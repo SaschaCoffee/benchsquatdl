@@ -36,9 +36,6 @@ import java.util.List;
         private FirebaseUser user;
         private DatabaseReference reference,  referenceTest, referenceTraininglog;
         ArrayList<greenCardModel> lstBook = new ArrayList<>();
-        ArrayList<Integer> fieldSize = new ArrayList<Integer>();
-        List<Integer> hallo21 = new ArrayList<>();
-        ArrayList<Integer> jd = new ArrayList<>();
         ArrayList<Long> firebaseArray;
 
 
@@ -46,19 +43,17 @@ import java.util.List;
         private RecyclerView.Adapter mAdapter;
         private RecyclerView.LayoutManager mLayoutManager;
         private ProgressBar pgBar;
-        private TextView tv, tv_updown, tv_updown_third;
-        private EditText et_first_set, et_second_set, et_third_set;
+        private TextView tv;
+        private EditText et_first_set, et_second_set, et_third_set, et_kg, et_kg2, et_kg3;
         int progr;
         private Button btn_add_data, btn_upload_data, btn_addtoTv, btntoTv;
         private AlertDialog dialog;
         private String userid;
         private int counter = 0;
-        KeyEvent cc;
-        int x = 1;
         int arraycounter = 0;
-        long size = 4;
-        checker xx;
         int sizeField =  0;
+        int newCounter = 0;
+        private double tempCounter;
 
 
         @Override
@@ -71,7 +66,6 @@ import java.util.List;
             String childcard = "anzahl";
             String childcardBench = "Best3BenchKg";
             String childcardDate = "Date";
-
 
 
 
@@ -95,48 +89,11 @@ import java.util.List;
                     } catch (Exception e) {
                         Toast.makeText(cardMainactivity.this, "dd", Toast.LENGTH_SHORT).show();
                     }
-
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
-
-            referenceTest.child(childcardDate).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    long count = snapshot.getChildrenCount();
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-            firebaseArray = new ArrayList<>();
-
-
-            referenceTest.child(childcardBench).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        long xxx = dataSnapshot.getValue(long.class);
-                        firebaseArray.add(xxx);
-                    }
-                    Toast.makeText(cardMainactivity.this, "size:" + firebaseArray.size(), Toast.LENGTH_SHORT).show();
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             dialogExtend xx = new dialogExtend();
@@ -145,21 +102,20 @@ import java.util.List;
             View view = getLayoutInflater().inflate(R.layout.custom_dialog, null);
 
             btn_upload_data = view.findViewById(R.id.btn_upload_data);
-            tv_updown = view.findViewById(R.id.tv_updown);
-            tv_updown_third = view.findViewById(R.id.tv_reps_third);
-            btntoTv = view.findViewById(R.id.button39);
             et_first_set = view.findViewById(R.id.et_symbol_reps);
             et_second_set = view.findViewById(R.id.et_symbol_reps2);
             et_third_set = view.findViewById(R.id.et_symbol_reps3);
 
+            et_kg = view.findViewById(R.id.et_kg_card);
+            et_kg2 = view.findViewById(R.id.et_kg_card2);
+            et_kg3 = view.findViewById(R.id.et_kg_card3);
 
 
-
-
-      et_first_set.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            et_first_set.setOnFocusChangeListener(new View.OnFocusChangeListener() {
           @Override
           public void onFocusChange(View view, boolean b) {
              sizeField = 1;
+             counter= 0;
           }
       });
 
@@ -167,6 +123,7 @@ import java.util.List;
               @Override
               public void onFocusChange(View view, boolean b) {
                 sizeField = 2;
+                counter = 0;
 
               }
           });
@@ -175,60 +132,34 @@ import java.util.List;
                 @Override
                 public void onFocusChange(View view, boolean b) {
                     sizeField = 3;
-                }
-            });
-
-
-
-
-
-
-
-            TextWatcher textWatcher = new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    Toast.makeText(cardMainactivity.this, "before", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(cardMainactivity.this, "" +charSequence, Toast.LENGTH_SHORT).show();
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    Toast.makeText(cardMainactivity.this, "on", Toast.LENGTH_SHORT).show();
-                    if(charSequence.length() == 0) {
-                        Toast.makeText(cardMainactivity.this, "ffff" + charSequence, Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    Toast.makeText(cardMainactivity.this, "after", Toast.LENGTH_SHORT).show();
-
-                }
-            };
-            et_first_set.addTextChangedListener(textWatcher);
-
-         ;
-
-            et_first_set.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                        Toast.makeText(cardMainactivity.this, "wwwww", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-            et_second_set.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
                     counter = 0;
-
-                    addtoTv();
-
-
                 }
             });
+
+            et_kg.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    sizeField = 4;
+                    counter = 0;
+                }
+            });
+
+            et_kg2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    sizeField = 5;
+                    counter = 0;
+                }
+            });
+
+            et_kg3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    sizeField = 6;
+                    counter = 0;
+                }
+            });
+
 
 
             DialogInterface.OnKeyListener xxy = new DialogInterface.OnKeyListener() {
@@ -236,25 +167,53 @@ import java.util.List;
                 public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
                     String x = "1";
 
-                    if (tv_updown_third.equals(String.class)) {
-                        Toast.makeText(cardMainactivity.this, "111111", Toast.LENGTH_SHORT).show();
-                    }
 
                     int code = keyEvent.getKeyCode();
 
-                    if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                        Toast.makeText(cardMainactivity.this, "1down", Toast.LENGTH_SHORT).show();
+                    if(keyEvent.getAction() == KeyEvent.ACTION_UP){
+                        switch (code) {
+                            case KeyEvent.KEYCODE_VOLUME_UP:
+                                counter++;
+                                double counterNew = 20+(counter*2.5);
+                                tempCounter = counterNew;
+                                switch(sizeField){
+                                    case 1:
+                                        et_first_set.setText(String.valueOf(counter));
+                                        break;
+                                    case 2:
+                                        et_second_set.setText(String.valueOf(counter));
+                                        break;
+                                    case 3:
+                                        et_third_set.setText(String.valueOf(counter));
+                                        break;
+                                    case 4:
+                                        et_kg.setText(String.valueOf(counterNew));
+                                        break;
+                                    case 5:
+                                        et_kg2.setText(String.valueOf(counterNew));
+                                        break;
+                                    case 6:
+                                        et_kg3.setText(String.valueOf(counterNew));
 
+                                }
+                                return true;
+                        }
+
+                    }
+
+                    if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
                         switch (code) {
                             case KeyEvent.KEYCODE_VOLUME_UP:
                                 Toast.makeText(cardMainactivity.this, "up", Toast.LENGTH_SHORT).show();
+
+
                                 return true;
                             case KeyEvent.KEYCODE_VOLUME_DOWN:
+                                counter--;
 
 
-
-
-                                counter++;
+                                double counterNewDown = tempCounter - 2.5;
+                                tempCounter = counterNewDown;
 
                                 switch(sizeField){
                                     case 1:
@@ -266,19 +225,23 @@ import java.util.List;
                                     case 3:
                                         et_third_set.setText(String.valueOf(counter));
                                         break;
+                                    case 4:
+                                        et_kg.setText(String.valueOf(counterNewDown));
+                                        break;
+                                    case 5:
+                                        et_kg2.setText(String.valueOf(counterNewDown));
+                                        break;
+                                    case 6:
+                                        et_kg3.setText(String.valueOf(counterNewDown));
+
                                 }
-
-
                                 return true;
                         }
+
                     }
                     return true;
                 }
-
-
             };
-
-
 
             builder.setOnKeyListener(xxy);
             createCard();
@@ -286,23 +249,12 @@ import java.util.List;
             builder.setView(view);
             dialog = builder.create();
 
-            btntoTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    addtoTv();
-                }
-            });
-
-
             btn_add_data.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     dialog.show();
                 }
             });
-
-
-
 
                 btn_upload_data.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -370,31 +322,6 @@ import java.util.List;
 
         }
 
-
-    private void addtoTv() {
-            arraycounter++;
-
-            switch(arraycounter){
-                case 1:
-                    Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
-                    et_first_set.setText(String.valueOf(counter));
-                    this.counter = 0;
-                    break;
-                case 2:
-                    Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
-                    et_second_set.setText(String.valueOf(counter));
-                    this.counter = 0;
-                    break;
-                case 3:
-                    et_third_set.setText(String.valueOf(counter));
-                    this.counter = 0;
-                    this.arraycounter = 0;
-                    break;
-            }
-
-
-
-    }
 
     private void buildRecyclerView() {
             mRecyclerView = findViewById(R.id.recyclerview_id);
