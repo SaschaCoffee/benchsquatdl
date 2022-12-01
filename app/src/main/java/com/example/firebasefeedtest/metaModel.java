@@ -3,6 +3,7 @@ package com.example.firebasefeedtest;
 public class metaModel {
 
     String username,bestSquat, bestBenchpress, bestDeadlift, age, city, height;
+    boolean publishDataToFeed;
 
     public metaModel(String username, String bestSquat, String bestBenchpress, String bestDeadlift, String age, String city, String height) {
         this.username = username;

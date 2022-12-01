@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">FireBaseFeedTest</string>
+    <string name="facebook_app_id">178287503770439</string>
+    <string name="fb_login_protocol_scheme">fb178287503770439</string>
+    <string name="facebook_client_token">7cc9cc40771dffe9efb680f70cdafadc</string>
 </resources>

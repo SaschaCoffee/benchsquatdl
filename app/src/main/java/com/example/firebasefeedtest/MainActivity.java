@@ -1,17 +1,39 @@
 package com.example.firebasefeedtest;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.internal.WebDialog;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,12 +41,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
+import javax.security.auth.callback.Callback;
+
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseUser user;
-    private Button btn_register, card, btn_login;
+
+    private Button btn_register, card, btn_login, btn_fb_logout;
+    LoginButton facebook_login;
+
     private Context context;
-    private DatabaseReference reference, referenceTest,referenceTest2;
+    private FirebaseAuth mAuth;
+
+    CallbackManager mCallbackManager;
+    TextView test;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +78,23 @@ public class MainActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login_main);
         btn_register = findViewById(R.id.btn_register_main);
         card = findViewById(R.id.btn_card);
+        btn_fb_logout = findViewById(R.id.btn_fb_logout);
 
-        modelSquat xx = new modelSquat("300", "333", "33");
 
-        referenceTest = FirebaseDatabase.getInstance().getReference();
+
+
+        btn_fb_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.getInstance().signOut();
+                LoginManager.getInstance().logOut();
+
+                startActivity((new Intent(MainActivity.this, startActivity.class)));
+            }
+        });
+
+
+
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,53 +117,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-        //GREENCARD EDITING TEST
-        int arraysize = 3;
-        int selectIndex = 1;
-
-
-        referenceTest.child("metdaDatenUser").child("UID").child("bestSquat").setValue("33");
-        referenceTest.child("metdaDatenUser").child("UID").child("Follower").setValue("UID21");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-    
-    
+
+
+
+
+
+
 }

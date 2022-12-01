@@ -17,5 +17,5 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "FireBaseFeedTest"
+rootProject.name = "Similar Strength"
 include ':app'

@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,7 +35,8 @@ import java.util.List;
     public class cardMainactivity extends AppCompatActivity {
 
         private FirebaseUser user;
-        private DatabaseReference reference,  referenceTest, referenceTraininglog;
+        private DatabaseReference reference,  referenceTest, referenceTraininglogPrivate, referenceTraininglogPublic,
+    referenceCollectTrainingData, referenceTrainingLocation;
         ArrayList<greenCardModel> lstBook = new ArrayList<>();
         ArrayList<Long> firebaseArray;
 
@@ -54,6 +56,8 @@ import java.util.List;
         int sizeField =  0;
         int newCounter = 0;
         private double tempCounter;
+        CheckBox worldwide;
+        boolean checkBoxClicked = false;
 
 
         @Override
@@ -71,10 +75,14 @@ import java.util.List;
 
             user = FirebaseAuth.getInstance().getCurrentUser();
             reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
-
-            referenceTraininglog = FirebaseDatabase.getInstance().getReference("Traininglog");
+            referenceCollectTrainingData = FirebaseDatabase.getInstance().getReference("CollectTrainingData");
+            referenceTraininglogPrivate = FirebaseDatabase.getInstance().getReference("TraininglogPrivate");
+            referenceTraininglogPublic = FirebaseDatabase.getInstance().getReference("TraininglogPublic");
             referenceTest = FirebaseDatabase.getInstance().getReference("teste");
+            referenceTrainingLocation = FirebaseDatabase.getInstance().getReference("Location");
             userid = user.getUid();
+
+
 
 
             reference.child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -106,9 +114,24 @@ import java.util.List;
             et_second_set = view.findViewById(R.id.et_symbol_reps2);
             et_third_set = view.findViewById(R.id.et_symbol_reps3);
 
+            worldwide = view.findViewById(R.id.cb_publish_world);
+
+
+
+
+
             et_kg = view.findViewById(R.id.et_kg_card);
             et_kg2 = view.findViewById(R.id.et_kg_card2);
             et_kg3 = view.findViewById(R.id.et_kg_card3);
+
+            worldwide.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkBoxClicked = true;
+                }
+            });
+
+            Toast.makeText(this, "checkbox:" +checkBoxClicked, Toast.LENGTH_SHORT).show();
 
 
             et_first_set.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -174,7 +197,38 @@ import java.util.List;
                         switch (code) {
                             case KeyEvent.KEYCODE_VOLUME_UP:
                                 counter++;
-                                double counterNew = 20+(counter*2.5);
+                                double counterNew = 20+(counter*5);
+                                tempCounter = counterNew;
+                                switch(sizeField){
+                                    case 1:
+                                        et_first_set.setText(String.valueOf(counter));
+                                        break;
+                                    case 2:
+                                        et_second_set.setText(String.valueOf(counter));
+                                        break;
+                                    case 3:
+                                        et_third_set.setText(String.valueOf(counter));
+                                        break;
+                                    case 4:
+                                        et_kg.setText(String.valueOf(counterNew));
+                                        break;
+                                    case 5:
+                                        et_kg2.setText(String.valueOf(counterNew));
+                                        break;
+                                    case 6:
+                                        et_kg3.setText(String.valueOf(counterNew));
+
+                                }
+                                return true;
+                        }
+
+                    }
+
+                    if(keyEvent.getAction() == KeyEvent.ACTION_UP){
+                        switch (code) {
+                            case KeyEvent.KEYCODE_VOLUME_UP:
+                                counter++;
+                                double counterNew = 20+(counter*5);
                                 tempCounter = counterNew;
                                 switch(sizeField){
                                     case 1:
@@ -205,14 +259,10 @@ import java.util.List;
                         switch (code) {
                             case KeyEvent.KEYCODE_VOLUME_UP:
                                 Toast.makeText(cardMainactivity.this, "up", Toast.LENGTH_SHORT).show();
-
-
                                 return true;
                             case KeyEvent.KEYCODE_VOLUME_DOWN:
                                 counter--;
-
-
-                                double counterNewDown = tempCounter - 2.5;
+                                double counterNewDown = tempCounter - 1.25;
                                 tempCounter = counterNewDown;
 
                                 switch(sizeField){
@@ -261,17 +311,26 @@ import java.util.List;
                     public void onClick(View view) {
 
                         if (!everythingIsFilled()) {
-
-                            String keyTraining = referenceTraininglog.push().getKey();
+                            if(worldwide.isChecked()) {
+                            String keyTraining = referenceTraininglogPublic.push().getKey();
                             String first_set = et_first_set.getText().toString().trim();
                             String second_set = et_second_set.getText().toString().trim();
                             String third_set = et_third_set.getText().toString().trim();
 
-                            modelSquat xyz = new modelSquat(first_set, second_set, third_set);
+                            String kg1 = et_kg.getText().toString().trim();
+                            String kg2 = et_kg2.getText().toString().trim();
+                            String kg3 = et_kg3.getText().toString().trim();
 
-                            referenceTraininglog.child(keyTraining).setValue(xyz);
 
-                            Toast.makeText(cardMainactivity.this, "card" + keyTraining, Toast.LENGTH_SHORT).show();
+                            modelSquat xyz = new modelSquat(first_set, second_set, third_set, kg1, kg2, kg3);
+
+                            referenceTraininglogPublic.child(keyTraining).setValue(xyz);
+                            referenceTraininglogPrivate.child(keyTraining).setValue(xyz);
+                            referenceCollectTrainingData.child(keyTraining).child("userid").setValue(userid);
+                            referenceTrainingLocation.child("Hannover").child("Datum5").setValue(keyTraining);
+
+
+
 
                             progr++;
                             reference.child(userid).child("anzahl").setValue(progr);
@@ -282,8 +341,37 @@ import java.util.List;
                             dialog.dismiss();
                         }
 
+                            else{
+                                String keyTraining = referenceTraininglogPrivate.push().getKey();
+                                String first_set = et_first_set.getText().toString().trim();
+                                String second_set = et_second_set.getText().toString().trim();
+                                String third_set = et_third_set.getText().toString().trim();
+
+                                String kg1 = et_kg.getText().toString().trim();
+                                String kg2 = et_kg2.getText().toString().trim();
+                                String kg3 = et_kg3.getText().toString().trim();
+
+
+                                modelSquat xyz = new modelSquat(first_set, second_set, third_set, kg1, kg2, kg3);
+
+                                referenceTraininglogPrivate.child(keyTraining).setValue(xyz);
+
+                                Toast.makeText(cardMainactivity.this, "card" + keyTraining, Toast.LENGTH_SHORT).show();
+
+                                progr++;
+                                reference.child(userid).child("anzahl").setValue(progr);
+
+                                updateProgressBar(progr);
+                                updateCard(progr);
+                                buildRecyclerView();
+                                dialog.dismiss();
+
+                            }
+                        }
+
                     }
                 });
+
 
             }
 

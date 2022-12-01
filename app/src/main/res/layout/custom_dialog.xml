@@ -29,6 +29,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <CheckBox
+                android:id="@+id/cb_publish_world"
+                android:layout_width="216dp"
+                android:layout_height="55dp"
+                android:text="Publish to the WORLD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_upload_data" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageButton

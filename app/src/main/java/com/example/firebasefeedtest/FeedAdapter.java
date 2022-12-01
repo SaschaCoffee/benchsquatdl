@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedHolder> {
     private FirebaseUser user;
     private Context context;
     private DatabaseReference reference, referenceTest;
+
 
     public FeedAdapter(Context context) {
         this.context = context;
@@ -34,6 +36,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedHolder> {
     @Override
     public void onBindViewHolder(@NonNull FeedHolder holder, int position) {
         holder.tv_feed_bench.setText("hALLO");
+        holder.img_feed_user.setImageResource(R.drawable.quadratgruen);
+
+
     }
 
     @Override
