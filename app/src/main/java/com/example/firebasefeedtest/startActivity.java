@@ -108,27 +108,6 @@ public class startActivity extends AppCompatActivity {
         });
 
 
-        oneTapClient = Identity.getSignInClient(this);
-        signInRequest = BeginSignInRequest.builder()
-                .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
-                        .setSupported(true)
-                        .build())
-                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                        .setSupported(true)
-                        // Your server's client ID, not your Android client ID.
-                        .setServerClientId(getString(R.string.googleID))
-                        // Only show accounts previously used to sign in.
-                        .setFilterByAuthorizedAccounts(true)
-                        .build())
-                // Automatically sign in when exactly one credential is retrieved.
-                .setAutoSelectEnabled(true)
-                .build();
-
-
-
-
-
-
         googleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,7 +130,7 @@ public class startActivity extends AppCompatActivity {
         Toast.makeText(this, "sender", Toast.LENGTH_SHORT).show();
         GetSignInIntentRequest request =
                 GetSignInIntentRequest.builder()
-                        .setServerClientId(getString(R.string.googleID))
+                        .setServerClientId(getString(R.string.default_web_client_id))
                         .build();
 
         Identity.getSignInClient(this)
@@ -182,13 +161,15 @@ public class startActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(this, "onActivity", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "rq:" + requestCode, Toast.LENGTH_SHORT).show();
 
         switch (requestCode) {
-            case REQ_ONE_TAP:
+
+            case REQUEST_CODE_GOOGLE_SIGN_IN:
                 try {
-                    SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(data);
+                    SignInCredential credential = Identity.getSignInClient(this).getSignInCredentialFromIntent(data);
                     String idToken = credential.getGoogleIdToken();
+
                     if (idToken !=  null) {
                         AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
                         mAuth.signInWithCredential(firebaseCredential)
@@ -196,9 +177,14 @@ public class startActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
+
                                             // Sign in success, update UI with the signed-in user's information
                                             Log.d("TAG", "signInWithCredential:success");
                                             FirebaseUser user = mAuth.getCurrentUser();
+
+                                            FirebaseDatabase.getInstance().getReference("googleUsers")
+                                                    .child(user.getUid()).setValue("fff");
+
 
                                         } else {
                                             // If sign in fails, display a message to the user.
