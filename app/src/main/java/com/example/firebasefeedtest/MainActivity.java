@@ -28,6 +28,12 @@ import com.facebook.internal.WebDialog;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -35,6 +41,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Context context;
     private FirebaseAuth mAuth;
-
-    CallbackManager mCallbackManager;
     TextView test;
+
+
 
 
     @Override
@@ -79,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
         btn_register = findViewById(R.id.btn_register_main);
         card = findViewById(R.id.btn_card);
         btn_fb_logout = findViewById(R.id.btn_fb_logout);
-
-
 
 
         btn_fb_logout.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
 
 

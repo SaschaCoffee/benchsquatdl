@@ -1,4 +1,5 @@
 <resources>
+    <string name="googleID">925912855180-r6kpacm1ngd8tjbc2mbcot29b040e9tp.apps.googleusercontent.com</string>
     <string name="app_name">FireBaseFeedTest</string>
     <string name="facebook_app_id">178287503770439</string>
     <string name="fb_login_protocol_scheme">fb178287503770439</string>
