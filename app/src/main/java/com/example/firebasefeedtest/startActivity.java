@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,10 +56,9 @@ public class startActivity extends AppCompatActivity {
     CallbackManager mCallbackManager;
     SignInButton googleLogin;
     BeginSignInRequest signInRequest;
-
-
     SignInClient oneTapClient, oneTapClient2;
     GoogleSignInClient mGoogleClient;
+    TextView loginNormal;
 
 
 
@@ -80,6 +81,14 @@ public class startActivity extends AppCompatActivity {
         referenceTest = FirebaseDatabase.getInstance().getReference();
         googleLogin = findViewById(R.id.google_login);
 
+        loginNormal = findViewById(R.id.textView3);
+
+        loginNormal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity((new Intent(startActivity.this, logRegActivity.class)));
+            }
+        });
 
 
 

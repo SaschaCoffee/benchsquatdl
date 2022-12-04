@@ -22,7 +22,7 @@ public class registerUser extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth mAuth;
     private EditText et_name, et_age, et_email, et_pw, et_city, et_bestsquat, et_bestbench, et_bestdeadlift, et_height;
-    private TextView banner;
+
     private Button btn_register;
     private ProgressBar pg_bar;
 
@@ -44,7 +44,7 @@ public class registerUser extends AppCompatActivity implements View.OnClickListe
         et_bestdeadlift = findViewById(R.id.et_max_deadlift_register);
         et_height = findViewById(R.id.et_height_register);
 
-        banner = findViewById(R.id.banner);
+
         btn_register = findViewById(R.id.btn_register);
 
         btn_register.setOnClickListener( new View.OnClickListener() {

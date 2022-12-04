@@ -1,6 +1,7 @@
 package com.example.firebasefeedtest;
 
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,7 +47,7 @@ import java.util.List;
         private RecyclerView.Adapter mAdapter;
         private RecyclerView.LayoutManager mLayoutManager;
         private ProgressBar pgBar;
-        private TextView tv;
+        private TextView tv, heavy1, heavy2, heavy3;
         private EditText et_first_set, et_second_set, et_third_set, et_kg, et_kg2, et_kg3;
         int progr;
         private Button btn_add_data, btn_upload_data, btn_addtoTv, btntoTv;
@@ -58,6 +60,13 @@ import java.util.List;
         private double tempCounter;
         CheckBox worldwide;
         boolean checkBoxClicked = false;
+        boolean firstSet = false;
+        boolean secondSet = false;
+        boolean thirdSet = false;
+        boolean fourthSet = false;
+        boolean fifthSet = false;
+        boolean heavyChosen = false;
+        int currentSelectedHeavy;
 
 
         @Override
@@ -72,7 +81,6 @@ import java.util.List;
             String childcardDate = "Date";
 
 
-
             user = FirebaseAuth.getInstance().getCurrentUser();
             reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
             referenceCollectTrainingData = FirebaseDatabase.getInstance().getReference("CollectTrainingData");
@@ -81,7 +89,6 @@ import java.util.List;
             referenceTest = FirebaseDatabase.getInstance().getReference("teste");
             referenceTrainingLocation = FirebaseDatabase.getInstance().getReference("Location");
             userid = user.getUid();
-
 
 
 
@@ -116,6 +123,80 @@ import java.util.List;
 
             worldwide = view.findViewById(R.id.cb_publish_world);
 
+            heavy1 = view.findViewById(R.id.heavy_button);
+            heavy2 = view.findViewById(R.id.heavy_button2);
+            heavy3 = view.findViewById(R.id.heavy_button3);
+
+            heavy1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(!heavyChosen) {
+                        heavy1.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 1;
+                        heavyChosen = true;
+                    }
+                    else{
+                        switch(currentSelectedHeavy){
+                            case 1:
+                                heavy1.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy));
+                                heavyChosen = false;
+                                break;
+                            case 2:
+                                heavy2.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy));
+                                currentSelectedHeavy = 1;
+                                heavy1.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy_true));
+                                heavyChosen = true;
+                                break;
+
+                            case 3:
+                                heavy3.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy));
+                                currentSelectedHeavy = 1;
+                                heavy1.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy_true));
+                                heavyChosen = true;
+                                break;
+                        }
+
+                    }
+                }
+            });
+
+
+
+            heavy2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(!heavyChosen){
+                        heavy2.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 2;
+                        heavyChosen = true;
+                    }
+                    else{
+                        switch(currentSelectedHeavy){
+                            case 1:
+                                heavy1.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy));
+                                heavy2.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy_true));
+                                heavyChosen = true;
+                                currentSelectedHeavy =  2;
+
+                                break;
+                            case 2:
+                                heavy2.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy));
+                                currentSelectedHeavy = 2;
+                                heavyChosen = false;
+                                break;
+
+                            case 3:
+                                heavy3.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy));
+
+                                currentSelectedHeavy = 2;
+                                heavyChosen = true;
+                                heavy2.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy_true));
+                                break;
+                        }
+
+                    }
+                }
+            });
 
 
 

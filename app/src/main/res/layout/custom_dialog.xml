@@ -20,13 +20,13 @@
 
             <Button
                 android:id="@+id/btn_upload_data"
-                android:layout_width="38dp"
-                android:layout_height="41dp"
+                android:layout_width="99dp"
+                android:layout_height="52dp"
 
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="208dp"
-                android:text="+"
+                android:text="SAVE"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <CheckBox
@@ -61,6 +61,20 @@
             android:layout_below="@+id/imageButton2"
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageButton3"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageButton4"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
         <EditText
             android:id="@+id/et_symbol_reps"
             android:layout_width="wrap_content"
@@ -71,7 +85,7 @@
             android:layout_toEndOf="@+id/imageButton"
             android:ems="10"
             android:focusable="true"
-            android:hint="Repetitions (First Set)"
+            android:hint="Repetitions "
             android:inputType="textPersonName" />
 
         <EditText
@@ -84,7 +98,7 @@
             android:layout_toStartOf="@+id/et_kg_card2"
             android:layout_toEndOf="@+id/imageButton"
             android:ems="10"
-            android:hint="Repetitions (Second Set)"
+            android:hint="Repetitions"
             android:inputType="textPersonName" />
 
         <EditText
@@ -97,19 +111,46 @@
             android:layout_toStartOf="@+id/et_kg_card3"
             android:layout_toEndOf="@+id/imageButton"
             android:ems="10"
-            android:hint="Repetitions (Third Set)"
+            android:hint="Repetitions"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/et_symbol_reps4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/et_symbol_reps3"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="17dp"
+            android:layout_toStartOf="@+id/et_kg_card3"
+            android:layout_toEndOf="@+id/imageButton"
+            android:ems="10"
+            android:hint="Repetitions"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/et_symbol_reps5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_symbol_reps4"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="17dp"
+            android:layout_toStartOf="@+id/et_kg_card3"
+            android:layout_toEndOf="@+id/imageButton"
+            android:ems="10"
+            android:hint="Repetitions"
             android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/tv_updown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/et_symbol_reps3"
+            android:layout_below="@+id/et_symbol_reps5"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
 
             android:layout_marginStart="51dp"
-            android:layout_marginTop="-2dp"
+            android:layout_marginTop="11dp"
             android:layout_marginEnd="53dp"
             android:text="You can use your Volume Up/Down to increase/decrease repetitions"
             android:textColor="@color/black"
@@ -117,10 +158,10 @@
 
         <EditText
             android:id="@+id/et_kg_card"
-            android:layout_width="112dp"
+            android:layout_width="58dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="6dp"
+            android:layout_toStartOf="@+id/heavy_button"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="KG"
@@ -128,12 +169,12 @@
 
         <EditText
             android:id="@+id/et_kg_card2"
-            android:layout_width="113dp"
+            android:layout_width="58dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_kg_card"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="-2dp"
+            android:layout_marginEnd="6dp"
+            android:layout_toStartOf="@+id/heavy_button2"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="KG"
@@ -141,16 +182,90 @@
 
         <EditText
             android:id="@+id/et_kg_card3"
-            android:layout_width="113dp"
+            android:layout_width="57dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_kg_card"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="47dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="72dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="KG"
             app:layout_constraintEnd_toStartOf="@+id/et_symbol_reps" />
+
+        <EditText
+            android:id="@+id/et_kg_card4"
+            android:layout_width="57dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_kg_card"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="72dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="KG"
+            app:layout_constraintEnd_toStartOf="@+id/et_symbol_reps" />
+
+        <EditText
+            android:id="@+id/et_kg_card5"
+            android:layout_width="57dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_kg_card"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="130dp"
+            android:layout_marginEnd="72dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="KG"
+            app:layout_constraintEnd_toStartOf="@+id/et_symbol_reps" />
+
+        <TextView
+            android:id="@+id/heavy_button"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:background="@mipmap/heavy" />
+
+        <TextView
+            android:id="@+id/heavy_button2"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/et_symbol_reps"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="16dp"
+            android:background="@mipmap/heavy" />
+
+        <TextView
+            android:id="@+id/heavy_button3"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/heavy_button2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:background="@mipmap/heavy" />
+
+        <TextView
+            android:id="@+id/heavy_button4"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/heavy_button5"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:background="@mipmap/heavy" />
+
+        <TextView
+            android:id="@+id/heavy_button5"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/heavy_button3"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:background="@mipmap/heavy" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,11 +28,13 @@
 
         </activity>
 
-        <activity android:name=".registerUser">
+        <activity android:name=".registerUser"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>
 
-        <activity android:name="logRegActivity">
+        <activity android:name="logRegActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>
 
