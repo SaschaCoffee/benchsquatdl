@@ -127,6 +127,9 @@ import java.util.List;
             heavy2 = view.findViewById(R.id.heavy_button2);
             heavy3 = view.findViewById(R.id.heavy_button3);
 
+            start();
+
+
             heavy1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -402,8 +405,7 @@ import java.util.List;
                             String kg2 = et_kg2.getText().toString().trim();
                             String kg3 = et_kg3.getText().toString().trim();
 
-
-                            modelSquat xyz = new modelSquat(first_set, second_set, third_set, kg1, kg2, kg3);
+                            modelSquat xyz = new modelSquat(first_set, null, null, kg1, null, null);
 
                             referenceTraininglogPublic.child(keyTraining).setValue(xyz);
                             referenceTraininglogPrivate.child(keyTraining).setValue(xyz);
@@ -456,38 +458,60 @@ import java.util.List;
 
             }
 
+    private void start() {
+        heavy1.setBackground(ContextCompat.getDrawable(cardMainactivity.this, R.mipmap.heavy_true));
+        currentSelectedHeavy = 1;
+        heavyChosen = true;
 
-
-
+    }
 
 
     public boolean everythingIsFilled(){
 
             boolean enter_data = false;
+            boolean valid_field_data = false;
 
             String first_set = et_first_set.getText().toString().trim();
             String second_set = et_second_set.getText().toString().trim();
             String third_set = et_third_set.getText().toString().trim();
 
-            if(first_set.isEmpty()){
-                et_first_set.setError("Age is required");
-                et_first_set.requestFocus();
-                enter_data = true;
-            }
 
-            if(second_set.isEmpty()){
-                et_second_set.setError("Age is required");
-                et_second_set.requestFocus();
-                enter_data = true;
-            }
 
-            if(third_set.isEmpty()){
-                et_third_set.setError("Age is required");
-                et_third_set.requestFocus();
-                enter_data = true;
-            }
+        Toast.makeText(this, "Selected:" + currentSelectedHeavy, Toast.LENGTH_SHORT).show();
 
-            return enter_data;
+
+            switch(currentSelectedHeavy){
+                case 1:
+                    if(first_set.isEmpty()){
+                        enter_data = true;
+                        et_first_set.setError("The selected Heavy Field is wrong");
+                    }
+                    else{
+                        enter_data = false;
+                    }
+                    break;
+                case 2:
+                    if(second_set.isEmpty() || first_set.isEmpty()){
+                           et_second_set.setError("The selected Heavy Field is wrong");
+                            enter_data = true;
+                            et_first_set.setError("First Field is empty");
+                    }
+                    else{
+                        enter_data = false;
+                    }
+                    break;
+                case 3:
+                    if(third_set.isEmpty() || first_set.isEmpty() || second_set.isEmpty() ){
+                                enter_data = true;
+                                et_third_set.setError("The selected Heavy Field is wrong");
+                }
+                    else{
+                        enter_data = false;
+                    }
+            }
+        return (enter_data);
+
+
 
         }
 
