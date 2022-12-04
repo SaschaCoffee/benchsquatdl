@@ -221,10 +221,12 @@ import java.util.List;
             et_first_set.setOnFocusChangeListener(new View.OnFocusChangeListener() {
           @Override
           public void onFocusChange(View view, boolean b) {
+
              sizeField = 1;
              counter= 0;
           }
       });
+
 
           et_second_set.setOnFocusChangeListener(new View.OnFocusChangeListener() {
               @Override
@@ -405,7 +407,9 @@ import java.util.List;
                             String kg2 = et_kg2.getText().toString().trim();
                             String kg3 = et_kg3.getText().toString().trim();
 
-                            modelSquat xyz = new modelSquat(first_set, null, null, kg1, null, null);
+
+
+                            modelSquat xyz = new modelSquat(first_set, second_set, third_set, kg1, kg2, kg3);
 
                             referenceTraininglogPublic.child(keyTraining).setValue(xyz);
                             referenceTraininglogPrivate.child(keyTraining).setValue(xyz);
@@ -469,15 +473,38 @@ import java.util.List;
     public boolean everythingIsFilled(){
 
             boolean enter_data = false;
-            boolean valid_field_data = false;
+            boolean valid_field_data = true;
 
             String first_set = et_first_set.getText().toString().trim();
             String second_set = et_second_set.getText().toString().trim();
             String third_set = et_third_set.getText().toString().trim();
 
 
-
         Toast.makeText(this, "Selected:" + currentSelectedHeavy, Toast.LENGTH_SHORT).show();
+
+        if(!third_set.isEmpty()) {
+            if (first_set.isEmpty() || second_set.isEmpty()) {
+                et_first_set.setError("Field 1 and 2 are missing");
+                valid_field_data = true;
+            } else {
+                valid_field_data = false;
+            }
+        }
+             else if(!second_set.isEmpty()){
+                if(first_set.isEmpty()){
+                    valid_field_data = true;
+                    et_first_set.setError("Field 1 is missing");
+                }
+                else{
+                    valid_field_data = false;
+                }
+
+            }
+             else{
+            valid_field_data = true;
+            }
+
+
 
 
             switch(currentSelectedHeavy){
@@ -491,7 +518,7 @@ import java.util.List;
                     }
                     break;
                 case 2:
-                    if(second_set.isEmpty() || first_set.isEmpty()){
+                    if(second_set.isEmpty()){
                            et_second_set.setError("The selected Heavy Field is wrong");
                             enter_data = true;
                             et_first_set.setError("First Field is empty");
@@ -501,7 +528,7 @@ import java.util.List;
                     }
                     break;
                 case 3:
-                    if(third_set.isEmpty() || first_set.isEmpty() || second_set.isEmpty() ){
+                    if(third_set.isEmpty()){
                                 enter_data = true;
                                 et_third_set.setError("The selected Heavy Field is wrong");
                 }
@@ -509,7 +536,8 @@ import java.util.List;
                         enter_data = false;
                     }
             }
-        return (enter_data);
+        Toast.makeText(this, "valid_field" + valid_field_data, Toast.LENGTH_SHORT).show();
+        return (enter_data || valid_field_data );
 
 
 
