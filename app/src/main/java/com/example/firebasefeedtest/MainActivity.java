@@ -14,6 +14,7 @@ import android.content.pm.Signature;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -36,6 +37,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -54,16 +56,14 @@ import java.util.Arrays;
 
 import javax.security.auth.callback.Callback;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
 
     private Button btn_register, card, btn_login, btn_fb_logout;
     LoginButton facebook_login;
-
     private Context context;
     private FirebaseAuth mAuth;
     TextView test;
-
 
 
 
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         btn_register = findViewById(R.id.btn_register_main);
         card = findViewById(R.id.btn_card);
         btn_fb_logout = findViewById(R.id.btn_fb_logout);
-
 
         btn_fb_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+
+
 
 
 

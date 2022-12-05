@@ -33,6 +33,9 @@
 
         </activity>
 
+        <activity android:name=".fragmentTestAct">
+        </activity>
+
         <activity android:name="logRegActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
