@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -92,6 +93,8 @@ import java.util.List;
 
 
 
+
+
             reference.child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -100,7 +103,7 @@ import java.util.List;
                         long model = snapshot.getValue(long.class);
                         progr = Integer.parseInt(String.valueOf(model));
                         updateCard(progr);
-                        buildRecyclerView();
+                       buildRecyclerView();
                     } catch (Exception e) {
                         Toast.makeText(cardMainactivity.this, "dd", Toast.LENGTH_SHORT).show();
                     }
@@ -115,6 +118,9 @@ import java.util.List;
             builder.setTitle("Enter Data");
 
             View view = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+
+
+
 
             btn_upload_data = view.findViewById(R.id.btn_upload_data);
             et_first_set = view.findViewById(R.id.et_symbol_reps);
@@ -468,6 +474,8 @@ import java.util.List;
         heavyChosen = true;
 
     }
+
+
 
 
     public boolean everythingIsFilled(){

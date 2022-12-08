@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity  {
         contactView.setLayoutManager(linearLayoutManager);
         contactView.setHasFixedSize(true);
 
+
+
         contactView.setVisibility(View.VISIBLE);
 
         FeedAdapter myAdapter = new FeedAdapter(this);

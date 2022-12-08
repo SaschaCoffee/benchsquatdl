@@ -19,7 +19,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class FirstFragment extends Fragment implements View.OnClickListener {
+public class FirstFragment extends Fragment  {
     Context mcontext;
     Button xyz;
 
@@ -36,20 +36,7 @@ public class FirstFragment extends Fragment implements View.OnClickListener {
         return inflater.inflate(R.layout.activity_item, container, false);
     }
 
-    @Override
-    public void onClick(View view) {
-        xyz = view.findViewById(R.id.btn_add_data);
-        ItemViewModel xx = new ItemViewModel();
-        xyz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-
-
-            }
-        });
-
-    }
 
 
 

@@ -16,7 +16,8 @@
         <activity
             android:name=".startActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,22 +29,27 @@
 
         </activity>
 
+
+
+        <activity android:name=".fragmentTestAct"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+
+        </activity>
+
+
         <activity android:name=".registerUser"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>
 
-        <activity android:name=".fragmentTestAct">
-        </activity>
+
 
         <activity android:name="logRegActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
         </activity>
 
-        <activity android:name=".cardMainactivity">
 
-        </activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
 

@@ -226,7 +226,7 @@ public class startActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()){
-                            startActivity((new Intent(startActivity.this, MainActivity.class)));
+
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             facebookSignModel fb_model = new facebookSignModel(user.getDisplayName(), user.getEmail());
@@ -235,7 +235,7 @@ public class startActivity extends AppCompatActivity {
                             .child(user.getUid()).setValue(fb_model);
 
 
-                            startActivity((new Intent(startActivity.this, MainActivity.class)));
+                            startActivity((new Intent(startActivity.this, fragmentTestAct.class)));
 
 
 

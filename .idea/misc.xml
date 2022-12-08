@@ -12,19 +12,32 @@
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activity_book.xml" value="0.1702127659574468" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activity_item.xml" value="0.3515625" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activitycard.xml" value="0.14969604863221886" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activitycard.xml" value="0.18" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activitycard2.xml" value="0.25" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activitycard_bench.xml" value="0.2056159420289855" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activitycard_deadlift.xml" value="0.2056159420289855" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activitycard_squat.xml" value="0.21" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/bench_layout.xml" value="0.1778115501519757" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/card_view_item_book.xml" value="0.1702127659574468" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/circle.xml" value="0.14969604863221886" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/cirecle.xml" value="0.14969604863221886" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog.xml" value="0.33" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_item.xml" value="0.2056159420289855" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_recyclerview.xml" value="0.2056159420289855" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/deadlift_layout.xml" value="0.21" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/fragment_first.xml" value="0.1757852077001013" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/fragment_first2.xml" value="0.2484375" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/fragment_mainactivity.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/fragment_second.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/fragment_second2.xml" value="0.2484375" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/fragment_third.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/logregactivity.xml" value="0.25" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/registeractivity.xml" value="0.3061594202898551" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/rv_customdialog_item.xml" value="0.2056159420289855" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/squat_layout.xml" value="0.25" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/start_activity.xml" value="0.33" />
-        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/menu/squat_bench_deadlift.xml" value="0.2916666666666667" />
       </map>
     </option>
   </component>

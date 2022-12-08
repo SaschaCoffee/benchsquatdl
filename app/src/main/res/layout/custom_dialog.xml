@@ -12,22 +12,32 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="119dp"
+            android:layout_height="237dp"
             android:layout_below="@+id/tv_updown"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="0dp">
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="1dp">
+
+            <EditText
+                android:id="@+id/editTextTextMultiLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="0dp" />
 
             <Button
                 android:id="@+id/btn_upload_data"
                 android:layout_width="99dp"
                 android:layout_height="52dp"
 
-                android:layout_marginTop="16dp"
                 android:text="SAVE"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/cb_publish_world" />
 
             <CheckBox
                 android:id="@+id/cb_publish_world"
@@ -36,12 +46,12 @@
                 android:text="Publish to the WORLD"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_upload_data" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imageButtonOne"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_menu_edit" />
@@ -50,7 +60,7 @@
             android:id="@+id/imageButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageButton"
+            android:layout_below="@+id/imageButtonOne"
             android:layout_marginTop="-8dp"
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
@@ -79,10 +89,12 @@
             android:id="@+id/et_symbol_reps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
-            android:layout_marginEnd="17dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
             android:layout_toStartOf="@+id/et_kg_card"
-            android:layout_toEndOf="@+id/imageButton"
+            android:layout_toEndOf="@+id/imageButtonOne"
             android:ems="10"
             android:focusable="true"
             android:hint="Repetitions "
@@ -96,7 +108,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginEnd="17dp"
             android:layout_toStartOf="@+id/et_kg_card2"
-            android:layout_toEndOf="@+id/imageButton"
+            android:layout_toEndOf="@+id/imageButtonOne"
             android:ems="10"
             android:hint="Repetitions"
             android:inputType="textPersonName" />
@@ -109,7 +121,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginEnd="17dp"
             android:layout_toStartOf="@+id/et_kg_card3"
-            android:layout_toEndOf="@+id/imageButton"
+            android:layout_toEndOf="@+id/imageButtonOne"
             android:ems="10"
             android:hint="Repetitions"
             android:inputType="textPersonName" />
@@ -120,10 +132,11 @@
             android:layout_height="wrap_content"
 
             android:layout_below="@+id/et_symbol_reps3"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="17dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="14dp"
             android:layout_toStartOf="@+id/et_kg_card3"
-            android:layout_toEndOf="@+id/imageButton"
+            android:layout_toEndOf="@+id/imageButtonOne"
             android:ems="10"
             android:hint="Repetitions"
             android:inputType="textPersonName" />
@@ -134,9 +147,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_symbol_reps4"
             android:layout_marginStart="0dp"
-            android:layout_marginEnd="17dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
             android:layout_toStartOf="@+id/et_kg_card3"
-            android:layout_toEndOf="@+id/imageButton"
+            android:layout_toEndOf="@+id/imageButtonOne"
             android:ems="10"
             android:hint="Repetitions"
             android:inputType="textPersonName" />
@@ -149,9 +163,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
 
-            android:layout_marginStart="51dp"
-            android:layout_marginTop="11dp"
-            android:layout_marginEnd="53dp"
+            android:layout_marginStart="57dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="57dp"
             android:text="You can use your Volume Up/Down to increase/decrease repetitions"
             android:textColor="@color/black"
             android:textSize="15dp" />
