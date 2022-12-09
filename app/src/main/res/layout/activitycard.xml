@@ -41,7 +41,7 @@
 
 
         <Button
-            android:id="@+id/btn_add_data"
+            android:id="@+id/btn_add_data_card_bench"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Button"

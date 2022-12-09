@@ -1,13 +1,8 @@
 package com.example.firebasefeedtest;
 
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -32,7 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 //ANSATZ nach erhöhung und button speichern-> in array anzahl abspeichern. dann switch anweisung case array.size=1, tv.set, anzahl
     public class cardMainactivity extends AppCompatActivity {
@@ -76,7 +70,7 @@ import java.util.List;
             setContentView(R.layout.activitycard);
             pgBar = findViewById(R.id.progress_bar);
             tv = findViewById(R.id.text_view_progress);
-            btn_add_data = findViewById(R.id.btn_add_data);
+            btn_add_data = findViewById(R.id.btn_add_data_card_bench);
             String childcard = "anzahl";
             String childcardBench = "Best3BenchKg";
             String childcardDate = "Date";

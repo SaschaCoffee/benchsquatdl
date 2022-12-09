@@ -32,7 +32,7 @@
         tools:text="60%" />
 
     <Button
-        android:id="@+id/btn_add_data"
+        android:id="@+id/btn_add_data_card_bench"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -46,7 +46,7 @@
         android:layout_width="410dp"
         android:layout_height="423dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/btn_add_data">
+        app:layout_constraintTop_toBottomOf="@+id/btn_add_data_card_bench">
 
 
         <androidx.recyclerview.widget.RecyclerView
