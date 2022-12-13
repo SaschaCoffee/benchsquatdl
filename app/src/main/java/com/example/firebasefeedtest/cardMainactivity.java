@@ -85,10 +85,6 @@ import java.util.ArrayList;
             referenceTrainingLocation = FirebaseDatabase.getInstance().getReference("Location");
             userid = user.getUid();
 
-
-
-
-
             reference.child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -97,7 +93,7 @@ import java.util.ArrayList;
                         long model = snapshot.getValue(long.class);
                         progr = Integer.parseInt(String.valueOf(model));
                         updateCard(progr);
-                       buildRecyclerView();
+                        buildRecyclerView();
                     } catch (Exception e) {
                         Toast.makeText(cardMainactivity.this, "dd", Toast.LENGTH_SHORT).show();
                     }
@@ -117,13 +113,13 @@ import java.util.ArrayList;
 
 
             btn_upload_data = view.findViewById(R.id.btn_upload_data);
-            et_first_set = view.findViewById(R.id.et_symbol_reps_single_item);
+            et_first_set = view.findViewById(R.id.layer_two_et_symbol_reps_single_item);
             et_second_set = view.findViewById(R.id.et_symbol_reps2);
             et_third_set = view.findViewById(R.id.et_symbol_reps3);
 
             worldwide = view.findViewById(R.id.cb_publish_world);
 
-            heavy1 = view.findViewById(R.id.heavy_button_single_item);
+            heavy1 = view.findViewById(R.id.layer_two_heavy_button_single_item);
             heavy2 = view.findViewById(R.id.heavy_button2);
             heavy3 = view.findViewById(R.id.heavy_button3);
 
@@ -204,7 +200,7 @@ import java.util.ArrayList;
 
 
 
-            et_kg = view.findViewById(R.id.et_kg_card_single_item);
+            et_kg = view.findViewById(R.id.layer_two_et_kg_card_single_item);
             et_kg2 = view.findViewById(R.id.et_kg_card2);
             et_kg3 = view.findViewById(R.id.et_kg_card3);
 

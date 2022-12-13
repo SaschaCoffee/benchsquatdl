@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/imageButtonOne_single_item"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp" />
+
+        <EditText
+            android:id="@+id/layer_two_et_symbol_reps_single_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/layer_two_et_kg_card_single_item"
+            android:layout_toEndOf="@+id/imageButtonOne_single_item"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="Repetitions "
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/layer_two_et_symbol_reps_single_item_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layer_two_et_symbol_reps_single_item"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/layer_two_et_kg_card_single_item"
+            android:layout_toEndOf="@+id/imageButtonOne_single_item"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="Repetitions "
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/layer_two_et_kg_card_single_item"
+            android:layout_width="58dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="6dp"
+            android:layout_toStartOf="@+id/layer_two_heavy_button_single_item"
+            android:ems="10"
+            android:hint="Kg/lb"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/layer_two_et_kg_card_single_item_two"
+            android:layout_width="58dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layer_two_et_kg_card_single_item"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="6dp"
+            android:layout_toStartOf="@+id/layer_two_heavy_button_single_item"
+            android:ems="10"
+            android:hint="kg/lb"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/layer_two_heavy_button_single_item"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="6dp"
+            android:background="@mipmap/heavy" />
+
+        <TextView
+            android:id="@+id/layer_two_heavy_button_single_item_two"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/layer_two_heavy_button_single_item"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="6dp"
+            android:background="@mipmap/heavy" />
+
+        <ImageView
+            android:id="@+id/layer_two_image_button"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="9dp"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <ImageView
+            android:id="@+id/layer_two_image_button_two"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layer_two_image_button"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

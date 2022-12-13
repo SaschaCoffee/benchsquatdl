@@ -86,14 +86,14 @@
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <EditText
-            android:id="@+id/et_symbol_reps_single_item"
+            android:id="@+id/layer_two_et_symbol_reps_single_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/et_kg_card_single_item"
+            android:layout_toStartOf="@+id/layer_two_et_kg_card_single_item"
             android:layout_toEndOf="@+id/imageButtonOne_single_item"
             android:ems="10"
             android:focusable="true"
@@ -104,7 +104,7 @@
             android:id="@+id/et_symbol_reps2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/et_symbol_reps_single_item"
+            android:layout_below="@+id/layer_two_et_symbol_reps_single_item"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="17dp"
             android:layout_toStartOf="@+id/et_kg_card2"
@@ -171,70 +171,70 @@
             android:textSize="15dp" />
 
         <EditText
-            android:id="@+id/et_kg_card_single_item"
+            android:id="@+id/layer_two_et_kg_card_single_item"
             android:layout_width="58dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
-            android:layout_toStartOf="@+id/heavy_button_single_item"
+            android:layout_toStartOf="@+id/layer_two_heavy_button_single_item"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="KG"
-            app:layout_constraintEnd_toStartOf="@+id/et_symbol_reps_single_item" />
+            app:layout_constraintEnd_toStartOf="@+id/layer_two_et_symbol_reps_single_item" />
 
         <EditText
             android:id="@+id/et_kg_card2"
             android:layout_width="58dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/et_kg_card_single_item"
+            android:layout_below="@+id/layer_two_et_kg_card_single_item"
             android:layout_marginTop="-2dp"
             android:layout_marginEnd="6dp"
             android:layout_toStartOf="@+id/heavy_button2"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="KG"
-            app:layout_constraintEnd_toStartOf="@+id/et_symbol_reps_single_item" />
+            app:layout_constraintEnd_toStartOf="@+id/layer_two_et_symbol_reps_single_item" />
 
         <EditText
             android:id="@+id/et_kg_card3"
             android:layout_width="57dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/et_kg_card_single_item"
+            android:layout_below="@+id/layer_two_et_kg_card_single_item"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="47dp"
             android:layout_marginEnd="72dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="KG"
-            app:layout_constraintEnd_toStartOf="@+id/et_symbol_reps_single_item" />
+            app:layout_constraintEnd_toStartOf="@+id/layer_two_et_symbol_reps_single_item" />
 
         <EditText
             android:id="@+id/et_kg_card4"
             android:layout_width="57dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/et_kg_card_single_item"
+            android:layout_below="@+id/layer_two_et_kg_card_single_item"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="88dp"
             android:layout_marginEnd="72dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="KG"
-            app:layout_constraintEnd_toStartOf="@+id/et_symbol_reps_single_item" />
+            app:layout_constraintEnd_toStartOf="@+id/layer_two_et_symbol_reps_single_item" />
 
         <EditText
             android:id="@+id/et_kg_card5"
             android:layout_width="57dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/et_kg_card_single_item"
+            android:layout_below="@+id/layer_two_et_kg_card_single_item"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="130dp"
             android:layout_marginEnd="72dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="KG"
-            app:layout_constraintEnd_toStartOf="@+id/et_symbol_reps_single_item" />
+            app:layout_constraintEnd_toStartOf="@+id/layer_two_et_symbol_reps_single_item" />
 
         <TextView
-            android:id="@+id/heavy_button_single_item"
+            android:id="@+id/layer_two_heavy_button_single_item"
             android:layout_width="48dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
@@ -245,7 +245,7 @@
             android:id="@+id/heavy_button2"
             android:layout_width="48dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/et_symbol_reps_single_item"
+            android:layout_below="@+id/layer_two_et_symbol_reps_single_item"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="16dp"
