@@ -110,7 +110,7 @@ public class benchFragment extends Fragment  {
                 builder.setTitle("Enter Data");
 
 
-
+                //FIRST RUN, COUNT == 1, ARRAY SIZE IN CONTACTADAPTER NULL
                 View vieww = getLayoutInflater().inflate(R.layout.custom_dialog_list_recyclerview, null);
                 RecyclerView contactView = vieww.findViewById(R.id.rv_customdialog);
 
@@ -128,7 +128,7 @@ public class benchFragment extends Fragment  {
                 dialog.show();
 
                 contactView.setVisibility(View.VISIBLE);
-                ContactAdapter mAdapter = new ContactAdapter(getActivity(), count, dialog, firstrep,firstset);
+                ContactAdapter mAdapter = new ContactAdapter(getActivity(), count, dialog, dialogRepKgModel);
                 contactView.setAdapter(mAdapter);
                 dialog.create();
 
@@ -139,7 +139,7 @@ public class benchFragment extends Fragment  {
                         if(count >0 ){
                             count--;
                             contactView.setVisibility(View.VISIBLE);
-                            ContactAdapter mAdapter = new ContactAdapter(getActivity(), count, dialog, firstrep, firstset);
+                            ContactAdapter mAdapter = new ContactAdapter(getActivity(), count, dialog, dialogRepKgModel);
                             contactView.setAdapter(mAdapter);
                         }
                     }
@@ -153,22 +153,34 @@ public class benchFragment extends Fragment  {
                         if(count <= 5){
                         count++;
                         contactView.setVisibility(View.VISIBLE);
-
                         arraySizeContactAdapter = mAdapter.returnMyObject().size();
-                        if(arraySizeContactAdapter == 0) {
-                            contactView.setVisibility(View.VISIBLE);
-                            ContactAdapter mAdapter = new ContactAdapter(getActivity(), count, dialog, firstrep, firstset);
-                            contactView.setAdapter(mAdapter);
+                        dialogRepKgModel = new dialogRepKgModel(mAdapter.returnMyObject().get(0),mAdapter.returnMyObject().get(1), mAdapter.returnMyObject().get(0),mAdapter.returnMyObject().get(1));
 
+                            ContactAdapter mAdapter_two = new ContactAdapter(getActivity(), count, dialog, dialogRepKgModel);
+
+                        if(arraySizeContactAdapter == 2) {
+                            contactView.setVisibility(View.VISIBLE);
+                            contactView.setAdapter(mAdapter_two);
                             Log.d("geht", "sizeStart" + arraySizeContactAdapter );
                         }
+
+                            if(arraySizeContactAdapter == 4) {
+
+                                dialogRepKgModel xx = new dialogRepKgModel(mAdapter_two.returnMyObject().get(0),mAdapter_two.returnMyObject().get(1), mAdapter_two.returnMyObject().get(2),mAdapter_two.returnMyObject().get(3));
+
+                                contactView.setVisibility(View.VISIBLE);
+                                ContactAdapter mAdapter_three = new ContactAdapter(getActivity(), count, dialog, xx);
+                                contactView.setAdapter(mAdapter_three);
+                                Log.d("geht", "sizeStart" + arraySizeContactAdapter );
+                            }
+
                         else{
                             Log.d("geht", "sizeStartElse" + arraySizeContactAdapter );
-                            dialogRepKgModel xx = new dialogRepKgModel(mAdapter.returnMyObject().get(0),mAdapter.returnMyObject().get(1));
+                            dialogRepKgModel xx = new dialogRepKgModel(mAdapter.returnMyObject().get(0),mAdapter.returnMyObject().get(1),null,null);
                             firstrep = mAdapter.returnMyObject().get(0);
                             firstset = mAdapter.returnMyObject().get(1);
                             Log.d("geht","benchfrag" + firstset + firstset);
-                            ContactAdapter mAdapter = new ContactAdapter(getActivity(), count, dialog, firstrep, firstset);
+                            ContactAdapter mAdapter = new ContactAdapter(getActivity(), count, dialog, dialogRepKgModel);
                             contactView.setAdapter(mAdapter);
 
                         }

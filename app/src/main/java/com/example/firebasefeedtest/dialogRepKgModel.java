@@ -1,26 +1,44 @@
 package com.example.firebasefeedtest;
 
 public class dialogRepKgModel {
-    String kg,rep;
+    String firstkg,firstrep, secondkg, secondrep;
 
-    public dialogRepKgModel(String kg, String rep) {
-        this.kg = kg;
-        this.rep = rep;
+    public dialogRepKgModel(String firstkg, String firstrep, String secondkg, String secondrep) {
+        this.firstkg = firstkg;
+        this.firstrep = firstrep;
+        this.secondkg = secondkg;
+        this.secondrep = secondrep;
     }
 
-    public String getKg() {
-        return kg;
+    public String getFirstkg() {
+        return firstkg;
     }
 
-    public void setKg(String kg) {
-        this.kg = kg;
+    public void setFirstkg(String firstkg) {
+        this.firstkg = firstkg;
     }
 
-    public String getRep() {
-        return rep;
+    public String getFirstrep() {
+        return firstrep;
     }
 
-    public void setRep(String rep) {
-        this.rep = rep;
+    public void setFirstrep(String firstrep) {
+        this.firstrep = firstrep;
+    }
+
+    public String getSecondkg() {
+        return secondkg;
+    }
+
+    public void setSecondkg(String secondkg) {
+        this.secondkg = secondkg;
+    }
+
+    public String getSecondrep() {
+        return secondrep;
+    }
+
+    public void setSecondrep(String secondrep) {
+        this.secondrep = secondrep;
     }
 }

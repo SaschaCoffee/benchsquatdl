@@ -36,27 +36,46 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
 
 
-    public ContactAdapter(Context mcontext, Integer counter, AlertDialog dialog, String firstrep, String firstkg) {
+
+    public ContactAdapter(Context mcontext, Integer counter, AlertDialog dialog, dialogRepKgModel dialogRepKgModel ) {
         this.mcontext = mcontext;
         this.counter = counter;
         this.dialog = dialog;
-        this.firstrep = firstrep;
-        this.firstkg = firstkg;
-
+        this.dialogRepKgModel = dialogRepKgModel;
     }
 
 
 
     public ArrayList<String> returnMyObject(){
         hallo = new ArrayList<String>();
-        if(!rep.isEmpty() && !kg.isEmpty()) {
+        if(!rep.isEmpty() && !kg.isEmpty() && counter == 1) {
             hallo.add(0, rep);
             hallo.add(1, kg);
-            Log.d("geht", "adapterArrayListReturn"+ hallo.get(0)+ hallo.get(1));
             //hallo.add(rep);
             //hallo.add(kg);
         }
+         if(!rep.isEmpty() && !kg.isEmpty() && counter == 2){
+             Log.d("geht", "ArrayList counter" + counter);
+             hallo.add(0,dialogRepKgModel.getFirstrep());
+             hallo.add(1, dialogRepKgModel.getFirstkg());
+             hallo.add(2,rep);
+             hallo.add(3,kg);
+         }
+
+        if(!rep.isEmpty() && !kg.isEmpty() && counter == 3){
+            Log.d("geht", "ArrayList counter" + counter);
+            hallo.add(0,dialogRepKgModel.getFirstrep());
+            hallo.add(1, dialogRepKgModel.getFirstkg());
+            hallo.add(2, dialogRepKgModel.getSecondrep());
+            hallo.add(3, dialogRepKgModel.getSecondkg());
+            hallo.add(4,rep);
+            hallo.add(5,kg);
+        }
         return hallo;
+
+
+
+
     }
 
     @NonNull
@@ -73,6 +92,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
             case 2:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_two, parent, false);
                 break;
+            case 3:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_three, parent, false);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + counter);
         }
@@ -84,6 +106,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         //holder.reps.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        //FIRST RUN, COUNT == 1
 
         if(counter == 1){
 
@@ -148,11 +172,49 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
                 Log.d("geht","broo" + firstrep + firstkg);
 
-                holder.l2_reps_one.setText(firstrep);
-                holder.l2_kg_one.setText(firstkg);
+                holder.l2_reps_one.setText(dialogRepKgModel.getFirstrep());
+                holder.l2_kg_one.setText(dialogRepKgModel.getFirstkg());
 
-                holder.l2_reps_two.setText(firstrep);
-                holder.l2_kg_two.setText(firstkg);
+                holder.l2_reps_two.setText(dialogRepKgModel.getFirstrep());
+                holder.l2_kg_two.setText(dialogRepKgModel.getFirstkg());
+
+                holder.l2_kg_two.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        Log.d("textWatch","before" +charSequence);
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        Log.d("textWatch","on" +charSequence);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        Log.d("textWatch","after" +editable);
+                        kg = editable.toString();
+                        returnMyObject();
+
+                    }
+                });
+
+                holder.l2_reps_two.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        rep = editable.toString();
+                        returnMyObject();
+                    }
+                });
 
                 holder.l2_heavy_button_one.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -211,30 +273,70 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
             Log.d("geht","broo" + firstrep + firstkg);
 
-            holder.l2_reps_one.setText(firstrep);
-            holder.l2_kg_one.setText(firstkg);
+            holder.l3_reps.setText(dialogRepKgModel.getFirstrep());
+            holder.l3_reps_two.setText(dialogRepKgModel.getSecondrep());
+            holder.l3_reps_three.setText(dialogRepKgModel.getSecondrep());
 
-            holder.l2_reps_two.setText(firstrep);
-            holder.l2_kg_two.setText(firstkg);
+            holder.l3_kg_one.setText(dialogRepKgModel.getFirstkg());
+            holder.l3_kg_two.setText(dialogRepKgModel.getSecondkg());
+            holder.l3_kg_three.setText(dialogRepKgModel.getSecondkg());
+
+            holder.l3_kg_three.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    Log.d("textWatch","before" +charSequence);
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    Log.d("textWatch","on" +charSequence);
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    Log.d("textWatch","after" +editable);
+                    kg = editable.toString();
+                    returnMyObject();
+
+                }
+            });
+
+            holder.l3_reps_three.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    rep = editable.toString();
+                    returnMyObject();
+                }
+            });
 
 
-            holder.l2_heavy_button_one.setOnClickListener(new View.OnClickListener() {
+            holder.l3_heavy_button_one.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (!heavyChosen) {
-                        holder.l2_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        holder.l3_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
                         currentSelectedHeavy = 1;
                         heavyChosen = true;
                     } else {
                         switch (currentSelectedHeavy) {
                             case 1:
-                                holder.l2_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l3_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
                                 heavyChosen = false;
                                 break;
                             case 2:
-                                holder.l2_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l3_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
                                 currentSelectedHeavy = 1;
-                                holder.l2_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                holder.l3_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
                                 heavyChosen = true;
                                 break;
 
@@ -243,23 +345,23 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
                 }
             });
 
-            holder.l2_heavy_button_two.setOnClickListener(new View.OnClickListener() {
+            holder.l3_heavy_button_two.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (!heavyChosen) {
-                        holder.l2_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        holder.l3_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
                         currentSelectedHeavy = 2;
                         heavyChosen = true;
                     } else {
                         switch (currentSelectedHeavy) {
                             case 1:
-                                holder.l2_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
-                                holder.l2_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                holder.l3_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l3_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
                                 currentSelectedHeavy = 2;
                                 heavyChosen = true;
                                 break;
                             case 2:
-                                holder.l2_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l3_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
                                 heavyChosen = false;
                                 break;
                         }
@@ -286,8 +388,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView l1_heavy_button, l2_heavy_button_one, l2_heavy_button_two, l3_heavy_button_one, l3_heavy_button_two, l3_heavy_button_three;
-        ImageView l1_pencil, l2_pencil_one, l2_pencil_two;
-        EditText l1_reps, l1_kg, l2_reps_one, l2_reps_two, l2_kg_one, l2_kg_two;
+        ImageView l1_pencil, l2_pencil_one, l2_pencil_two, l3_pencil, l3_pencil_two, l3_pencil_three;
+        EditText l1_reps, l1_kg, l2_reps_one, l2_reps_two, l2_kg_one, l2_kg_two, l3_reps, l3_reps_two, l3_reps_three
+                , l3_kg_one, l3_kg_two, l3_kg_three;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -311,16 +414,21 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         l2_kg_two = itemView.findViewById(R.id.layer_two_et_kg_card_single_item_two);
 
         //Layer Three
-            l3_heavy_button_one = itemView.findViewById(R.id.layer_two_heavy_button_single_item);
-            l3_heavy_button_two = itemView.findViewById(R.id.layer_two_heavy_button_single_item_two);
-            l3_heavy_button_three = itemView.findViewById(R.id.layer_two_heavy_button_single_item_two);
-            l3_pencil_one = itemView.findViewById(R.id.layer_two_image_button);
-            l3_pencil_two = itemView.findViewById(R.id.layer_two_image_button_two);
-            l3_pencil_three =
-            l3_reps_one = itemView.findViewById(R.id.layer_two_et_symbol_reps_single_item);
-            l3_reps_two = itemView.findViewById(R.id.layer_two_et_symbol_reps_single_item_two);
-            l3_kg_one = itemView.findViewById(R.id.layer_two_et_kg_card_single_item);
-            l3_kg_two = itemView.findViewById(R.id.layer_two_et_kg_card_single_item_two);
+            l3_heavy_button_one = itemView.findViewById(R.id.layer_three_heavy_button_single_item);
+            l3_heavy_button_two = itemView.findViewById(R.id.layer_three_heavy_button_single_item_two);
+            l3_heavy_button_three = itemView.findViewById(R.id.layer_three_heavy_button_single_item_two);
+
+            l3_pencil = itemView.findViewById(R.id.layer_three_image_button);
+            l3_pencil_two = itemView.findViewById(R.id.layer_three_image_button_two);
+            l3_pencil_three = itemView.findViewById(R.id.layer_three_image_button_three);
+
+            l3_reps = itemView.findViewById(R.id.layer_three_et_symbol_reps_single_item);
+            l3_reps_two = itemView.findViewById(R.id.layer_three_et_symbol_reps_single_item_two);
+            l3_reps_three = itemView.findViewById(R.id.layer_three_et_symbol_reps_single_item_two_three);
+
+            l3_kg_one = itemView.findViewById(R.id.layer_three_et_kg_card_single_item);
+            l3_kg_two = itemView.findViewById(R.id.layer_three_et_kg_card_single_item_two);
+            l3_kg_three = itemView.findViewById(R.id.layer_three_et_kg_card_single_item_three);
 
 
 
