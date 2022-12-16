@@ -14,7 +14,7 @@
         android:theme="@style/Theme.FireBaseFeedTest"
         tools:targetApi="31">
         <activity
-            android:name=".startActivity"
+            android:name=".fragmentTestAct"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             >
@@ -31,10 +31,7 @@
 
 
 
-        <activity android:name=".fragmentTestAct"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        </activity>
 
 
         <activity android:name=".registerUser"
