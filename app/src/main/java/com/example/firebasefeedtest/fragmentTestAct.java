@@ -1,24 +1,19 @@
 package com.example.firebasefeedtest;
 
-import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 public class fragmentTestAct extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -43,7 +38,7 @@ public class fragmentTestAct extends AppCompatActivity implements BottomNavigati
             @Override
             public void onChanged(@Nullable final String newName) {
                 // Update the UI, in this case, a TextView.
-               Log.d("onchange","onchangedHallo" + newName);
+                Log.d("onchange","onchangedHallo" + newName);
             }
         };
 
@@ -83,7 +78,7 @@ public class fragmentTestAct extends AppCompatActivity implements BottomNavigati
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, firstFragment).commit();
                 return true;
 
-            case R.id.profile:
+            case R.id.training:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
                 return true;
 
@@ -103,5 +98,4 @@ public class fragmentTestAct extends AppCompatActivity implements BottomNavigati
 
         return false;
     }
-    }
-
+}

@@ -83,7 +83,6 @@ public class deadliftFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
 
-
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
         referenceCollectTrainingData = FirebaseDatabase.getInstance().getReference("FeedTrainingData");
@@ -539,8 +538,6 @@ public class deadliftFragment extends Fragment {
 
 
     private void buildRecyclerView() {
-
-
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new cardViewAdapter(getActivity(), lstBook);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 5));
@@ -574,10 +571,7 @@ public class deadliftFragment extends Fragment {
     private void updateProgressBar(int z) {
         int x = z;
         String zy = String.valueOf(z) + "%";
-
         pgBar.setProgress(x);
         tv.setText(zy);
-
-
     }
 }

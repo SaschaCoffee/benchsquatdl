@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageButton
             android:id="@+id/imageButtonOne_single_item"
@@ -18,14 +18,14 @@
             android:layout_marginTop="5dp" />
 
         <EditText
-            android:id="@+id/layer_three_et_symbol_reps_single_item"
+            android:id="@+id/layer_four_et_symbol_reps_single_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/layer_three_et_kg_card_single_item"
+            android:layout_toStartOf="@+id/layer_four_et_kg_card_single_item"
             android:layout_toEndOf="@+id/imageButtonOne_single_item"
             android:ems="10"
             android:focusable="true"
@@ -33,14 +33,14 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/layer_three_et_symbol_reps_single_item_two"
+            android:id="@+id/layer_four_et_symbol_reps_single_item_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layer_three_et_symbol_reps_single_item"
+            android:layout_below="@+id/layer_four_et_symbol_reps_single_item"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/layer_three_et_kg_card_single_item_two"
+            android:layout_toStartOf="@+id/layer_four_et_kg_card_single_item_two"
             android:layout_toEndOf="@+id/imageButtonOne_single_item"
             android:ems="10"
             android:focusable="true"
@@ -48,14 +48,14 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/layer_three_et_symbol_reps_single_item_two_three"
+            android:id="@+id/layer_four_et_symbol_reps_single_item_three"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layer_three_et_symbol_reps_single_item_two"
+            android:layout_below="@+id/layer_four_et_symbol_reps_single_item_two"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/layer_three_et_kg_card_single_item_three"
+            android:layout_toStartOf="@+id/layer_four_et_kg_card_single_item"
             android:layout_toEndOf="@+id/imageButtonOne_single_item"
             android:ems="10"
             android:focusable="true"
@@ -63,7 +63,22 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/layer_three_et_kg_card_single_item"
+            android:id="@+id/layer_four_et_symbol_reps_single_item_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layer_four_et_symbol_reps_single_item_three"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/layer_four_et_kg_card_single_item"
+            android:layout_toEndOf="@+id/imageButtonOne_single_item"
+            android:ems="10"
+            android:focusable="true"
+            android:hint="Repetitions "
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/layer_four_et_kg_card_single_item"
             android:layout_width="52dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -75,25 +90,37 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/layer_three_et_kg_card_single_item_two"
+            android:id="@+id/layer_four_et_kg_card_single_item_two"
             android:layout_width="58dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layer_three_et_kg_card_single_item"
+            android:layout_below="@+id/layer_four_et_kg_card_single_item"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="6dp"
-            android:layout_toStartOf="@+id/layer_three_heavy_button_single_item_two"
+            android:layout_toStartOf="@+id/layer_four_heavy_button_single_item_two"
             android:ems="10"
             android:hint="kg/lb"
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/layer_three_et_kg_card_single_item_three"
+            android:id="@+id/layer_four_et_kg_card_single_item_three"
             android:layout_width="58dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layer_three_et_kg_card_single_item_two"
+            android:layout_below="@+id/layer_four_et_kg_card_single_item_two"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="6dp"
-            android:layout_toStartOf="@+id/layer_three_heavy_button_single_item_two"
+            android:layout_toStartOf="@+id/layer_four_heavy_button_single_item_two"
+            android:ems="10"
+            android:hint="kg/lb"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/layer_four_et_kg_card_single_item_four"
+            android:layout_width="58dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layer_four_et_kg_card_single_item_three"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="6dp"
+            android:layout_toStartOf="@+id/layer_four_heavy_button_single_item_two"
             android:ems="10"
             android:hint="kg/lb"
             android:inputType="textPersonName" />
@@ -109,7 +136,7 @@
             android:background="@mipmap/heavy" />
 
         <TextView
-            android:id="@+id/layer_three_heavy_button_single_item_two"
+            android:id="@+id/layer_four_heavy_button_single_item_two"
             android:layout_width="48dp"
             android:layout_height="40dp"
             android:layout_below="@+id/layer_four_heavy_button_single_item"
@@ -119,17 +146,27 @@
             android:background="@mipmap/heavy" />
 
         <TextView
-            android:id="@+id/layer_three_heavy_button_single_item_three"
+            android:id="@+id/layer_four_heavy_button_single_item_three"
             android:layout_width="48dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/layer_three_heavy_button_single_item_two"
+            android:layout_below="@+id/layer_four_heavy_button_single_item_two"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="6dp"
+            android:background="@mipmap/heavy" />
+
+        <TextView
+            android:id="@+id/layer_four_heavy_button_single_item_four"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/layer_four_heavy_button_single_item_three"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="6dp"
             android:background="@mipmap/heavy" />
 
         <ImageView
-            android:id="@+id/layer_three_image_button"
+            android:id="@+id/layer_four_image_button"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -137,19 +174,27 @@
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <ImageView
-            android:id="@+id/layer_three_image_button_two"
+            android:id="@+id/layer_four_image_button_two"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layer_three_image_button"
+            android:layout_below="@+id/layer_four_image_button"
             android:layout_marginTop="10dp"
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <ImageView
-            android:id="@+id/layer_three_image_button_three"
+            android:id="@+id/layer_four_image_button_three"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layer_three_image_button_two"
-            android:layout_marginTop="0dp"
+            android:layout_below="@+id/layer_four_image_button_two"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <ImageView
+            android:id="@+id/layer_four_image_button_four"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layer_four_image_button_three"
+            android:layout_marginTop="10dp"
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
     </RelativeLayout>

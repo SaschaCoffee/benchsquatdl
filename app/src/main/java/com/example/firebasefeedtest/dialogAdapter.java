@@ -31,13 +31,7 @@ public class dialogAdapter extends RecyclerView.Adapter<dialogAdapter.dialogerHo
     @Override
     public void onBindViewHolder(@NonNull dialogerHolder holder, int position) {
         holder.kg.setText("kg");
-
-
         holder.reps.setText("vallah");
-
-
-
-
     }
 
     @Override

@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Feed" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/training"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Training" />
     <item

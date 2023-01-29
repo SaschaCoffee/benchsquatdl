@@ -11,7 +11,7 @@
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/drawable/img_res.xml" value="0.1" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activity_book.xml" value="0.1702127659574468" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activity_item.xml" value="0.3515625" />
-        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activitycard.xml" value="0.18" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activitycard2.xml" value="0.25" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/activitycard_bench.xml" value="0.2056159420289855" />
@@ -22,8 +22,9 @@
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/circle.xml" value="0.14969604863221886" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/cirecle.xml" value="0.14969604863221886" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog.xml" value="0.33" />
-        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_item.xml" value="0.33" />
-        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_item_fourth.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_item.xml" value="0.22" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_item_fifth.xml" value="0.22" />
+        <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_item_fourth.xml" value="0.25" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_item_one.xml" value="0.23958333333333334" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_item_three.xml" value="0.25" />
         <entry key="..\:/Users/sasch/AndroidStudioProjects/FireBaseFeedTest/app/src/main/res/layout/custom_dialog_item_two.xml" value="0.25" />

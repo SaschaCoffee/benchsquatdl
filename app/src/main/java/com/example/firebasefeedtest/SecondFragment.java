@@ -83,6 +83,9 @@ public class SecondFragment extends Fragment implements BottomNavigationView.OnN
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.start_squad);
 
+        benchFragment benchFragment = new benchFragment();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.containertwo,benchFragment).commit();
+
 
         //pgBar = vx.findViewById(R.id.progress_bar);
         //  tv = vx.findViewById(R.id.text_view_progress);
