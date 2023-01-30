@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class benchFragment extends Fragment  {
     Context mcontext;
@@ -83,9 +84,6 @@ public class benchFragment extends Fragment  {
 
         referenceTraininglogPublic = FirebaseDatabase.getInstance().getReference("TraininglogPublic");
 
-        String keyTraining = referenceTraininglogPublic.push().getKey();
-
-
         mRecyclerView = vx.findViewById(R.id.recyclerview_id);
         String childcard = "anzahlBench";
         String childcardBench = "Best3BenchKg";
@@ -110,6 +108,7 @@ public class benchFragment extends Fragment  {
         bre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("sizeCase23", "countnull" + save.size());
 
                 //OPEN DIALOG
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -143,6 +142,8 @@ public class benchFragment extends Fragment  {
                 save.add(0,mAdapter);
                 contactView.setAdapter(save.get(0));
 
+                String keyTraining = referenceTraininglogPublic.push().getKey();
+
                 btn_upload_data.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -155,87 +156,112 @@ public class benchFragment extends Fragment  {
 
                         switch(size){
                             case 1:
-                                reps = save.get(0).returnMyObject().get(0);
-                                kg = save.get(0).returnMyObject().get(1);
-                                Log.d("testDa","" + reps + "" + kg);
-                                modelBench bench = new modelBench(reps,kg);
+                                EditText first_kg = vieww.findViewById(R.id.layer_one_kg);
+                                EditText first_rep = vieww.findViewById(R.id.layer_one_reps);
+
+                                String first_kg_string = first_kg.getText().toString().trim();
+                                String first_rep_string = first_rep.getText().toString().trim();
+
+                                modelBench bench = new modelBench(first_rep_string,first_kg_string);
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench);
                                 break;
 
                             case 2:
-                                reps = save.get(0).returnMyObject().get(0);
-                                kg = save.get(0).returnMyObject().get(1);
-                                reps2 = save.get(1).returnMyObject().get(2);
-                                kg2 = save.get(1).returnMyObject().get(3);
-                                Log.d("testDa","" + reps2 + "" + kg2);
-                                modelBench bench2 = new modelBench(reps,kg,reps2,kg2);
+                                EditText first_kg_layer2 = vieww.findViewById(R.id.layer_two_et_kg_card_single_item);
+                                EditText first_rep_layer2 = vieww.findViewById(R.id.layer_two_et_symbol_reps_single_item);
+                                EditText second_kg_layer2 = vieww.findViewById(R.id.layer_two_et_kg_card_single_item_two);
+                                EditText second_rep_layer2 = vieww.findViewById(R.id.layer_two_et_symbol_reps_single_item_two);
+
+                                String first_kg_l2 = first_kg_layer2.getText().toString().trim();
+                                String second_kg_l2 = second_kg_layer2.getText().toString().trim();
+                                String first_rep_l2 = first_rep_layer2.getText().toString().trim();
+                                String second_rep_l2 = second_rep_layer2.getText().toString().trim();
+
+                                modelBench bench2 = new modelBench(first_rep_l2,second_rep_l2,first_kg_l2,second_kg_l2);
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench2);
                                 break;
                             case 3:
-                                reps = save.get(0).returnMyObject().get(0);
-                                kg = save.get(0).returnMyObject().get(1);
-                                reps2 = save.get(1).returnMyObject().get(2);
-                                kg2 = save.get(1).returnMyObject().get(3);
-                                reps3 = save.get(2).returnMyObject().get(4);
-                                kg3 = save.get(2).returnMyObject().get(5);
-                                modelBench bench3 = new modelBench(reps,kg,reps2,kg2,reps3,kg3);
+                                EditText first_kg_layer3 = vieww.findViewById(R.id.layer_three_et_kg_card_single_item);
+                                EditText second_kg_layer3 = vieww.findViewById(R.id.layer_three_et_kg_card_single_item_two);
+                                EditText third_kg_layer3 = vieww.findViewById(R.id.layer_three_et_kg_card_single_item_three);
+
+                                EditText first_rep_l3 = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item);
+                                EditText second_rep_l3 = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item_two);
+                                EditText third_rep_l3 = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item_two_three);
+
+                                modelBench bench3 = new modelBench(first_rep_l3.getText().toString().trim(),second_rep_l3.getText().toString().trim(),third_rep_l3.getText().toString().trim(),first_kg_layer3.getText().toString().trim(), second_kg_layer3.getText().toString().trim(), third_kg_layer3.getText().toString());
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench3);
-                                Log.d("testDa","" + reps3 + "" + kg3);
                                 break;
 
                             case 4:
-                                reps = save.get(0).returnMyObject().get(0);
-                                kg = save.get(0).returnMyObject().get(1);
-                                reps2 = save.get(1).returnMyObject().get(2);
-                                kg2 = save.get(1).returnMyObject().get(3);
-                                reps3 = save.get(2).returnMyObject().get(4);
-                                kg3 = save.get(2).returnMyObject().get(5);
-                                reps4 = save.get(3).returnMyObject().get(6);
-                                kg4 = save.get(3).returnMyObject().get(7);
-                                modelBench bench4 = new modelBench(reps,kg,reps2,kg2,reps3,kg3,reps4,kg4);
+                                EditText first_kg_layer4 = vieww.findViewById(R.id.layer_four_et_kg_card_single_item);
+                                EditText second_kg_layer4 = vieww.findViewById(R.id.layer_four_et_kg_card_single_item_two);
+                                EditText third_kg_layer4 = vieww.findViewById(R.id.layer_four_et_kg_card_single_item_three);
+                                EditText fourth_kg_layer4 = vieww.findViewById(R.id.layer_four_et_kg_card_single_item_four);
+
+                                EditText first_rep_l4 = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item);
+                                EditText second_rep_l4 = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item_two);
+                                EditText third_rep_l4 = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item_three);
+                                EditText fourth_rep_l4 = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item_four);
+
+
+                                String rp1_l4 = first_rep_l4.getText().toString().trim();
+                                String rp2_l4 = second_rep_l4.getText().toString().trim();
+                                String rp3_l4 = third_rep_l4.getText().toString().trim();
+                                String rp4_l4 = fourth_rep_l4.getText().toString().trim();
+
+                                String kg1_l4 = first_kg_layer4.getText().toString().trim();
+                                String kg2_l4 = second_kg_layer4.getText().toString().trim();
+                                String kg3_l4 = third_kg_layer4.getText().toString().trim();
+                                String kg4_l4 = fourth_kg_layer4.getText().toString().trim();
+
+
+
+                                modelBench bench4 = new modelBench(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4,kg3_l4,kg4_l4);
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench4);
-                                Log.d("testDa","" + reps4 + "" + kg4);
                                 break;
 
                             case 5:
-                                reps = save.get(0).returnMyObject().get(0);
-                                kg = save.get(0).returnMyObject().get(1);
-                                reps2 = save.get(1).returnMyObject().get(2);
-                                kg2 = save.get(1).returnMyObject().get(3);
-                                reps3 = save.get(2).returnMyObject().get(4);
-                                kg3 = save.get(2).returnMyObject().get(5);
-                                reps4 = save.get(3).returnMyObject().get(6);
-                                kg4 = save.get(3).returnMyObject().get(7);
-                                reps5 = save.get(4).returnMyObject().get(8);
-                                kg5 = save.get(4).returnMyObject().get(9);
-                                modelBench bench5 = new modelBench(reps,reps2,reps3, reps4, reps5,kg, kg2,kg3,kg4,kg5);
+                                EditText first_kg_layer5 = vieww.findViewById(R.id.layer_five_et_kg_card_single_item);
+                                EditText second_kg_layer5 = vieww.findViewById(R.id.layer_five_et_kg_card_single_item_two);
+                                EditText third_kg_layer5 = vieww.findViewById(R.id.layer_five_et_kg_card_single_item_three);
+                                EditText fourth_kg_layer5 = vieww.findViewById(R.id.layer_five_et_kg_card_single_item_four);
+                                EditText fifth_kg_layer5 = vieww.findViewById(R.id.layer_five_et_kg_card_single_item_five);
+
+                                EditText first_rep_l5 = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item);
+                                EditText second_rep_l5 = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item_two);
+                                EditText third_rep_l5 = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item_three);
+                                EditText fourth_rep_l5 = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item_four);
+                                EditText fifth_rep_l5 = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item_five);
+
+
+                                String rp1_l5 = first_rep_l5.getText().toString().trim();
+                                String rp2_l5 = second_rep_l5.getText().toString().trim();
+                                String rp3_l5 = third_rep_l5.getText().toString().trim();
+                                String rp4_l5 = fourth_rep_l5.getText().toString().trim();
+                                String rp5_l5 = fifth_rep_l5.getText().toString().trim();
+
+                                String kg1_l5 = first_kg_layer5.getText().toString().trim();
+                                String kg2_l5 = second_kg_layer5.getText().toString().trim();
+                                String kg3_l5 = third_kg_layer5.getText().toString().trim();
+                                String kg4_l5 = fourth_kg_layer5.getText().toString().trim();
+                                String kg5_l5 = fifth_kg_layer5.getText().toString().trim();
+
+                                modelBench bench5 = new modelBench(rp1_l5,rp2_l5,rp3_l5,rp4_l5,rp5_l5,kg1_l5,kg2_l5,kg3_l5,kg4_l5, kg5_l5);
+
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench5);
-                                Log.d("testDa","" + reps5 + "" + kg5);
                                 break;
                         }
                     }
                 });
 
-                btn_add_data.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-
-
-
-                    }
-                });
-
-
-
                 btn_delete_data.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(count > 0 ){
+                        if(count > 0){
                             count = 0;
 
                             save.remove(0);
-
                             contactView.setVisibility(View.VISIBLE);
                             ContactAdapter mAdapter = new ContactAdapter(getActivity(), 1, dialog, dialogRepKgModel);
                             save.add(0,mAdapter);
@@ -251,16 +277,14 @@ public class benchFragment extends Fragment  {
                 });
 
 
-
                 btn_add_data.setOnClickListener(new View.OnClickListener() {
-
-
                     @Override
                     public void onClick(View view) {
-                        if(count <= 5 && save.size() > 0){
+
+                        if(count <= 5 && !save.get(0).returnMyObject().isEmpty()){
                           count++;
 
-                            Log.d("sizeCase23", "count" + count);
+                            Log.d("sizeCase23", "count" + save.size());
                             int size = 0;
 
                             if(count == 1) {
@@ -305,6 +329,8 @@ public class benchFragment extends Fragment  {
                             }
                         }
                         else{
+
+                            Log.d("testDich", "it does not work bro XDDDDD");
 
 
 
