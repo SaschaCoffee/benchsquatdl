@@ -23,6 +23,16 @@ public class cardViewAdapter extends RecyclerView.Adapter<cardViewAdapter.MyView
     private ArrayList<greenCardModel> mData;
     private Context mContext;
 
+    public interface PlayPauseClick {
+        void imageButtonOnClick(View v, int position);
+    }
+
+    private PlayPauseClick callback;
+
+    public void setPlayPauseClickListener(PlayPauseClick listener) {
+        this.callback = listener;
+    }
+
 
 
 
@@ -46,6 +56,16 @@ public class cardViewAdapter extends RecyclerView.Adapter<cardViewAdapter.MyView
 
         holder.cardView.setClickable(true);
         holder.cardView.setFocusable(true);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("cardview","");
+                if (callback != null) {
+                    callback.imageButtonOnClick(view, position);
+                }
+            }
+        });
 
     }
 

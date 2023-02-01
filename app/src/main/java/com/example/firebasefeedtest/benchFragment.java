@@ -32,7 +32,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class benchFragment extends Fragment  {
+public class benchFragment extends Fragment implements
+        cardViewAdapter.PlayPauseClick  {
     Context mcontext;
 
     ArrayList<greenCardModel> lstBook = new ArrayList<>();
@@ -415,9 +416,10 @@ public class benchFragment extends Fragment  {
 
     private void buildRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new cardViewAdapter(getActivity(), lstBook);
+        cardViewAdapter mAdapter = new cardViewAdapter(getActivity(), lstBook);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 5));
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setPlayPauseClickListener(this::imageButtonOnClick);
     }
 
     private void updateCard(int z) {
@@ -427,6 +429,12 @@ public class benchFragment extends Fragment  {
 
         }
 
+    }
+
+    public void imageButtonOnClick(View v, int position) {
+        // TODO: Implement this
+        Log.d("cardview","hello Sir");
+       updateProgressBar(12);
     }
 
 
@@ -439,7 +447,7 @@ public class benchFragment extends Fragment  {
 
 
         int arraySize = lstBook.size();
-        updateProgressBar(arraySize);
+
 
     }
 
