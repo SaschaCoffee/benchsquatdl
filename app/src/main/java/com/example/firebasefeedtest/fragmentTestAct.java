@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,9 @@ public class fragmentTestAct extends AppCompatActivity implements BottomNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_mainactivity);
-        Log.d("vaalla", "hallo");
+
+
+
         bottomNavigationView = findViewById(R.id.topNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.start_squad);
@@ -47,12 +50,41 @@ public class fragmentTestAct extends AppCompatActivity implements BottomNavigati
         model.getCurrentName().observe(this, nameObserver);
 
 
+        receiveData();
 
 
 
 
 
     }
+
+    private void receiveData() {
+
+        try{
+            // Recieve data
+            Intent intent = getIntent();
+            String exercise = intent.getExtras().getString("exercise");
+            Log.d("exercise:","" + exercise);
+
+            if(!exercise.isEmpty()){
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
+                secondFragment.receiver(exercise);
+
+
+            }
+
+
+
+        }catch(Exception error1) {
+            Log.e("TAG", "The exception caught while executing the process. (error1)");
+            error1.printStackTrace();
+        }
+
+
+    }
+
+
     FirstFragment firstFragment = new FirstFragment();
     SecondFragment secondFragment = new SecondFragment();
     ThirdFragment thirdFragment = new ThirdFragment();
@@ -62,16 +94,8 @@ public class fragmentTestAct extends AppCompatActivity implements BottomNavigati
 
 
 
-
-
-
-
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
 
         switch (item.getItemId()) {
             case R.id.start_squad:
@@ -95,6 +119,7 @@ public class fragmentTestAct extends AppCompatActivity implements BottomNavigati
                 return true;
 
         }
+
 
         return false;
     }

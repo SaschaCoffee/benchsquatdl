@@ -2,10 +2,15 @@ package com.example.firebasefeedtest;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -18,9 +23,13 @@ public class cardViewAdapter extends RecyclerView.Adapter<cardViewAdapter.MyView
     private ArrayList<greenCardModel> mData;
     private Context mContext;
 
+
+
+
     public cardViewAdapter(Context mcontext, ArrayList<greenCardModel> mData) {
         this.mData = mData;
         this.mContext = mcontext;
+
     }
 
     @NonNull
@@ -35,17 +44,8 @@ public class cardViewAdapter extends RecyclerView.Adapter<cardViewAdapter.MyView
     public void onBindViewHolder(@NonNull cardViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext,cardActivity.class);
-
-                // passing data to the book activity
-                intent.putExtra("Thumbnail",mData.get(position).getThumbnail());
-                // start the activity
-                mContext.startActivity(intent);
-            }
-        });
+        holder.cardView.setClickable(true);
+        holder.cardView.setFocusable(true);
 
     }
 
@@ -57,12 +57,15 @@ public class cardViewAdapter extends RecyclerView.Adapter<cardViewAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         ImageView img_book_thumbnail;
         CardView cardView;
+        EditText rep1_focus,kg1_focus;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             img_book_thumbnail  = itemView.findViewById(R.id.book_img_id);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
+
+
         }
     }
 }

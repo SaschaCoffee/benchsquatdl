@@ -1,6 +1,7 @@
 package com.example.firebasefeedtest;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,10 +66,16 @@ public class SecondFragment extends Fragment implements BottomNavigationView.OnN
     Integer choosen = 1;
     MenuItem start;
     BottomNavigationView bottomNavigationView;
+    String receiveExercise = "";
 
     public SecondFragment() {
         // require a empty public constructor
     }
+
+    public void receiver(String x){
+        this.receiveExercise = x;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,8 +104,28 @@ public class SecondFragment extends Fragment implements BottomNavigationView.OnN
         // builder.setView(view);
         // dialog = builder.create();
 
+        Log.d("receiverr","" + receiveExercise);
+
+        if(!receiveExercise.isEmpty()){
+            switch(receiveExercise){
+                case "bench":
+                    onNavigationItemSelected(bottomNavigationView.findViewById(R.id.bench_card));
+                    break;
+                case "deadlift":
+                    onNavigationItemSelected(bottomNavigationView.findViewById(R.id.deadlift_card));
+                    break;
+                case "squat":
+                    onNavigationItemSelected(bottomNavigationView.findViewById(R.id.squad_card));
+                    break;
+            }
+        }
+
+
+
         return vx;
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

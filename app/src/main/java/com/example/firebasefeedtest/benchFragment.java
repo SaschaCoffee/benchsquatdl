@@ -1,8 +1,12 @@
 package com.example.firebasefeedtest;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,16 +75,21 @@ public class benchFragment extends Fragment  {
 
 
 
+
     public benchFragment(){
         // require a empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         View vx = inflater.inflate(R.layout.activitycard_bench, container, false);
         pgBar = vx.findViewById(R.id.progress_bar);
         tv = vx.findViewById(R.id.text_view_progress);
+
+
 
         referenceTraininglogPublic = FirebaseDatabase.getInstance().getReference("TraininglogPublic");
 
@@ -90,6 +99,8 @@ public class benchFragment extends Fragment  {
         String childcardDate = "Date";
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
+
+
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
@@ -105,7 +116,11 @@ public class benchFragment extends Fragment  {
         createCard();
         buildRecyclerView();
 
+
+
         bre.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
                 Log.d("sizeCase23", "countnull" + save.size());
@@ -115,10 +130,11 @@ public class benchFragment extends Fragment  {
                 dialogExtend xx = new dialogExtend();
                 builder.setTitle("Enter Data");
 
-
                 //FIRST RUN, COUNT == 1, ARRAY SIZE IN CONTACTADAPTER NULL
                 View vieww = getLayoutInflater().inflate(R.layout.custom_dialog_list_recyclerview, null);
                 RecyclerView contactView = vieww.findViewById(R.id.rv_customdialog);
+
+                Context emptyContext;
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 
@@ -144,17 +160,12 @@ public class benchFragment extends Fragment  {
 
                 String keyTraining = referenceTraininglogPublic.push().getKey();
 
+
                 btn_upload_data.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d("btn_add", "es geht");
-                        Toast.makeText(getActivity(), "ggg", Toast.LENGTH_SHORT).show();
-                        int size = save.size();
-                        Log.d("arraySize", "hh" + size);
-                        String reps, kg, reps2, kg2, reps3, kg3, reps4, kg4, reps5, kg5;
 
-
-                        switch(size){
+                        switch(save.size()){
                             case 1:
                                 EditText first_kg = vieww.findViewById(R.id.layer_one_kg);
                                 EditText first_rep = vieww.findViewById(R.id.layer_one_reps);
@@ -162,8 +173,18 @@ public class benchFragment extends Fragment  {
                                 String first_kg_string = first_kg.getText().toString().trim();
                                 String first_rep_string = first_rep.getText().toString().trim();
 
-                                modelBench bench = new modelBench(first_rep_string,first_kg_string);
-                                referenceTraininglogPublic.child(keyTraining).setValue(bench);
+                                if(!first_kg_string.isEmpty() && !first_rep_string.isEmpty()) {
+                                    modelBench bench = new modelBench(first_rep_string, first_kg_string);
+                                    referenceTraininglogPublic.child(keyTraining).setValue(bench);
+                                    dialog.cancel();
+                                    //RESET
+                                    count = 0;
+                                    save.clear();
+                                }
+                                else{
+                                    Toast.makeText(dialog.getContext(), "Empty Fields Are not Allowed", Toast.LENGTH_SHORT).show();
+                                    Log.d("emptyy","fd");
+                                }
                                 break;
 
                             case 2:
@@ -177,20 +198,51 @@ public class benchFragment extends Fragment  {
                                 String first_rep_l2 = first_rep_layer2.getText().toString().trim();
                                 String second_rep_l2 = second_rep_layer2.getText().toString().trim();
 
-                                modelBench bench2 = new modelBench(first_rep_l2,second_rep_l2,first_kg_l2,second_kg_l2);
-                                referenceTraininglogPublic.child(keyTraining).setValue(bench2);
+                                if(!first_kg_l2.isEmpty() && !second_kg_l2.isEmpty() && !first_rep_l2.isEmpty() &&
+                                        !second_rep_l2.isEmpty()) {
+
+                                    modelBench bench2 = new modelBench(first_rep_l2, second_rep_l2, first_kg_l2, second_kg_l2);
+                                    referenceTraininglogPublic.child(keyTraining).setValue(bench2);
+                                    dialog.cancel();
+                                    //RESET
+                                    count = 0;
+                                    save.clear();
+                                }
+                                else{
+                                    Toast.makeText(getActivity(), "Empty Fields Are not Allowed", Toast.LENGTH_SHORT).show();
+                                }
                                 break;
                             case 3:
                                 EditText first_kg_layer3 = vieww.findViewById(R.id.layer_three_et_kg_card_single_item);
                                 EditText second_kg_layer3 = vieww.findViewById(R.id.layer_three_et_kg_card_single_item_two);
                                 EditText third_kg_layer3 = vieww.findViewById(R.id.layer_three_et_kg_card_single_item_three);
 
-                                EditText first_rep_l3 = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item);
-                                EditText second_rep_l3 = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item_two);
-                                EditText third_rep_l3 = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item_two_three);
+                                EditText first_rep_layer3 = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item);
+                                EditText second_rep_layer3 = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item_two);
+                                EditText third_rep_layer3 = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item_two_three);
 
-                                modelBench bench3 = new modelBench(first_rep_l3.getText().toString().trim(),second_rep_l3.getText().toString().trim(),third_rep_l3.getText().toString().trim(),first_kg_layer3.getText().toString().trim(), second_kg_layer3.getText().toString().trim(), third_kg_layer3.getText().toString());
+                                String first_kg_l3 = first_kg_layer3.getText().toString().trim();
+                                String second_kg_l3 = second_kg_layer3.getText().toString().trim();
+                                String third_kg_l3 = third_kg_layer3.getText().toString().trim();
+
+                                String first_rep_l3 = first_rep_layer3.getText().toString().trim();
+                                String second_rep_l3 = second_rep_layer3.getText().toString().trim();
+                                String third_rep_l3 = third_rep_layer3.getText().toString().trim();
+
+                                if(!first_rep_l3.isEmpty() && !second_rep_l3.isEmpty() &&
+                                        !third_rep_l3.isEmpty() && !first_kg_l3.isEmpty() && !second_kg_l3.isEmpty() && !third_kg_l3.isEmpty()){
+                                modelBench bench3 = new modelBench(first_rep_l3, second_rep_l3, third_rep_l3, first_kg_l3, second_kg_l3, third_kg_l3
+                                );
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench3);
+                                dialog.cancel();
+
+                                //RESET
+                                count = 0;
+                                save.clear();
+                            }
+                                else{
+                                    Toast.makeText(getActivity(), "Empty Fields Are not Allowed", Toast.LENGTH_SHORT).show();
+                                }
                                 break;
 
                             case 4:
@@ -204,7 +256,6 @@ public class benchFragment extends Fragment  {
                                 EditText third_rep_l4 = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item_three);
                                 EditText fourth_rep_l4 = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item_four);
 
-
                                 String rp1_l4 = first_rep_l4.getText().toString().trim();
                                 String rp2_l4 = second_rep_l4.getText().toString().trim();
                                 String rp3_l4 = third_rep_l4.getText().toString().trim();
@@ -215,10 +266,22 @@ public class benchFragment extends Fragment  {
                                 String kg3_l4 = third_kg_layer4.getText().toString().trim();
                                 String kg4_l4 = fourth_kg_layer4.getText().toString().trim();
 
+                                if(!rp1_l4.isEmpty() && !rp2_l4.isEmpty() && !rp3_l4.isEmpty() && !rp4_l4.isEmpty()
+                                && !kg1_l4.isEmpty() && !kg2_l4.isEmpty() && !kg3_l4.isEmpty() && !kg4_l4.isEmpty()) {
+
+                                    modelBench bench4 = new modelBench(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4, kg3_l4, kg4_l4);
+                                    referenceTraininglogPublic.child(keyTraining).setValue(bench4);
+                                    dialog.cancel();
+                                    //RESET
+                                    count = 0;
+                                    save.clear();
+                                }
+
+                                else{
+                                        Toast.makeText(getActivity(), "Empty Fields Are not Allowed", Toast.LENGTH_SHORT).show();
+                                }
 
 
-                                modelBench bench4 = new modelBench(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4,kg3_l4,kg4_l4);
-                                referenceTraininglogPublic.child(keyTraining).setValue(bench4);
                                 break;
 
                             case 5:
@@ -247,9 +310,18 @@ public class benchFragment extends Fragment  {
                                 String kg4_l5 = fourth_kg_layer5.getText().toString().trim();
                                 String kg5_l5 = fifth_kg_layer5.getText().toString().trim();
 
-                                modelBench bench5 = new modelBench(rp1_l5,rp2_l5,rp3_l5,rp4_l5,rp5_l5,kg1_l5,kg2_l5,kg3_l5,kg4_l5, kg5_l5);
+                                if(!rp1_l5.isEmpty() && !rp2_l5.isEmpty() && !rp3_l5.isEmpty() && !rp4_l5.isEmpty() && !rp5_l5.isEmpty() &&
+                                        !kg1_l5.isEmpty() && !kg2_l5.isEmpty() && !kg3_l5.isEmpty() &&
+                                        !kg4_l5.isEmpty() && !kg5_l5.isEmpty()){
+
+                                modelBench bench5 = new modelBench(rp1_l5, rp2_l5, rp3_l5, rp4_l5, rp5_l5, kg1_l5, kg2_l5, kg3_l5, kg4_l5, kg5_l5);
 
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench5);
+                                dialog.cancel();
+                                //RESET
+                                count = 0;
+                                save.remove(0);
+                            }
                                 break;
                         }
                     }
@@ -329,12 +401,7 @@ public class benchFragment extends Fragment  {
                             }
                         }
                         else{
-
-                            Log.d("testDich", "it does not work bro XDDDDD");
-
-
-
-
+                            Log.d("testDich", "it does not work bro");
                         }
                     }
 
@@ -342,17 +409,8 @@ public class benchFragment extends Fragment  {
 
             }
         });
-
-
-
-
         return vx;
     }
-
-
-
-
-
 
 
     private void buildRecyclerView() {
@@ -383,7 +441,6 @@ public class benchFragment extends Fragment  {
         int arraySize = lstBook.size();
         updateProgressBar(arraySize);
 
-
     }
 
     private void updateProgressBar(int z) {
@@ -392,10 +449,6 @@ public class benchFragment extends Fragment  {
         pgBar.setProgress(x);
         tv.setText(zy);
     }
-
-
-
-
 
 
 }

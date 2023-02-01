@@ -59,6 +59,7 @@ public class squatFragment extends Fragment {
     boolean fifthSet = false;
     boolean heavyChosen = false;
     int currentSelectedHeavy;
+    String startExercise = "squat";
 
 
     public squatFragment(){

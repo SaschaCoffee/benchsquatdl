@@ -2,6 +2,7 @@ package com.example.firebasefeedtest;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -62,6 +63,7 @@ import java.util.ArrayList;
         boolean fifthSet = false;
         boolean heavyChosen = false;
         int currentSelectedHeavy;
+        String starterExercise = "";
 
 
         @Override
@@ -417,7 +419,6 @@ import java.util.ArrayList;
 
                             progr++;
                             reference.child(userid).child("anzahl").setValue(progr);
-
                             updateProgressBar(progr);
                             updateCard(progr);
                             buildRecyclerView();
@@ -556,7 +557,6 @@ import java.util.ArrayList;
                 lstBook.set(x, new greenCardModel(R.drawable.quadratgruen));
                 Toast.makeText(this, "" + countstart, Toast.LENGTH_SHORT).show();
             }
-
         }
 
 
@@ -566,7 +566,6 @@ import java.util.ArrayList;
             lstBook.add(new greenCardModel(R.drawable.quadrat40));
             lstBook.add(new greenCardModel(R.drawable.quadrat40));
             lstBook.add(new greenCardModel(R.drawable.quadrat40));
-
 
             int arraySize = lstBook.size();
             updateProgressBar(arraySize);

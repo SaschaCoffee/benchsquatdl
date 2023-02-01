@@ -61,6 +61,8 @@ public class deadliftFragment extends Fragment {
     boolean heavyChosen = false;
     int currentSelectedHeavy;
 
+    String starterExercise = "deadlift";
+
 
 
 
@@ -368,7 +370,6 @@ public class deadliftFragment extends Fragment {
                                     break;
                                 case 6:
                                     et_kg3.setText(String.valueOf(counterNewDown));
-
                             }
                             return true;
                     }

@@ -1,9 +1,11 @@
 package com.example.firebasefeedtest;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +35,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     ArrayList<String> hallo;
     String firstrep;
     String firstkg;
+    private int sizeField,counterr;
+    private double tempCounter;
 
 
 
@@ -58,10 +62,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
             Log.d("emnpty","it's empty brooo" + hallo.size());
         }
          if( counter == 2){
-             hallo.add(0,dialogRepKgModel.getFirstrep());
-             hallo.add(1,dialogRepKgModel.getFirstkg());
-             hallo.add(2,dialogRepKgModel.getFirstrep());
-             hallo.add(3,dialogRepKgModel.getFirstkg());
+             hallo.add(0,dialogRepKgModel.getFirstrep().toString().trim());
+             hallo.add(1,dialogRepKgModel.getFirstkg().toString().trim());
+             hallo.add(2,dialogRepKgModel.getFirstrep().toString().trim());
+             hallo.add(3,dialogRepKgModel.getFirstkg().toString().trim());
 
              if(!kg.isEmpty() ){
                  hallo.add(0,dialogRepKgModel.getFirstrep());
