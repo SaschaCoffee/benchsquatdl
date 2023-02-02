@@ -1,12 +1,8 @@
 package com.example.firebasefeedtest;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class benchFragment extends Fragment implements
         cardViewAdapter.PlayPauseClick  {
@@ -72,7 +66,7 @@ public class benchFragment extends Fragment implements
     dialogRepKgModel dialogRepKgModel;
     int arraySizeContactAdapter;
     String firstrep,firstset;
-    ArrayList<ContactAdapter> save = new ArrayList<>();
+    ArrayList<RepKgAdapter> save = new ArrayList<>();
 
 
 
@@ -155,18 +149,19 @@ public class benchFragment extends Fragment implements
 
 
                 contactView.setVisibility(View.VISIBLE);
-                ContactAdapter mAdapter = new ContactAdapter(getActivity(), 1, dialog, dialogRepKgModel);
+                RepKgAdapter mAdapter = new RepKgAdapter(getActivity(), 1, dialog, dialogRepKgModel);
                 save.add(0,mAdapter);
                 contactView.setAdapter(save.get(0));
-
+                mAdapter.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick);
                 String keyTraining = referenceTraininglogPublic.push().getKey();
 
 
                 btn_upload_data.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Log.d("savesize","peng" + save.size());
                         switch(save.size()){
+
                             case 1:
                                 EditText first_kg = vieww.findViewById(R.id.layer_one_kg);
                                 EditText first_rep = vieww.findViewById(R.id.layer_one_reps);
@@ -336,7 +331,7 @@ public class benchFragment extends Fragment implements
 
                             save.remove(0);
                             contactView.setVisibility(View.VISIBLE);
-                            ContactAdapter mAdapter = new ContactAdapter(getActivity(), 1, dialog, dialogRepKgModel);
+                            RepKgAdapter mAdapter = new RepKgAdapter(getActivity(), 1, dialog, dialogRepKgModel);
                             save.add(0,mAdapter);
                             contactView.setAdapter(save.get(0));
                             dialog.create();
@@ -366,7 +361,7 @@ public class benchFragment extends Fragment implements
                                 arraySizeContactAdapter = mAdapter.returnMyObject().size();
                                 Log.d("sizeCase66", "two before ini" + arraySizeContactAdapter);
                                 dialogRepKgModel = new dialogRepKgModel(save.get(0).returnMyObject().get(0), save.get(0).returnMyObject().get(1), save.get(0).returnMyObject().get(0), save.get(0).returnMyObject().get(1),null,null,null,null,null,null);
-                                ContactAdapter mAdapter_two = new ContactAdapter(getActivity(), 2, dialog, dialogRepKgModel);
+                                RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), 2, dialog, dialogRepKgModel);
                                 contactView.setVisibility(View.VISIBLE);
                                 contactView.setAdapter(mAdapter_two);
                                 save.add(1,mAdapter_two);
@@ -377,7 +372,7 @@ public class benchFragment extends Fragment implements
                             if( count == 2 ){
                                 Log.d("countsize9","2:" + save.get(1).returnMyObject().size());
                                 dialogRepKgModel = new dialogRepKgModel(save.get(1).returnMyObject().get(0), save.get(1).returnMyObject().get(1), save.get(1).returnMyObject().get(2), save.get(1).returnMyObject().get(3),null,null,null,null,null,null);
-                                ContactAdapter mAdapter_three = new ContactAdapter(getActivity(), 3, dialog, dialogRepKgModel);
+                                RepKgAdapter mAdapter_three = new RepKgAdapter(getActivity(), 3, dialog, dialogRepKgModel);
                                 contactView.setVisibility(View.VISIBLE);
                                 contactView.setAdapter(mAdapter_three);
                                 save.add(2, mAdapter_three);
@@ -386,7 +381,7 @@ public class benchFragment extends Fragment implements
                             if (count == 3){
                                 Log.d("countsize9","3:" + save.get(2).returnMyObject().size());
                                 dialogRepKgModel = new dialogRepKgModel(save.get(2).returnMyObject().get(0), save.get(2).returnMyObject().get(1), save.get(2).returnMyObject().get(2), save.get(2).returnMyObject().get(3), save.get(2).returnMyObject().get(4), save.get(2).returnMyObject().get(5),null,null,null,null);
-                                ContactAdapter mAdapter_two = new ContactAdapter(getActivity(), 4, dialog, dialogRepKgModel);
+                                RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), 4, dialog, dialogRepKgModel);
                                 contactView.setVisibility(View.VISIBLE);
                                 contactView.setAdapter(mAdapter_two);
                                 save.add(3,mAdapter_two);
@@ -395,7 +390,7 @@ public class benchFragment extends Fragment implements
                             if (count == 4){
                                 Log.d("countsize9","4:" + save.get(3).returnMyObject().size());
                                 dialogRepKgModel = new dialogRepKgModel(save.get(3).returnMyObject().get(0), save.get(3).returnMyObject().get(1), save.get(3).returnMyObject().get(2), save.get(3).returnMyObject().get(3), save.get(3).returnMyObject().get(4), save.get(3).returnMyObject().get(5),save.get(3).returnMyObject().get(6), save.get(3).returnMyObject().get(7),null,null);
-                                ContactAdapter mAdapter_two = new ContactAdapter(getActivity(), 5, dialog, dialogRepKgModel);
+                                RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), 5, dialog, dialogRepKgModel);
                                 contactView.setVisibility(View.VISIBLE);
                                 contactView.setAdapter(mAdapter_two);
                                 save.add(4,mAdapter_two);
@@ -419,6 +414,7 @@ public class benchFragment extends Fragment implements
         cardViewAdapter mAdapter = new cardViewAdapter(getActivity(), lstBook);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 5));
         mRecyclerView.setAdapter(mAdapter);
+
         mAdapter.setPlayPauseClickListener(this::imageButtonOnClick);
     }
 
@@ -434,7 +430,31 @@ public class benchFragment extends Fragment implements
     public void imageButtonOnClick(View v, int position) {
         // TODO: Implement this
         Log.d("cardview","hello Sir");
-       updateProgressBar(12);
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        dialogExtend xx = new dialogExtend();
+
+        View view = getLayoutInflater().inflate(R.layout.open_training_data, null);
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.show();
+    }
+
+    public void imageButtonOnClick2(View v, int position) {
+        // TODO: Implement this
+        Log.d("cardview","hello Sir");
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        dialogExtend xx = new dialogExtend();
+
+        View view = getLayoutInflater().inflate(R.layout.open_training_data, null);
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.show();
     }
 
 

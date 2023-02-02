@@ -60,7 +60,7 @@ public class cardViewAdapter extends RecyclerView.Adapter<cardViewAdapter.MyView
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("cardview","");
+                Log.d("cardview","" + position);
                 if (callback != null) {
                     callback.imageButtonOnClick(view, position);
                 }

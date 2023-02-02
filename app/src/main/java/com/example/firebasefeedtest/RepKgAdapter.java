@@ -1,11 +1,10 @@
 package com.example.firebasefeedtest;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> {
+public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder> {
 
     Context mcontext;
     Integer counter = 0;
@@ -38,10 +37,20 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     private int sizeField,counterr;
     private double tempCounter;
 
+    public interface PlayPauseClick {
+        void imageButtonOnClick(View v, int position);
+    }
+
+    private cardViewAdapter.PlayPauseClick callback;
+
+    public void setPlayPauseClickListener(cardViewAdapter.PlayPauseClick listener) {
+        this.callback = listener;
+    }
 
 
 
-    public ContactAdapter(Context mcontext, Integer counter, AlertDialog dialog, dialogRepKgModel dialogRepKgModel ) {
+
+    public RepKgAdapter(Context mcontext, Integer counter, AlertDialog dialog, dialogRepKgModel dialogRepKgModel ) {
         this.mcontext = mcontext;
         this.counter = counter;
         this.dialog = dialog;
@@ -234,9 +243,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         //holder.reps.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+
 
         //FIRST RUN, COUNT == 1
 
