@@ -3,6 +3,7 @@ package com.example.firebasefeedtest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,31 +31,29 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
     int currentSelectedHeavy;
     String rep = "";
     String kg = "";
-    dialogRepKgModel dialogRepKgModel;
+    RepKgModel RepKgModel;
     ArrayList<String> hallo;
     String firstrep;
     String firstkg;
     private int sizeField,counterr;
     private double tempCounter;
+    View repKgview;
 
     public interface PlayPauseClick {
-        void imageButtonOnClick(View v, int position);
+        void imageButtonOnClick2(View v, int position, String l1_reps);
     }
 
-    private cardViewAdapter.PlayPauseClick callback;
+    private PlayPauseClick callback;
 
-    public void setPlayPauseClickListener(cardViewAdapter.PlayPauseClick listener) {
+    public void setPlayPauseClickListener(RepKgAdapter.PlayPauseClick listener) {
         this.callback = listener;
     }
 
-
-
-
-    public RepKgAdapter(Context mcontext, Integer counter, AlertDialog dialog, dialogRepKgModel dialogRepKgModel ) {
+    public RepKgAdapter(Context mcontext, Integer counter, AlertDialog dialog, RepKgModel RepKgModel) {
         this.mcontext = mcontext;
         this.counter = counter;
         this.dialog = dialog;
-        this.dialogRepKgModel = dialogRepKgModel;
+        this.RepKgModel = RepKgModel;
     }
 
 
@@ -64,98 +63,126 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
         if(!rep.isEmpty() && !kg.isEmpty() && counter == 1) {
             hallo.add(0, rep);
             hallo.add(1, kg);
-            //hallo.add(rep);
-            //hallo.add(kg);
+            Log.d("pis","" + kg);
+            hallo.get(0);
+            Log.d("pis","array"+ hallo.get(0));
         }
         else {
             Log.d("emnpty","it's empty brooo" + hallo.size());
         }
          if( counter == 2){
-             hallo.add(0,dialogRepKgModel.getFirstrep().toString().trim());
-             hallo.add(1,dialogRepKgModel.getFirstkg().toString().trim());
-             hallo.add(2,dialogRepKgModel.getFirstrep().toString().trim());
-             hallo.add(3,dialogRepKgModel.getFirstkg().toString().trim());
+             hallo.add(0, RepKgModel.getFirstrep().toString().trim());
+             hallo.add(1, RepKgModel.getFirstkg().toString().trim());
+             hallo.add(2, RepKgModel.getFirstrep().toString().trim());
+             hallo.add(3, RepKgModel.getFirstkg().toString().trim());
 
-             if(!kg.isEmpty() ){
-                 hallo.add(0,dialogRepKgModel.getFirstrep());
-                 hallo.add(1, dialogRepKgModel.getFirstkg());
-                 hallo.add(2,dialogRepKgModel.getFirstrep());
+             if(!rep.isEmpty() && !kg.isEmpty()){
+                     hallo.add(0, RepKgModel.getFirstrep());
+                     hallo.add(1, RepKgModel.getFirstkg());
+                     hallo.add(2,rep);
+                     hallo.add(3,kg);
+             }
+             if(!rep.isEmpty() && kg.isEmpty() ){
+                 hallo.add(0, RepKgModel.getFirstrep());
+                 hallo.add(1, RepKgModel.getFirstkg());
+                 hallo.add(2,rep);
+                 hallo.add(3, RepKgModel.getFirstkg());
+             }
+
+             if(!kg.isEmpty() && rep.isEmpty() ){
+                 hallo.add(0, RepKgModel.getFirstrep());
+                 hallo.add(1, RepKgModel.getFirstkg());
+                 hallo.add(2, RepKgModel.getFirstrep());
                  hallo.add(3,kg);
 
              }
 
-             if(!rep.isEmpty() ){
-                 hallo.add(0,dialogRepKgModel.getFirstrep());
-                 hallo.add(1, dialogRepKgModel.getFirstkg());
-                 hallo.add(2,rep);
-                 hallo.add(3,dialogRepKgModel.getFirstkg());
 
-             }
 
          }
 
         if(counter == 3){
             Log.d("geht", "ArrayList counter" + counter);
-            hallo.add(0,dialogRepKgModel.getFirstrep());
-            hallo.add(1, dialogRepKgModel.getFirstkg());
-            hallo.add(2, dialogRepKgModel.getSecondrep());
-            hallo.add(3, dialogRepKgModel.getSecondkg());
-            hallo.add(4,dialogRepKgModel.getSecondrep());
-            hallo.add(5,dialogRepKgModel.getSecondkg());
+            hallo.add(0, RepKgModel.getFirstrep());
+            hallo.add(1, RepKgModel.getFirstkg());
+            hallo.add(2, RepKgModel.getSecondrep());
+            hallo.add(3, RepKgModel.getSecondkg());
+            hallo.add(4, RepKgModel.getSecondrep());
+            hallo.add(5, RepKgModel.getSecondkg());
 
-            if(!kg.isEmpty() ){
-                hallo.add(0,dialogRepKgModel.getFirstrep());
-                hallo.add(1, dialogRepKgModel.getFirstkg());
-                hallo.add(2, dialogRepKgModel.getSecondrep());
-                hallo.add(3, dialogRepKgModel.getSecondkg());
-                hallo.add(4,dialogRepKgModel.getSecondrep());
+            if(!kg.isEmpty() && !rep.isEmpty()){
+                hallo.add(0, RepKgModel.getFirstrep());
+                hallo.add(1, RepKgModel.getFirstkg());
+                hallo.add(2, RepKgModel.getSecondrep());
+                hallo.add(3, RepKgModel.getSecondkg());
+                hallo.add(4, rep);
+                hallo.add(5, kg);
+            }
+
+            if(!kg.isEmpty() && rep.isEmpty()){
+                hallo.add(0, RepKgModel.getFirstrep());
+                hallo.add(1, RepKgModel.getFirstkg());
+                hallo.add(2, RepKgModel.getSecondrep());
+                hallo.add(3, RepKgModel.getSecondkg());
+                hallo.add(4, RepKgModel.getSecondrep());
                 hallo.add(5,kg);
 
             }
 
-            if(!rep.isEmpty()){
-                hallo.add(0,dialogRepKgModel.getFirstrep());
-                hallo.add(1, dialogRepKgModel.getFirstkg());
-                hallo.add(2, dialogRepKgModel.getSecondrep());
-                hallo.add(3, dialogRepKgModel.getSecondkg());
+            if(!rep.isEmpty() && kg.isEmpty()){
+                hallo.add(0, RepKgModel.getFirstrep());
+                hallo.add(1, RepKgModel.getFirstkg());
+                hallo.add(2, RepKgModel.getSecondrep());
+                hallo.add(3, RepKgModel.getSecondkg());
                 hallo.add(4,rep);
-                hallo.add(5,dialogRepKgModel.getSecondkg());
+                hallo.add(5, RepKgModel.getSecondkg());
 
             }
         }
 
         if(counter == 4){
             Log.d("geht", "ArrayList counter" + counter);
-            hallo.add(0,dialogRepKgModel.getFirstrep());
-            hallo.add(1, dialogRepKgModel.getFirstkg());
-            hallo.add(2, dialogRepKgModel.getSecondrep());
-            hallo.add(3, dialogRepKgModel.getSecondkg());
-            hallo.add(4,dialogRepKgModel.getThirdrep());
-            hallo.add(5,dialogRepKgModel.getThirdkg());
-            hallo.add(6, dialogRepKgModel.getThirdrep());
-            hallo.add(7,dialogRepKgModel.getThirdkg());
+            hallo.add(0, RepKgModel.getFirstrep());
+            hallo.add(1, RepKgModel.getFirstkg());
+            hallo.add(2, RepKgModel.getSecondrep());
+            hallo.add(3, RepKgModel.getSecondkg());
+            hallo.add(4, RepKgModel.getThirdrep());
+            hallo.add(5, RepKgModel.getThirdkg());
+            hallo.add(6, RepKgModel.getThirdrep());
+            hallo.add(7, RepKgModel.getThirdkg());
 
-            if(!kg.isEmpty() ){
-                hallo.add(0,dialogRepKgModel.getFirstrep());
-                hallo.add(1, dialogRepKgModel.getFirstkg());
-                hallo.add(2, dialogRepKgModel.getSecondrep());
-                hallo.add(3, dialogRepKgModel.getSecondkg());
-                hallo.add(4,dialogRepKgModel.getThirdrep());
-                hallo.add(5,dialogRepKgModel.getThirdkg());
-                hallo.add(6, dialogRepKgModel.getThirdrep());
+            if(!kg.isEmpty() && !rep.isEmpty()){
+                hallo.add(0, RepKgModel.getFirstrep());
+                hallo.add(1, RepKgModel.getFirstkg());
+                hallo.add(2, RepKgModel.getSecondrep());
+                hallo.add(3, RepKgModel.getSecondkg());
+                hallo.add(4, RepKgModel.getThirdrep());
+                hallo.add(5, RepKgModel.getThirdkg());
+                hallo.add(6, rep);
+                hallo.add(7,kg);
+            }
+
+            if(!kg.isEmpty() && rep.isEmpty()){
+                hallo.add(0, RepKgModel.getFirstrep());
+                hallo.add(1, RepKgModel.getFirstkg());
+                hallo.add(2, RepKgModel.getSecondrep());
+                hallo.add(3, RepKgModel.getSecondkg());
+                hallo.add(4, RepKgModel.getThirdrep());
+                hallo.add(5, RepKgModel.getThirdkg());
+                hallo.add(6, RepKgModel.getThirdrep());
                 hallo.add(7,kg);
 
             }
 
-            if(!rep.isEmpty()){
-                hallo.add(0,dialogRepKgModel.getFirstrep());
-                hallo.add(1, dialogRepKgModel.getFirstkg());
-                hallo.add(2, dialogRepKgModel.getSecondrep());
-                hallo.add(3, dialogRepKgModel.getSecondkg());
-                hallo.add(4,dialogRepKgModel.getThirdrep());
-                hallo.add(5,dialogRepKgModel.getThirdkg());
+            if(!rep.isEmpty() && kg.isEmpty()){
+                hallo.add(0, RepKgModel.getFirstrep());
+                hallo.add(1, RepKgModel.getFirstkg());
+                hallo.add(2, RepKgModel.getSecondrep());
+                hallo.add(3, RepKgModel.getSecondkg());
+                hallo.add(4, RepKgModel.getThirdrep());
+                hallo.add(5, RepKgModel.getThirdkg());
                 hallo.add(6, rep);
-                hallo.add(7,dialogRepKgModel.getThirdkg());
+                hallo.add(7, RepKgModel.getThirdkg());
 
 
             }
@@ -165,42 +192,42 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
 
         if(counter == 5){
             Log.d("geht", "ArrayList counter" + counter);
-            hallo.add(0,dialogRepKgModel.getFirstrep());
-            hallo.add(1, dialogRepKgModel.getFirstkg());
-            hallo.add(2, dialogRepKgModel.getSecondrep());
-            hallo.add(3, dialogRepKgModel.getSecondkg());
-            hallo.add(4,dialogRepKgModel.getThirdrep());
-            hallo.add(5,dialogRepKgModel.getThirdkg());
-            hallo.add(6, dialogRepKgModel.getFourthrep());
-            hallo.add(7,dialogRepKgModel.getFourthkg());
-            hallo.add(8, dialogRepKgModel.getFourthrep());
-            hallo.add(9,dialogRepKgModel.getFourthkg());
+            hallo.add(0, RepKgModel.getFirstrep());
+            hallo.add(1, RepKgModel.getFirstkg());
+            hallo.add(2, RepKgModel.getSecondrep());
+            hallo.add(3, RepKgModel.getSecondkg());
+            hallo.add(4, RepKgModel.getThirdrep());
+            hallo.add(5, RepKgModel.getThirdkg());
+            hallo.add(6, RepKgModel.getFourthrep());
+            hallo.add(7, RepKgModel.getFourthkg());
+            hallo.add(8, RepKgModel.getFourthrep());
+            hallo.add(9, RepKgModel.getFourthkg());
 
-            if(!kg.isEmpty() ){
-                hallo.add(0,dialogRepKgModel.getFirstrep());
-                hallo.add(1, dialogRepKgModel.getFirstkg());
-                hallo.add(2, dialogRepKgModel.getSecondrep());
-                hallo.add(3, dialogRepKgModel.getSecondkg());
-                hallo.add(4,dialogRepKgModel.getThirdrep());
-                hallo.add(5,dialogRepKgModel.getThirdkg());
-                hallo.add(6, dialogRepKgModel.getFourthrep());
-                hallo.add(7,dialogRepKgModel.getFourthkg());
-                hallo.add(8, rep);
-                hallo.add(9,dialogRepKgModel.getFourthkg());
+            if(!kg.isEmpty() && rep.isEmpty()){
+                hallo.add(0, RepKgModel.getFirstrep());
+                hallo.add(1, RepKgModel.getFirstkg());
+                hallo.add(2, RepKgModel.getSecondrep());
+                hallo.add(3, RepKgModel.getSecondkg());
+                hallo.add(4, RepKgModel.getThirdrep());
+                hallo.add(5, RepKgModel.getThirdkg());
+                hallo.add(6, RepKgModel.getFourthrep());
+                hallo.add(7, RepKgModel.getFourthkg());
+                hallo.add(8, RepKgModel.getFourthrep());
+                hallo.add(9, kg);
 
             }
 
-            if(!rep.isEmpty()){
-                hallo.add(0,dialogRepKgModel.getFirstrep());
-                hallo.add(1, dialogRepKgModel.getFirstkg());
-                hallo.add(2, dialogRepKgModel.getSecondrep());
-                hallo.add(3, dialogRepKgModel.getSecondkg());
-                hallo.add(4,dialogRepKgModel.getThirdrep());
-                hallo.add(5,dialogRepKgModel.getThirdkg());
-                hallo.add(6, dialogRepKgModel.getFourthrep());
-                hallo.add(7,dialogRepKgModel.getFourthkg());
-                hallo.add(8, dialogRepKgModel.getFourthrep());
-                hallo.add(9,kg);
+            if(!rep.isEmpty() && kg.isEmpty()){
+                hallo.add(0, RepKgModel.getFirstrep());
+                hallo.add(1, RepKgModel.getFirstkg());
+                hallo.add(2, RepKgModel.getSecondrep());
+                hallo.add(3, RepKgModel.getSecondkg());
+                hallo.add(4, RepKgModel.getThirdrep());
+                hallo.add(5, RepKgModel.getThirdkg());
+                hallo.add(6, RepKgModel.getFourthrep());
+                hallo.add(7, RepKgModel.getFourthkg());
+                hallo.add(8, rep);
+                hallo.add(9,RepKgModel.getFourthkg());
             }
 
         }
@@ -215,43 +242,68 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
 
         switch(counter){
             case 0:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_one, parent, false);
+                this.repKgview = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_one, parent, false);
             case 1:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_one, parent, false);
+                this.repKgview = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_one, parent, false);
                 break;
             case 2:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_two, parent, false);
+                this.repKgview = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_two, parent, false);
                 break;
             case 3:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_three, parent, false);
+                this.repKgview = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_three, parent, false);
                 break;
             case 4:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_fourth, parent, false);
+                this.repKgview = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_fourth, parent, false);
                 break;
             case 5:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_fifth, parent, false);
+                this.repKgview = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_fifth, parent, false);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + counter);
         }
 
-    return new MyViewHolder(view);
+    return new MyViewHolder(repKgview);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        //holder.reps.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-
+      dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+      //holder.l1_reps.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         //FIRST RUN, COUNT == 1
 
         if(counter == 1){
+
+      holder.l1_reps.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+          @Override
+          public void onFocusChange(View view, boolean b) {
+              if (callback != null) {
+                  Log.d("callback2","" + callback);
+                  callback.imageButtonOnClick2(repKgview, position,"l1_reps");
+              }
+          }
+      });
+
+      holder.l1_reps.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Log.d("callback2","click");
+          }
+      });
+
+
+      holder.l1_kg.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+          @Override
+          public void onFocusChange(View view, boolean b) {
+              if (callback != null) {
+                  Log.d("callback2","" + callback);
+                  callback.imageButtonOnClick2(repKgview, position,"l1_kg");
+              }
+          }
+      });
 
             holder.l1_kg.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -266,7 +318,7 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    Log.d("textWatch","after" +editable);
+                    Log.d("textWatchh","after" +editable);
                     kg = editable.toString();
                     returnMyObject();
 
@@ -308,13 +360,56 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
 
             if(counter == 2) {
 
+                holder.l2_reps_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        if (callback != null) {
+                            Log.d("callback2","" + callback);
+                            callback.imageButtonOnClick2(repKgview, position,"l2_reps_two");
+                            Log.d("position2","" + position);
+                        }
+                    }
+                });
+
+                holder.l2_reps_one.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        if (callback != null) {
+                            Log.d("callback2","" + callback);
+                            callback.imageButtonOnClick2(repKgview, position,"l2_reps_one");
+                        }
+                    }
+                });
+
+                holder.l2_kg_one.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        if (callback != null) {
+                            Log.d("callback2","" + callback);
+                            callback.imageButtonOnClick2(repKgview, position,"l2_kg_one");
+                        }
+                    }
+                });
+
+                holder.l2_kg_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        if (callback != null) {
+                            Log.d("callback2","" + callback);
+                            callback.imageButtonOnClick2(repKgview, position,"l2_kg_two");
+                        }
+                    }
+                });
+
                 Log.d("geht","broo" + firstrep + firstkg);
 
-                holder.l2_reps_one.setText(dialogRepKgModel.getFirstrep());
-                holder.l2_kg_one.setText(dialogRepKgModel.getFirstkg());
+                holder.l2_reps_one.setText(RepKgModel.getFirstrep());
+                holder.l2_kg_one.setText(RepKgModel.getFirstkg());
 
-                holder.l2_reps_two.setText(dialogRepKgModel.getFirstrep());
-                holder.l2_kg_two.setText(dialogRepKgModel.getFirstkg());
+                holder.l2_reps_two.setText(RepKgModel.getFirstrep());
+                holder.l2_kg_two.setText(RepKgModel.getFirstkg());
+
+
 
                 holder.l2_kg_two.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -409,15 +504,75 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
 
         if(counter == 3) {
 
+            holder.l3_kg_one.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l3_kg_one");
+                    }
+                }
+            });
+
+            holder.l3_kg_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l3_kg_two");
+                    }
+                }
+            });
+
+            holder.l3_kg_three.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l3_kg_three");
+                    }
+                }
+            });
+
+            holder.l3_reps.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l3_reps");
+                    }
+                }
+            });
+
+            holder.l3_reps_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l3_reps_two");
+                    }
+                }
+            });
+
+            holder.l3_reps_three.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l3_reps_three");
+                    }
+                }
+            });
+
             Log.d("geht","broo" + firstrep + firstkg);
 
-            holder.l3_reps.setText(dialogRepKgModel.getFirstrep());
-            holder.l3_reps_two.setText(dialogRepKgModel.getSecondrep());
-            holder.l3_reps_three.setText(dialogRepKgModel.getSecondrep());
+            holder.l3_reps.setText(RepKgModel.getFirstrep());
+            holder.l3_reps_two.setText(RepKgModel.getSecondrep());
+            holder.l3_reps_three.setText(RepKgModel.getSecondrep());
 
-            holder.l3_kg_one.setText(dialogRepKgModel.getFirstkg());
-            holder.l3_kg_two.setText(dialogRepKgModel.getSecondkg());
-            holder.l3_kg_three.setText(dialogRepKgModel.getSecondkg());
+            holder.l3_kg_one.setText(RepKgModel.getFirstkg());
+            holder.l3_kg_two.setText(RepKgModel.getSecondkg());
+            holder.l3_kg_three.setText(RepKgModel.getSecondkg());
 
             holder.l3_kg_three.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -557,15 +712,99 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
         }
         if(counter == 4){
 
-            holder.l4_reps.setText(dialogRepKgModel.getFirstrep());
-            holder.l4_reps_two.setText(dialogRepKgModel.getSecondrep());
-            holder.l4_reps_three.setText(dialogRepKgModel.getThirdrep());
-            holder.l4_reps_four.setText(dialogRepKgModel.getThirdrep());
+           holder.l4_kg_one.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+               @Override
+               public void onFocusChange(View view, boolean b) {
+                   if (callback != null) {
+                       Log.d("callback2","" + callback);
+                       callback.imageButtonOnClick2(repKgview, position,"l4_kg_one");
+                   }
+               }
+           });
 
-            holder.l4_kg_one.setText(dialogRepKgModel.getFirstkg());
-            holder.l4_kg_two.setText(dialogRepKgModel.getSecondkg());
-            holder.l4_kg_three.setText(dialogRepKgModel.getThirdkg());
-            holder.l4_kg_four.setText(dialogRepKgModel.getThirdkg());
+           holder.l4_kg_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+               @Override
+               public void onFocusChange(View view, boolean b) {
+                   if (callback != null) {
+                       Log.d("callback2","" + callback);
+                       callback.imageButtonOnClick2(repKgview, position,"l4_kg_two");
+                   }
+               }
+           });
+
+           holder.l4_kg_three.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+               @Override
+               public void onFocusChange(View view, boolean b) {
+                   if (callback != null) {
+                       Log.d("callback2","" + callback);
+                       callback.imageButtonOnClick2(repKgview, position,"l4_kg_three");
+                   }
+               }
+           });
+
+           holder.l4_kg_four.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+               @Override
+               public void onFocusChange(View view, boolean b) {
+                   if (callback != null) {
+                       Log.d("callback2","" + callback);
+                       callback.imageButtonOnClick2(repKgview, position,"l4_kg_four");
+                   }
+               }
+           });
+
+           holder.l4_reps.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+               @Override
+               public void onFocusChange(View view, boolean b) {
+                   if (callback != null) {
+                       Log.d("callback2","" + callback);
+                       callback.imageButtonOnClick2(repKgview, position,"l4_reps");
+                   }
+               }
+           });
+
+           holder.l4_reps_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+               @Override
+               public void onFocusChange(View view, boolean b) {
+                   if (callback != null) {
+                       Log.d("callback2","" + callback);
+                       callback.imageButtonOnClick2(repKgview, position,"l4_reps_two");
+                   }
+               }
+           });
+
+           holder.l4_reps_three.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+               @Override
+               public void onFocusChange(View view, boolean b) {
+                   if (callback != null) {
+                       Log.d("callback2","" + callback);
+                       callback.imageButtonOnClick2(repKgview, position,"l4_reps_three");
+                   }
+               }
+           });
+
+           holder.l4_reps_four.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+               @Override
+               public void onFocusChange(View view, boolean b) {
+                   if (callback != null) {
+                       Log.d("callback2","" + callback);
+                       callback.imageButtonOnClick2(repKgview, position,"l4_reps_four");
+                   }
+               }
+           });
+
+
+
+           
+
+            holder.l4_reps.setText(RepKgModel.getFirstrep());
+            holder.l4_reps_two.setText(RepKgModel.getSecondrep());
+            holder.l4_reps_three.setText(RepKgModel.getThirdrep());
+            holder.l4_reps_four.setText(RepKgModel.getThirdrep());
+
+            holder.l4_kg_one.setText(RepKgModel.getFirstkg());
+            holder.l4_kg_two.setText(RepKgModel.getSecondkg());
+            holder.l4_kg_three.setText(RepKgModel.getThirdkg());
+            holder.l4_kg_four.setText(RepKgModel.getThirdkg());
 
             holder.l4_kg_four.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -607,17 +846,119 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
         }
         if(counter == 5){
 
-            holder.l5_reps.setText(dialogRepKgModel.getFirstrep());
-            holder.l5_reps_two.setText(dialogRepKgModel.getSecondrep());
-            holder.l5_reps_three.setText(dialogRepKgModel.getThirdrep());
-            holder.l5_reps_four.setText(dialogRepKgModel.getFourthrep());
-            holder.l5_reps_five.setText(dialogRepKgModel.getFourthrep());
+            holder.l5_reps.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_reps");
+                    }
+                }
+            });
 
-            holder.l5_kg_one.setText(dialogRepKgModel.getFirstkg());
-            holder.l5_kg_two.setText(dialogRepKgModel.getSecondkg());
-            holder.l5_kg_three.setText(dialogRepKgModel.getThirdkg());
-            holder.l5_kg_four.setText(dialogRepKgModel.getFourthkg());
-            holder.l5_kg_five.setText(dialogRepKgModel.getFourthkg());
+            holder.l5_reps_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_reps_two");
+                    }
+                }
+            });
+
+            holder.l5_reps_three.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_reps_three");
+                    }
+                }
+            });
+
+            holder.l5_reps_four.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_reps_four");
+                    }
+                }
+            });
+
+            holder.l5_reps_five.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_reps_five");
+                    }
+                }
+            });
+
+            holder.l5_kg_one.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_kg_one");
+                    }
+                }
+            });
+
+            holder.l5_kg_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_kg_two");
+                    }
+                }
+            });
+
+            holder.l5_kg_three.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_kg_three");
+                    }
+                }
+            });
+
+            holder.l5_kg_four.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_kg_four");
+                    }
+                }
+            });
+
+            holder.l5_kg_five.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (callback != null) {
+                        Log.d("callback2","" + callback);
+                        callback.imageButtonOnClick2(repKgview, position,"l5_kg_five");
+                    }
+                }
+            });
+
+
+
+            holder.l5_reps.setText(RepKgModel.getFirstrep());
+            holder.l5_reps_two.setText(RepKgModel.getSecondrep());
+            holder.l5_reps_three.setText(RepKgModel.getThirdrep());
+            holder.l5_reps_four.setText(RepKgModel.getFourthrep());
+            holder.l5_reps_five.setText(RepKgModel.getFourthrep());
+
+            holder.l5_kg_one.setText(RepKgModel.getFirstkg());
+            holder.l5_kg_two.setText(RepKgModel.getSecondkg());
+            holder.l5_kg_three.setText(RepKgModel.getThirdkg());
+            holder.l5_kg_four.setText(RepKgModel.getFourthkg());
+            holder.l5_kg_five.setText(RepKgModel.getFourthkg());
 
 
             holder.l5_kg_four.addTextChangedListener(new TextWatcher() {

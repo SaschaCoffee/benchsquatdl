@@ -567,6 +567,7 @@ import java.util.ArrayList;
             lstBook.add(new greenCardModel(R.drawable.quadrat40));
             lstBook.add(new greenCardModel(R.drawable.quadrat40));
 
+
             int arraySize = lstBook.size();
             updateProgressBar(arraySize);
 

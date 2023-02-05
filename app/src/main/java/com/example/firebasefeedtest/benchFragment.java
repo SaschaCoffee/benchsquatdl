@@ -1,8 +1,58 @@
 package com.example.firebasefeedtest;
 
+//Anleitung
+//
+//Der User drückt auf "Bench" -> Fenster wird geöffnet
+//und dann wird Objekt namens mAdapter von RepKgAdapter erstellt.
+//Diese enthält getActivity, Counter = 1, dialog, RepKgModel.
+//Dann wird es in array namens save (ArrayList<RepKgAdapter> save) gespeichert (wir sind noch immer in Benchfragment).
+//-> save.add(0, mAdapter)
+//
+//
+//Beim Eingabefeld wird rep,kg von RepKgAdapter getriggert,
+//und die Variablen rep,kg mit werten gefüllt,
+//wegen TextListener on Change.
+//
+//public ArrayList<String> returnMyObject(){
+//        hallo = new ArrayList<String>();
+//
+//if(!rep.isEmpty() && !kg.isEmpty() && counter == 1) {
+//            hallo.add(0, rep);
+//            hallo.add(1, kg);
+//        }
+//return hallo;
+//
+//Dann drückt der user auf add (wir sind jz in benchfragment.java,
+//und wichtig: globale variabel ->  ArrayList<RepKgAdapter> save = new ArrayList<>(); )
+//
+//-> RepKgModel wird initialisiert
+//mit save.get(0).rMyObj.get(0)
+//
+//-> RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), counter = 2,dialog, RepKgModel);
+//
+//-> RepKgAdapter
+//public ArrayList<String> returnMyObject(){
+//
+//if (counter == 2)
+//hallo.add(0, RepKgModel.getFirstrep().toString().trim());
+//hallo.add(1, RepKgModel.getFirstkg().toString().trim());
+//hallo.add(2, RepKgModel.getFirstrep().toString().trim());
+//hallo.add(3, RepKgModel.getFirstkg().toString().trim());
+//
+//}
+//
+//public void onBindViewHolder(){
+//
+//holder.l2_reps_one.setText(RepKgModel.getFirstrep());
+//holder.l2_kg_one.setText(RepKgModel.getFirstkg());
+//holder.l2_reps_two.setText(RepKgModel.getFirstrep());
+//holder.l2_kg_two.setText(RepKgModel.getFirstkg());
+//
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +63,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,8 +72,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -34,7 +88,7 @@ public class benchFragment extends Fragment implements
     private FirebaseUser user;
     private DatabaseReference reference,  referenceTest, referenceTraininglogPrivate, referenceTraininglogPublic,
             referenceCollectTrainingData, referenceTrainingLocation;
-    ArrayList<dialogRepKgModel> dialogArrayReference = new ArrayList<>();
+    ArrayList<RepKgModel> dialogArrayReference = new ArrayList<>();
     ArrayList<Long> firebaseArray;
 
 
@@ -63,10 +117,13 @@ public class benchFragment extends Fragment implements
     boolean heavyChosen = false;
     int currentSelectedHeavy;
     int count = 0;
-    dialogRepKgModel dialogRepKgModel;
+    RepKgModel RepKgModel;
     int arraySizeContactAdapter;
     String firstrep,firstset;
     ArrayList<RepKgAdapter> save = new ArrayList<>();
+    AlertDialog.Builder builder;
+
+    String adapterCallBackString = "l1_reps";
 
 
 
@@ -111,7 +168,24 @@ public class benchFragment extends Fragment implements
         createCard();
         buildRecyclerView();
 
+        reference.child(user.getUid()).child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                try {
+                    long model = snapshot.getValue(long.class);
+                    progr = Integer.parseInt(String.valueOf(model));
+                    Log.d("cardMe","value:" + progr);
+                    updateCard(progr);
+                    buildRecyclerView();
+                } catch (Exception e) {
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
         bre.setOnClickListener(new View.OnClickListener() {
 
@@ -121,7 +195,7 @@ public class benchFragment extends Fragment implements
                 Log.d("sizeCase23", "countnull" + save.size());
 
                 //OPEN DIALOG
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder = new AlertDialog.Builder(getActivity());
                 dialogExtend xx = new dialogExtend();
                 builder.setTitle("Enter Data");
 
@@ -135,6 +209,233 @@ public class benchFragment extends Fragment implements
 
                 contactView.setLayoutManager(linearLayoutManager);
                 contactView.setHasFixedSize(true);
+
+                //LayOne, Count = 1,
+
+
+
+
+
+
+                DialogInterface.OnKeyListener xxy = new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
+                        String x = "1";
+
+                        EditText l1_reps, l1_kg, l2_reps_one, l2_reps_two,
+                                l2_kg_one, l2_kg_two, l3_heavy_button_one,
+                                l3_heavy_button_two, l3_heavy_button_three,
+                                l3_pencil, l3_pencil_two, l3_pencil_three, l3_reps,
+                                l3_reps_two, l3_reps_three, l3_kg_one, l3_kg_two,
+                                l3_kg_three, l4_reps, l4_reps_two, l4_reps_three,
+                                l4_reps_four, l4_kg_one, l4_kg_two, l4_kg_three,
+                                l4_kg_four,l5_reps, l5_reps_two, l5_reps_three,
+                                l5_reps_four, l5_reps_five, l5_kg_one, l5_kg_two, l5_kg_three,
+                                l5_kg_four, l5_kg_five;
+
+
+                        l1_reps = vieww.findViewById(R.id.layer_one_reps);
+                        l1_kg = vieww.findViewById(R.id.layer_one_kg);
+
+                        //Layer Two
+                        l2_reps_one = vieww.findViewById(R.id.layer_two_et_symbol_reps_single_item);
+                        l2_reps_two = vieww.findViewById(R.id.layer_two_et_symbol_reps_single_item_two);
+                        l2_kg_one = vieww.findViewById(R.id.layer_two_et_kg_card_single_item);
+                        l2_kg_two = vieww.findViewById(R.id.layer_two_et_kg_card_single_item_two);
+
+                        //Layer Three
+                        l3_reps = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item);
+                        l3_reps_two = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item_two);
+                        l3_reps_three = vieww.findViewById(R.id.layer_three_et_symbol_reps_single_item_two_three);
+
+                        l3_kg_one = vieww.findViewById(R.id.layer_three_et_kg_card_single_item);
+                        l3_kg_two = vieww.findViewById(R.id.layer_three_et_kg_card_single_item_two);
+                        l3_kg_three = vieww.findViewById(R.id.layer_three_et_kg_card_single_item_three);
+
+                        //Layer Four
+                        l4_reps = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item);
+                        l4_reps_two = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item_two);
+                        l4_reps_three = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item_three);
+                        l4_reps_four = vieww.findViewById(R.id.layer_four_et_symbol_reps_single_item_four);
+
+                        l4_kg_one = vieww.findViewById(R.id.layer_four_et_kg_card_single_item);
+                        l4_kg_two = vieww.findViewById(R.id.layer_four_et_kg_card_single_item_two);
+                        l4_kg_three = vieww.findViewById(R.id.layer_four_et_kg_card_single_item_three);
+                        l4_kg_four =  vieww.findViewById(R.id.layer_four_et_kg_card_single_item_four);
+
+
+                        //Layer five
+                        l5_reps = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item);
+                        l5_reps_two = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item_two);
+                        l5_reps_three = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item_three);
+                        l5_reps_four = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item_four);
+                        l5_reps_five = vieww.findViewById(R.id.layer_five_et_symbol_reps_single_item_five);
+
+                        l5_kg_one = vieww.findViewById(R.id.layer_five_et_kg_card_single_item);
+                        l5_kg_two = vieww.findViewById(R.id.layer_five_et_kg_card_single_item_two);
+                        l5_kg_three = vieww.findViewById(R.id.layer_five_et_kg_card_single_item_three);
+                        l5_kg_four =  vieww.findViewById(R.id.layer_five_et_kg_card_single_item_four);
+                        l5_kg_five = vieww.findViewById(R.id.layer_five_et_kg_card_single_item_five);
+
+
+
+                        int code = keyEvent.getKeyCode();
+
+
+
+                        if(keyEvent.getAction() == KeyEvent.ACTION_UP){
+
+
+                            switch (code) {
+                                case KeyEvent.KEYCODE_VOLUME_UP:
+                                    counter++;
+                                    int counterNew = 20+(counter*5);
+                                    tempCounter = counterNew;
+                                    switch(adapterCallBackString){
+                                        case "l1_reps":
+                                            l1_reps.setText(String.valueOf(counter));
+                                            break;
+                                        case "l1_kg":
+                                            l1_kg.setText(String.valueOf(counterNew));
+                                            break;
+                                        case "l2_reps_one":
+                                            int txt_rep_l2 = Integer.parseInt(l2_reps_one.getText().toString().trim());
+                                            Log.d("txt","mem" + txt_rep_l2);
+                                            l2_reps_one.setText(String.valueOf(1 + txt_rep_l2));
+                                            break;
+                                        case "l2_reps_two":
+                                            int txt_rep2_l2 = Integer.parseInt(l2_reps_two.getText().toString().trim());
+                                            l2_reps_two.setText(String.valueOf(1 + txt_rep2_l2));
+                                            break;
+                                        case "l2_kg_one":
+                                            int txt_kg_l2 = Integer.parseInt(l2_kg_one.getText().toString().trim());
+                                            l2_kg_one.setText(String.valueOf(5 + txt_kg_l2));
+                                            break;
+                                        case "l2_kg_two":
+                                            int txt_kg2_l2 = Integer.parseInt(l2_kg_two.getText().toString().trim());
+                                            l2_kg_two.setText(String.valueOf(5 + txt_kg2_l2));
+                                            break;
+
+
+                                        case "l3_kg_one":
+                                            int txt_kg_l3 = Integer.parseInt(l3_kg_one.getText().toString().trim());
+                                            l3_kg_one.setText(String.valueOf(5 + txt_kg_l3));
+                                            break;
+                                        case "l3_kg_two":
+                                            int txt_kg2_l3 = Integer.parseInt(l3_kg_two.getText().toString().trim());
+                                            l3_kg_two.setText(String.valueOf(5 + txt_kg2_l3));
+                                            break;
+                                        case "l3_kg_three":
+                                            int txt_kg3_l3 = Integer.parseInt(l3_kg_three.getText().toString().trim());
+                                            l3_kg_three.setText(String.valueOf(5 + txt_kg3_l3));
+                                            break;
+
+                                        case "l3_reps":
+                                            int txt_rep_l3 = Integer.parseInt(l3_reps.getText().toString().trim());
+                                            l3_reps.setText(String.valueOf(1 + txt_rep_l3));
+                                            break;
+                                        case "l3_reps_two":
+                                            int txt_rep2_l3 = Integer.parseInt(l3_reps_two.getText().toString().trim());
+                                            l3_reps_two.setText(String.valueOf(txt_rep2_l3 + 1));
+                                            break;
+                                        case "l3_reps_three":
+                                            int txt_rep3_l3 = Integer.parseInt(l3_reps_three.getText().toString().trim());
+                                            l3_reps_three.setText(String.valueOf(1 + txt_rep3_l3));
+                                            break;
+
+                                        case "l4_kg_one":
+                                            int txt_kg_l4 = Integer.parseInt(l4_kg_one.getText().toString().trim());
+                                            l4_kg_one.setText(String.valueOf(5 + txt_kg_l4));
+                                            break;
+                                        case "l4_kg_two":
+                                            int txt_kg2_l4 = Integer.parseInt(l4_kg_two.getText().toString().trim());
+                                            l4_kg_two.setText(String.valueOf(5 + txt_kg2_l4));
+                                            break;
+                                        case "l4_kg_three":
+                                            int txt_kg3_l4 = Integer.parseInt(l4_kg_three.getText().toString().trim());
+                                            l4_kg_three.setText(String.valueOf(5 + txt_kg3_l4));
+                                            break;
+                                        case "l4_kg_four":
+                                            int txt_kg4_l4 = Integer.parseInt(l4_kg_four.getText().toString().trim());
+                                            l4_kg_four.setText(String.valueOf(5 + txt_kg4_l4));
+                                            break;
+
+                                        case "l4_reps":
+                                            int txt_rep_l4 = Integer.parseInt(l4_reps.getText().toString().trim());
+                                            l4_reps.setText(String.valueOf(1 + txt_rep_l4));
+                                            break;
+                                        case "l4_reps_two":
+                                            int txt_rep2_l4 = Integer.parseInt(l4_reps_two.getText().toString().trim());
+                                            l4_reps_two.setText(String.valueOf(txt_rep2_l4 + 1));
+                                            break;
+                                        case "l4_reps_three":
+                                            int txt_rep3_l4 = Integer.parseInt(l4_reps_three.getText().toString().trim());
+                                            l4_reps_three.setText(String.valueOf(txt_rep3_l4 + 1));
+                                            break;
+                                        case "l4_reps_four":
+                                            int txt_rep4_l4 = Integer.parseInt(l4_reps_four.getText().toString().trim());
+                                            l4_reps_four.setText(String.valueOf(txt_rep4_l4 + 1));
+                                            break;
+
+                                        case "l5_reps":
+                                            int txt_rep_l5 = Integer.parseInt(l5_reps.getText().toString().trim());
+                                            l5_reps.setText(String.valueOf(1 + txt_rep_l5));
+                                            break;
+                                        case "l5_reps_two":
+                                            int txt_rep2_l5 = Integer.parseInt(l5_reps_two.getText().toString().trim());
+                                            l5_reps_two.setText(String.valueOf(1 + txt_rep2_l5));
+                                            break;
+                                        case "l5_reps_three":
+                                            int txt_rep3_l5 = Integer.parseInt(l5_reps_three.getText().toString().trim());
+                                            l5_reps_three.setText(String.valueOf(1 + txt_rep3_l5));
+                                            break;
+                                        case "l5_reps_four":
+                                            int txt_rep4_l5 = Integer.parseInt(l5_reps_four.getText().toString().trim());
+                                            l5_reps_four.setText(String.valueOf(1 + txt_rep4_l5));
+                                            break;
+                                        case "l5_reps_five":
+                                            int txt_rep5_l5 = Integer.parseInt(l5_reps_five.getText().toString().trim());
+                                            l5_reps_five.setText(String.valueOf(1 + txt_rep5_l5));
+                                            break;
+
+                                        case "l5_kg_one":
+                                            int txt_kg_l5 = Integer.parseInt(l5_kg_one.getText().toString().trim());
+                                            l5_kg_one.setText(String.valueOf(5 + txt_kg_l5));
+                                            break;
+                                        case "l5_kg_two":
+                                            int txt_kg2_l5 = Integer.parseInt(l5_kg_two.getText().toString().trim());
+                                            l5_kg_two.setText(String.valueOf(5 + txt_kg2_l5));
+                                            break;
+                                        case "l5_kg_three":
+                                            int txt_kg3_l5 = Integer.parseInt(l5_kg_three.getText().toString().trim());
+                                            l5_kg_three.setText(String.valueOf(5 + txt_kg3_l5));
+                                            break;
+                                        case "l5_kg_four":
+                                            int txt_kg4_l5 = Integer.parseInt(l5_kg_four.getText().toString().trim());
+                                            l5_kg_four.setText(String.valueOf(5 +txt_kg4_l5));
+                                            break;
+                                        case "l5_kg_five":
+                                            int txt_kg5_l5 = Integer.parseInt(l5_kg_five.getText().toString().trim());
+                                            l5_kg_five.setText(String.valueOf(5 + txt_kg5_l5));
+                                            break;
+                                    }
+                                    return true;
+                            }
+
+                        }
+
+                        {
+
+
+                        }
+
+                        return true;
+                    }
+                };
+
+                builder.setOnKeyListener(xxy);
+
+
                 builder.setView(vieww);
 
                 btn_add_data = vieww.findViewById(R.id.btn_add_rv);
@@ -149,10 +450,10 @@ public class benchFragment extends Fragment implements
 
 
                 contactView.setVisibility(View.VISIBLE);
-                RepKgAdapter mAdapter = new RepKgAdapter(getActivity(), 1, dialog, dialogRepKgModel);
+                RepKgAdapter mAdapter = new RepKgAdapter(getActivity(), 1, dialog, RepKgModel);
                 save.add(0,mAdapter);
                 contactView.setAdapter(save.get(0));
-                mAdapter.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick);
+                mAdapter.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
                 String keyTraining = referenceTraininglogPublic.push().getKey();
 
 
@@ -172,10 +473,21 @@ public class benchFragment extends Fragment implements
                                 if(!first_kg_string.isEmpty() && !first_rep_string.isEmpty()) {
                                     modelBench bench = new modelBench(first_rep_string, first_kg_string);
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench);
+
+                                    progr++;
+
+                                    reference.child(userid).child(childcard).setValue(progr);
+
+                                    updateProgressBar(progr);
+                                    updateCard(progr);
+                                    buildRecyclerView();
+
                                     dialog.cancel();
                                     //RESET
                                     count = 0;
-                                    save.clear();
+
+                                    save.remove(0);
+
                                 }
                                 else{
                                     Toast.makeText(dialog.getContext(), "Empty Fields Are not Allowed", Toast.LENGTH_SHORT).show();
@@ -203,6 +515,9 @@ public class benchFragment extends Fragment implements
                                     //RESET
                                     count = 0;
                                     save.clear();
+
+
+
                                 }
                                 else{
                                     Toast.makeText(getActivity(), "Empty Fields Are not Allowed", Toast.LENGTH_SHORT).show();
@@ -235,6 +550,7 @@ public class benchFragment extends Fragment implements
                                 //RESET
                                 count = 0;
                                 save.clear();
+
                             }
                                 else{
                                     Toast.makeText(getActivity(), "Empty Fields Are not Allowed", Toast.LENGTH_SHORT).show();
@@ -271,6 +587,8 @@ public class benchFragment extends Fragment implements
                                     //RESET
                                     count = 0;
                                     save.clear();
+
+
                                 }
 
                                 else{
@@ -316,7 +634,7 @@ public class benchFragment extends Fragment implements
                                 dialog.cancel();
                                 //RESET
                                 count = 0;
-                                save.remove(0);
+
                             }
                                 break;
                         }
@@ -327,17 +645,80 @@ public class benchFragment extends Fragment implements
                     @Override
                     public void onClick(View view) {
                         if(count > 0){
-                            count = 0;
+                            if(count == 1) {
 
-                            save.remove(0);
-                            contactView.setVisibility(View.VISIBLE);
-                            RepKgAdapter mAdapter = new RepKgAdapter(getActivity(), 1, dialog, dialogRepKgModel);
-                            save.add(0,mAdapter);
-                            contactView.setAdapter(save.get(0));
-                            dialog.create();
+                                contactView.setVisibility(View.VISIBLE);
+                                arraySizeContactAdapter = mAdapter.returnMyObject().size();
 
-                            int size = save.size();
-                            Log.d("arraySize", "hh" + size);
+
+                                RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), 1, dialog, RepKgModel);
+                                save.remove(1);
+                                save.set(0, mAdapter_two);
+
+                                contactView.setVisibility(View.VISIBLE);
+                                contactView.setAdapter(mAdapter_two);
+
+                                mAdapter_two.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
+                                count = 0;
+                                counter = 0;
+
+                                Log.d("adasize","" + save.size());
+                            }
+
+                            if(count == 2){
+
+                                RepKgAdapter mAdapter_three = new RepKgAdapter(getActivity(), 2, dialog, RepKgModel);
+                                save.remove(2);
+                                save.set(1, mAdapter_three);
+
+                                contactView.setVisibility(View.VISIBLE);
+                                contactView.setAdapter(mAdapter_three);
+
+                                mAdapter_three.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
+
+                                count = 1;
+                                counter = 0;
+
+                            }
+
+                            if(count == 3){
+
+                                RepKgAdapter mAdapter_three = new RepKgAdapter(getActivity(), 3, dialog, RepKgModel);
+                                save.remove(3);
+                                save.set(2, mAdapter_three);
+
+                                contactView.setVisibility(View.VISIBLE);
+                                contactView.setAdapter(mAdapter_three);
+
+                                mAdapter_three.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
+
+                                count = 2;
+                                counter = 0;
+
+                            }
+
+                            if(count == 4){
+
+                                RepKgAdapter mAdapter_three = new RepKgAdapter(getActivity(), 4, dialog, RepKgModel);
+                                save.remove(4);
+                                save.set(3, mAdapter_three);
+
+
+                                contactView.setVisibility(View.VISIBLE);
+                                contactView.setAdapter(mAdapter_three);
+
+                                mAdapter_three.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
+
+                                count = 3;
+                                counter = 0;
+
+                                Log.d("count4","" +save.size());
+
+                            }
+
+
+
+
 
 
                         }
@@ -349,55 +730,64 @@ public class benchFragment extends Fragment implements
                     @Override
                     public void onClick(View view) {
 
-                        if(count <= 5 && !save.get(0).returnMyObject().isEmpty()){
-                          count++;
+                        if(count < 4 && !save.get(0).returnMyObject().isEmpty()){
 
-                            Log.d("sizeCase23", "count" + save.size());
+
+                            count++;
                             int size = 0;
 
+                            Log.d("countAdd","" + count);
+
                             if(count == 1) {
-                                Log.d("countsize9","1:" + save.get(0).returnMyObject().size());
+
                                 contactView.setVisibility(View.VISIBLE);
                                 arraySizeContactAdapter = mAdapter.returnMyObject().size();
                                 Log.d("sizeCase66", "two before ini" + arraySizeContactAdapter);
-                                dialogRepKgModel = new dialogRepKgModel(save.get(0).returnMyObject().get(0), save.get(0).returnMyObject().get(1), save.get(0).returnMyObject().get(0), save.get(0).returnMyObject().get(1),null,null,null,null,null,null);
-                                RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), 2, dialog, dialogRepKgModel);
+                                RepKgModel = new RepKgModel(save.get(0).returnMyObject().get(0), save.get(0).returnMyObject().get(1), null, null,null,null,null,null,null,null);
+                                RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), 2, dialog, RepKgModel);
                                 contactView.setVisibility(View.VISIBLE);
                                 contactView.setAdapter(mAdapter_two);
                                 save.add(1,mAdapter_two);
                                 size = mAdapter_two.returnMyObject().size();
+                                mAdapter_two.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
                             }
 
 
                             if( count == 2 ){
                                 Log.d("countsize9","2:" + save.get(1).returnMyObject().size());
-                                dialogRepKgModel = new dialogRepKgModel(save.get(1).returnMyObject().get(0), save.get(1).returnMyObject().get(1), save.get(1).returnMyObject().get(2), save.get(1).returnMyObject().get(3),null,null,null,null,null,null);
-                                RepKgAdapter mAdapter_three = new RepKgAdapter(getActivity(), 3, dialog, dialogRepKgModel);
+                                RepKgModel = new RepKgModel(save.get(1).returnMyObject().get(0), save.get(1).returnMyObject().get(1), save.get(1).returnMyObject().get(2), save.get(1).returnMyObject().get(3),null,null,null,null,null,null);
+                                RepKgAdapter mAdapter_three = new RepKgAdapter(getActivity(), 3, dialog, RepKgModel);
                                 contactView.setVisibility(View.VISIBLE);
                                 contactView.setAdapter(mAdapter_three);
                                 save.add(2, mAdapter_three);
+                                mAdapter_three.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
                             }
 
                             if (count == 3){
                                 Log.d("countsize9","3:" + save.get(2).returnMyObject().size());
-                                dialogRepKgModel = new dialogRepKgModel(save.get(2).returnMyObject().get(0), save.get(2).returnMyObject().get(1), save.get(2).returnMyObject().get(2), save.get(2).returnMyObject().get(3), save.get(2).returnMyObject().get(4), save.get(2).returnMyObject().get(5),null,null,null,null);
-                                RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), 4, dialog, dialogRepKgModel);
+                                RepKgModel = new RepKgModel(save.get(2).returnMyObject().get(0), save.get(2).returnMyObject().get(1), save.get(2).returnMyObject().get(2), save.get(2).returnMyObject().get(3), save.get(2).returnMyObject().get(4), save.get(2).returnMyObject().get(5),null,null,null,null);
+                                RepKgAdapter mAdapter_twoo = new RepKgAdapter(getActivity(), 4, dialog, RepKgModel);
                                 contactView.setVisibility(View.VISIBLE);
-                                contactView.setAdapter(mAdapter_two);
-                                save.add(3,mAdapter_two);
+                                contactView.setAdapter(mAdapter_twoo);
+                                save.add(3,mAdapter_twoo);
+
+                                mAdapter_twoo.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
                             }
 
                             if (count == 4){
                                 Log.d("countsize9","4:" + save.get(3).returnMyObject().size());
-                                dialogRepKgModel = new dialogRepKgModel(save.get(3).returnMyObject().get(0), save.get(3).returnMyObject().get(1), save.get(3).returnMyObject().get(2), save.get(3).returnMyObject().get(3), save.get(3).returnMyObject().get(4), save.get(3).returnMyObject().get(5),save.get(3).returnMyObject().get(6), save.get(3).returnMyObject().get(7),null,null);
-                                RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), 5, dialog, dialogRepKgModel);
+                                RepKgModel = new RepKgModel(save.get(3).returnMyObject().get(0), save.get(3).returnMyObject().get(1), save.get(3).returnMyObject().get(2), save.get(3).returnMyObject().get(3), save.get(3).returnMyObject().get(4), save.get(3).returnMyObject().get(5),save.get(3).returnMyObject().get(6), save.get(3).returnMyObject().get(7),null,null);
+                                RepKgAdapter mAdapter_two = new RepKgAdapter(getActivity(), 5, dialog, RepKgModel);
                                 contactView.setVisibility(View.VISIBLE);
                                 contactView.setAdapter(mAdapter_two);
                                 save.add(4,mAdapter_two);
+                                mAdapter_two.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
                             }
+
+
                         }
                         else{
-                            Log.d("testDich", "it does not work bro");
+                            Toast.makeText(getContext(), "Only 5 sets are allowed", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -408,13 +798,16 @@ public class benchFragment extends Fragment implements
         return vx;
     }
 
+    private void deleteString() {
+        this.adapterCallBackString = "l1_reps";
+    }
+
 
     private void buildRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
         cardViewAdapter mAdapter = new cardViewAdapter(getActivity(), lstBook);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 5));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 10));
         mRecyclerView.setAdapter(mAdapter);
-
         mAdapter.setPlayPauseClickListener(this::imageButtonOnClick);
     }
 
@@ -422,7 +815,6 @@ public class benchFragment extends Fragment implements
         int countstart = z;
         for (int x = 0; x < z; x++) {
             lstBook.set(x, new greenCardModel(R.drawable.quadratgruen));
-
         }
 
     }
@@ -431,30 +823,30 @@ public class benchFragment extends Fragment implements
         // TODO: Implement this
         Log.d("cardview","hello Sir");
 
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         dialogExtend xx = new dialogExtend();
-
         View view = getLayoutInflater().inflate(R.layout.open_training_data, null);
         builder.setView(view);
         dialog = builder.create();
         dialog.show();
     }
 
-    public void imageButtonOnClick2(View v, int position) {
+    public void imageButtonOnClick2(View v, int position, String x) {
         // TODO: Implement this
-        Log.d("cardview","hello Sir");
+
+        View g = v;
+
+        Log.d("heydu","" + x);
+
+        EditText hey = v.findViewById(R.id.layer_two_et_symbol_reps_single_item);
+
+
+        this.adapterCallBackString = x;
+
+        builder.setView(g);
 
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        dialogExtend xx = new dialogExtend();
-
-        View view = getLayoutInflater().inflate(R.layout.open_training_data, null);
-        builder.setView(view);
-        dialog = builder.create();
-        dialog.show();
     }
 
 
@@ -464,6 +856,50 @@ public class benchFragment extends Fragment implements
         lstBook.add(new greenCardModel(R.drawable.quadrat40));
         lstBook.add(new greenCardModel(R.drawable.quadrat40));
         lstBook.add(new greenCardModel(R.drawable.quadrat40));
+
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+        lstBook.add(new greenCardModel(R.drawable.quadrat40));
+
+
 
 
         int arraySize = lstBook.size();

@@ -1,9 +1,9 @@
 package com.example.firebasefeedtest;
 
-public class dialogRepKgModel {
+public class RepKgModel {
     String firstrep, firstkg, secondrep, secondkg, thirdrep, thirdkg, fourthrep, fourthkg, fifthrep, fifthkg;
 
-    public dialogRepKgModel(String firstrep, String firstkg, String secondrep, String secondkg, String thirdrep, String thirdkg, String fourthrep, String fourthkg, String fifthrep, String fifthkg) {
+    public RepKgModel(String firstrep, String firstkg, String secondrep, String secondkg, String thirdrep, String thirdkg, String fourthrep, String fourthkg, String fifthrep, String fifthkg) {
         this.firstrep = firstrep;
         this.firstkg = firstkg;
         this.secondrep = secondrep;
