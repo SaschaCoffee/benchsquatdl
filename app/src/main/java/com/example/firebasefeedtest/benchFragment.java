@@ -64,18 +64,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -98,8 +103,8 @@ public class benchFragment extends Fragment implements
     private ProgressBar pgBar;
     private TextView tv, heavy1, heavy2, heavy3;
     private EditText et_first_set, et_second_set, et_third_set, et_kg, et_kg2, et_kg3;
-    int progr;
-    private Button btn_add_data,upload_fb, btn_upload_data, btn_addtoTv, btntoTv, bre, btn_delete_data;
+    int progr = 0;
+    private Button btn_add_data,btn_delete_yes,btn_delete_item, upload_fb, btn_upload_data, btn_addtoTv, btntoTv, bre, btn_delete_data;
     private AlertDialog dialog;
     private String userid;
     private int counter = 0;
@@ -124,6 +129,7 @@ public class benchFragment extends Fragment implements
     AlertDialog.Builder builder;
 
     String adapterCallBackString = "l1_reps";
+    int counterNew = 0;
 
 
 
@@ -142,7 +148,6 @@ public class benchFragment extends Fragment implements
         tv = vx.findViewById(R.id.text_view_progress);
 
 
-
         referenceTraininglogPublic = FirebaseDatabase.getInstance().getReference("TraininglogPublic");
 
         mRecyclerView = vx.findViewById(R.id.recyclerview_id);
@@ -153,20 +158,56 @@ public class benchFragment extends Fragment implements
         reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
 
 
-
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
         referenceCollectTrainingData = FirebaseDatabase.getInstance().getReference("FeedTrainingData");
         referenceTraininglogPrivate = FirebaseDatabase.getInstance().getReference("TraininglogPrivateBench");
+
+
         referenceTraininglogPublic = FirebaseDatabase.getInstance().getReference("TraininglogPublic");
         referenceTest = FirebaseDatabase.getInstance().getReference("teste");
         referenceTrainingLocation = FirebaseDatabase.getInstance().getReference("Location");
         userid = user.getUid();
 
-        bre = vx.findViewById(R.id.btn_add_data_card_bench);
-
         createCard();
         buildRecyclerView();
+
+        bre = vx.findViewById(R.id.btn_add_data_card_bench);
+
+        btn_delete_item = vx.findViewById(R.id.btn_delete_item);
+
+        btn_delete_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                builder = new AlertDialog.Builder(getActivity());
+                View vieww = getLayoutInflater().inflate(R.layout.delete_areyousure, null);
+                btn_delete_yes = vieww.findViewById(R.id.btn_delete_yes);
+                builder.setView(vieww);
+
+                dialog = builder.create();
+                dialog.show();
+                dialog.create();
+
+                btn_delete_yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(progr > 0){
+                            deleteLastItem();
+                            dialog.cancel();
+                            buildRecyclerView();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "Is already empty", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+
+            }
+        });
+
+
 
         reference.child(user.getUid()).child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -190,9 +231,14 @@ public class benchFragment extends Fragment implements
         bre.setOnClickListener(new View.OnClickListener() {
 
 
+
+
             @Override
             public void onClick(View view) {
                 Log.d("sizeCase23", "countnull" + save.size());
+
+                counter = 0;
+                counterNew = 0;
 
                 //OPEN DIALOG
                 builder = new AlertDialog.Builder(getActivity());
@@ -283,20 +329,19 @@ public class benchFragment extends Fragment implements
 
 
 
-                        if(keyEvent.getAction() == KeyEvent.ACTION_UP){
+                        if(keyEvent.getAction() == KeyEvent.ACTION_UP && !adapterCallBackString.isEmpty() ){
 
 
                             switch (code) {
                                 case KeyEvent.KEYCODE_VOLUME_UP:
-                                    counter++;
-                                    int counterNew = 20+(counter*5);
+
                                     tempCounter = counterNew;
                                     switch(adapterCallBackString){
                                         case "l1_reps":
-                                            l1_reps.setText(String.valueOf(counter));
+                                            l1_reps.setText(String.valueOf(counter++));
                                             break;
                                         case "l1_kg":
-                                            l1_kg.setText(String.valueOf(counterNew));
+                                            l1_kg.setText(String.valueOf(20*(counterNew++)));
                                             break;
                                         case "l2_reps_one":
                                             int txt_rep_l2 = Integer.parseInt(l2_reps_one.getText().toString().trim());
@@ -456,6 +501,8 @@ public class benchFragment extends Fragment implements
                 mAdapter.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
                 String keyTraining = referenceTraininglogPublic.push().getKey();
 
+                contactView.getLayoutManager().scrollToPosition(0);
+
 
                 btn_upload_data.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -474,9 +521,11 @@ public class benchFragment extends Fragment implements
                                     modelBench bench = new modelBench(first_rep_string, first_kg_string);
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench);
 
+
                                     progr++;
 
                                     reference.child(userid).child(childcard).setValue(progr);
+                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench);
 
                                     updateProgressBar(progr);
                                     updateCard(progr);
@@ -486,7 +535,13 @@ public class benchFragment extends Fragment implements
                                     //RESET
                                     count = 0;
 
+                                    counter = 0;
+                                    counterNew = 0;
+
+
+
                                     save.remove(0);
+                                    adapterCallBackString = "l1_reps";
 
                                 }
                                 else{
@@ -510,11 +565,25 @@ public class benchFragment extends Fragment implements
                                         !second_rep_l2.isEmpty()) {
 
                                     modelBench bench2 = new modelBench(first_rep_l2, second_rep_l2, first_kg_l2, second_kg_l2);
+                                    progr++;
+
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench2);
+                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench2);
+
+
+                                    updateProgressBar(progr);
+                                    updateCard(progr);
+                                    buildRecyclerView();
+
                                     dialog.cancel();
                                     //RESET
                                     count = 0;
                                     save.clear();
+
+
+                                    adapterCallBackString = "l1_reps";
+                                    counterNew = 0;
+                                    counter = 0;
 
 
 
@@ -544,12 +613,27 @@ public class benchFragment extends Fragment implements
                                         !third_rep_l3.isEmpty() && !first_kg_l3.isEmpty() && !second_kg_l3.isEmpty() && !third_kg_l3.isEmpty()){
                                 modelBench bench3 = new modelBench(first_rep_l3, second_rep_l3, third_rep_l3, first_kg_l3, second_kg_l3, third_kg_l3
                                 );
+
+                                progr++;
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench3);
-                                dialog.cancel();
+                                referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench3);
+
+
+
+                                    updateProgressBar(progr);
+                                    updateCard(progr);
+                                    buildRecyclerView();
+                                    counterNew = 0;
+
+                                    dialog.cancel();
+
+                                    counter = 0;
 
                                 //RESET
                                 count = 0;
                                 save.clear();
+
+                                    adapterCallBackString = "l1_reps";
 
                             }
                                 else{
@@ -582,12 +666,26 @@ public class benchFragment extends Fragment implements
                                 && !kg1_l4.isEmpty() && !kg2_l4.isEmpty() && !kg3_l4.isEmpty() && !kg4_l4.isEmpty()) {
 
                                     modelBench bench4 = new modelBench(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4, kg3_l4, kg4_l4);
+
+                                    progr++;
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench4);
+                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench4);
+
+
+
+                                    updateProgressBar(progr);
+                                    updateCard(progr);
+                                    buildRecyclerView();
+
+                                    counter = 0;
+
                                     dialog.cancel();
                                     //RESET
                                     count = 0;
                                     save.clear();
 
+                                    adapterCallBackString = "l1_reps";
+                                    counterNew = 0;
 
                                 }
 
@@ -630,10 +728,23 @@ public class benchFragment extends Fragment implements
 
                                 modelBench bench5 = new modelBench(rp1_l5, rp2_l5, rp3_l5, rp4_l5, rp5_l5, kg1_l5, kg2_l5, kg3_l5, kg4_l5, kg5_l5);
 
+
+                                progr++;
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench5);
-                                dialog.cancel();
+                                referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench5);
+
+                                    updateProgressBar(progr);
+                                    updateCard(progr);
+                                    buildRecyclerView();
+
+                                    counter = 0;
+
+                                    dialog.cancel();
                                 //RESET
                                 count = 0;
+                                    adapterCallBackString = "l1_reps";
+                                    counterNew = 0;
+                                    save.clear();
 
                             }
                                 break;
@@ -661,6 +772,9 @@ public class benchFragment extends Fragment implements
                                 mAdapter_two.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
                                 count = 0;
                                 counter = 0;
+                                adapterCallBackString = "l1_reps_one";
+
+                                counterNew = 0;
 
                                 Log.d("adasize","" + save.size());
                             }
@@ -678,6 +792,8 @@ public class benchFragment extends Fragment implements
 
                                 count = 1;
                                 counter = 0;
+                                adapterCallBackString = "l2_reps_one";
+                                counterNew = 0;
 
                             }
 
@@ -694,6 +810,8 @@ public class benchFragment extends Fragment implements
 
                                 count = 2;
                                 counter = 0;
+                                adapterCallBackString = "l3_reps_one";
+                                counterNew = 0;
 
                             }
 
@@ -713,6 +831,8 @@ public class benchFragment extends Fragment implements
                                 counter = 0;
 
                                 Log.d("count4","" +save.size());
+                                adapterCallBackString = "l4_reps_five";
+                                counterNew = 0;
 
                             }
 
@@ -739,7 +859,6 @@ public class benchFragment extends Fragment implements
                             Log.d("countAdd","" + count);
 
                             if(count == 1) {
-
                                 contactView.setVisibility(View.VISIBLE);
                                 arraySizeContactAdapter = mAdapter.returnMyObject().size();
                                 Log.d("sizeCase66", "two before ini" + arraySizeContactAdapter);
@@ -750,6 +869,7 @@ public class benchFragment extends Fragment implements
                                 save.add(1,mAdapter_two);
                                 size = mAdapter_two.returnMyObject().size();
                                 mAdapter_two.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
+                                adapterCallBackString = "l2_reps_two";
                             }
 
 
@@ -761,6 +881,7 @@ public class benchFragment extends Fragment implements
                                 contactView.setAdapter(mAdapter_three);
                                 save.add(2, mAdapter_three);
                                 mAdapter_three.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
+                                adapterCallBackString = "l3_reps_three";
                             }
 
                             if (count == 3){
@@ -772,6 +893,7 @@ public class benchFragment extends Fragment implements
                                 save.add(3,mAdapter_twoo);
 
                                 mAdapter_twoo.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
+                                adapterCallBackString = "l4_reps_four";
                             }
 
                             if (count == 4){
@@ -782,12 +904,13 @@ public class benchFragment extends Fragment implements
                                 contactView.setAdapter(mAdapter_two);
                                 save.add(4,mAdapter_two);
                                 mAdapter_two.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
+                                adapterCallBackString = "l5_reps_one";
                             }
 
 
                         }
                         else{
-                            Toast.makeText(getContext(), "Only 5 sets are allowed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Fill out everything. Only 5 sets are allowed", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -813,9 +936,16 @@ public class benchFragment extends Fragment implements
 
     private void updateCard(int z) {
         int countstart = z;
-        for (int x = 0; x < z; x++) {
+        int x = 0;
+
+        for (x = 0; x < 39; x++) {
+            lstBook.set(x, new greenCardModel(R.drawable.quadrat40));
+        }
+
+        for (x = 0; x < z; x++) {
             lstBook.set(x, new greenCardModel(R.drawable.quadratgruen));
         }
+
 
     }
 
@@ -829,6 +959,79 @@ public class benchFragment extends Fragment implements
         builder.setView(view);
         dialog = builder.create();
         dialog.show();
+
+
+
+
+
+
+
+
+        referenceTraininglogPrivate.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Log.d("snak","" + snapshot.getChildren());
+
+                }
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+        referenceTraininglogPrivate.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Log.d("snaps","AAA" + snapshot.getValue());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    public void deleteLastItem(){
+        DatabaseReference quotesRef = referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr));
+        Query queryForFirstElement = quotesRef.orderByKey().limitToLast(1); //
+        quotesRef.removeValue();
+
+        if(progr > 0) {
+            progr--;
+        }
+
+        reference.child(userid).child("anzahlBench").setValue(progr);
+
+        updateCard(progr);
+
+
+
+
     }
 
     public void imageButtonOnClick2(View v, int position, String x) {

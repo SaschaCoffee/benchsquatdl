@@ -574,6 +574,9 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
             holder.l3_kg_two.setText(RepKgModel.getSecondkg());
             holder.l3_kg_three.setText(RepKgModel.getSecondkg());
 
+
+
+
             holder.l3_kg_three.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
