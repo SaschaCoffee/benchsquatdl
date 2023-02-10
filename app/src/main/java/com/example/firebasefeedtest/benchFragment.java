@@ -167,7 +167,7 @@ public class benchFragment extends Fragment implements
         referenceTraininglogPublic = FirebaseDatabase.getInstance().getReference("TraininglogPublic");
         referenceTest = FirebaseDatabase.getInstance().getReference("teste");
         referenceTrainingLocation = FirebaseDatabase.getInstance().getReference("Location");
-        userid = user.getUid();
+       // userid = user.getUid();
 
         createCard();
         buildRecyclerView();
@@ -209,7 +209,7 @@ public class benchFragment extends Fragment implements
 
 
 
-        reference.child(user.getUid()).child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child("userID22").child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -237,8 +237,8 @@ public class benchFragment extends Fragment implements
             public void onClick(View view) {
                 Log.d("sizeCase23", "countnull" + save.size());
 
-                counter = 0;
-                counterNew = 0;
+                counter = 1;
+                counterNew = 1;
 
                 //OPEN DIALOG
                 builder = new AlertDialog.Builder(getActivity());
@@ -255,13 +255,6 @@ public class benchFragment extends Fragment implements
 
                 contactView.setLayoutManager(linearLayoutManager);
                 contactView.setHasFixedSize(true);
-
-                //LayOne, Count = 1,
-
-
-
-
-
 
                 DialogInterface.OnKeyListener xxy = new DialogInterface.OnKeyListener() {
                     @Override
@@ -330,18 +323,34 @@ public class benchFragment extends Fragment implements
 
 
                         if(keyEvent.getAction() == KeyEvent.ACTION_UP && !adapterCallBackString.isEmpty() ){
-
-
                             switch (code) {
                                 case KeyEvent.KEYCODE_VOLUME_UP:
 
                                     tempCounter = counterNew;
+
                                     switch(adapterCallBackString){
                                         case "l1_reps":
-                                            l1_reps.setText(String.valueOf(counter++));
+                                            int text_rep;
+                                            if(l1_reps.getText().toString().isEmpty() || l1_reps.getText().toString().trim().equals("0")){
+                                                text_rep = 0;
+                                            }
+                                            else{
+                                                text_rep  = Integer.parseInt(l1_reps.getText().toString().trim());
+                                            }
+                                            l1_reps.setText(String.valueOf(3+(text_rep)));
                                             break;
                                         case "l1_kg":
-                                            l1_kg.setText(String.valueOf(20*(counterNew++)));
+
+                                            int text_kg;
+                                            if(l1_kg.getText().toString().isEmpty() || l1_kg.getText().toString().trim().equals("0")){
+                                                text_kg = 0;
+                                            }
+                                            else{
+                                                text_kg  = Integer.parseInt(l1_kg.getText().toString().trim());
+                                            }
+
+                                            l1_kg.setText(String.valueOf(20+(text_kg)));
+
                                             break;
                                         case "l2_reps_one":
                                             int txt_rep_l2 = Integer.parseInt(l2_reps_one.getText().toString().trim());
@@ -469,6 +478,393 @@ public class benchFragment extends Fragment implements
 
                         }
 
+
+                        if (keyEvent.getAction() == KeyEvent.ACTION_DOWN && !adapterCallBackString.isEmpty()) {
+                             switch (code) {
+
+                               case KeyEvent.KEYCODE_VOLUME_DOWN:
+                                    double counterNewDown = tempCounter - 1.25;
+                                    tempCounter = counterNewDown;
+
+                                    switch (adapterCallBackString) {
+                                        case "l1_reps":
+                                            int l1_reps_down;
+
+                                            if(l1_reps.getText().toString().isEmpty() || l1_reps.getText().toString().trim().equals("0")){
+                                                l1_reps_down = 1;
+                                            }
+                                            else{
+                                                l1_reps_down = Integer.parseInt(l1_reps.getText().toString());
+                                            }
+
+                                            l1_reps.setText(String.valueOf(l1_reps_down - 1));
+                                            break;
+                                        case "l1_kg":
+                                            int l1_kg_down;
+
+                                            if(l1_kg.getText().toString().isEmpty() || l1_kg.getText().toString().trim().equals("0")){
+                                                l1_kg_down = 2;
+                                            }else{
+                                                l1_kg_down = Integer.parseInt(l1_kg.getText().toString());
+                                            }
+
+                                            l1_kg.setText(String.valueOf(l1_kg_down - 2));
+                                            break;
+
+                                        case "l2_reps_two":
+                                            int txt_rep2_l2;
+
+                                            if(l2_reps_two.getText().toString().trim().equals("0") || l2_reps_two.getText().toString().isEmpty()){
+                                                txt_rep2_l2 = 1;
+                                            }
+                                            else {
+                                                boolean test = l2_reps_two.getText().equals("0");
+                                                Log.d("layerTwo","TestAufruf" + test);
+                                                txt_rep2_l2 = Integer.parseInt(l2_reps_two.getText().toString().trim());
+                                            }
+                                            l2_reps_two.setText(String.valueOf(txt_rep2_l2 -1));
+                                            break;
+
+                                        case "l2_kg_two":
+                                            int txt_kg_l2;
+
+                                            if(l2_kg_two.getText().toString().trim().equals("0") || l2_kg_two.getText().toString().isEmpty()){
+                                                txt_kg_l2 = 2;
+                                            }
+                                            else {
+                                                txt_kg_l2 = Integer.parseInt(l2_kg_two.getText().toString().trim());
+                                            }
+
+                                            l2_kg_two.setText(String.valueOf(txt_kg_l2 - 2));
+                                            break;
+
+
+                                        case "l3_kg_one":
+
+                                            int txt_kg_l3;
+
+                                            if(l2_kg_two.getText().toString().trim().equals("0") || l2_kg_two.getText().toString().isEmpty()){
+                                                txt_kg_l3 = 2;
+                                            }
+                                            else {
+                                                 txt_kg_l3 = Integer.parseInt(l3_kg_one.getText().toString().trim());
+                                            }
+
+                                            l3_kg_one.setText(String.valueOf(txt_kg_l3 - 2));
+
+                                            break;
+
+                                        case "l3_kg_two":
+
+                                            int txt_kg2_l3;
+
+                                            if(l3_kg_two.getText().toString().trim().equals("0") || l3_kg_two.getText().toString().isEmpty()){
+                                                txt_kg2_l3 = 2;
+                                            }
+                                            else {
+                                                 txt_kg2_l3 = Integer.parseInt(l3_kg_two.getText().toString().trim());
+                                            }
+
+                                            l3_kg_two.setText(String.valueOf(txt_kg2_l3 - 2));
+
+                                            break;
+                                        case "l3_kg_three":
+
+                                            int txt_kg3_l3;
+
+                                            if(l3_kg_three.getText().toString().trim().equals("0") || l3_kg_three.getText().toString().isEmpty()){
+                                                txt_kg3_l3 = 2;
+                                            }
+                                            else {
+                                                 txt_kg3_l3 = Integer.parseInt(l3_kg_three.getText().toString().trim());
+                                            }
+
+                                            l3_kg_three.setText(String.valueOf(txt_kg3_l3 - 2));
+
+                                            break;
+
+                                        case "l3_reps":
+                                            int txt_rep_l3;
+
+                                            if(l3_reps.getText().toString().trim().equals("0") || l3_reps.getText().toString().isEmpty()){
+                                                txt_rep_l3 = 1;
+                                            }
+                                            else {
+                                                txt_rep_l3 = Integer.parseInt(l3_reps.getText().toString().trim());
+                                            }
+
+                                            l3_reps.setText(String.valueOf(txt_rep_l3 - 1));
+                                            break;
+                                        case "l3_reps_two":
+
+                                            int txt_rep2_l3;
+
+                                            if(l3_reps_two.getText().toString().trim().equals("0") || l3_reps_two.getText().toString().isEmpty()){
+                                                txt_rep2_l3 = 1;
+                                            }
+                                            else {
+                                                txt_rep2_l3 = Integer.parseInt(l3_reps_two.getText().toString().trim());
+                                            }
+
+                                            l3_reps_two.setText(String.valueOf(txt_rep2_l3 - 1));
+
+                                            break;
+                                        case "l3_reps_three":
+
+                                            int txt_rep3_l3;
+
+                                            if(l3_reps_three.getText().toString().trim().equals("0") || l3_reps_three.getText().toString().isEmpty()){
+                                                txt_rep3_l3 = 1;
+                                            }
+                                            else {
+                                                txt_rep3_l3 = Integer.parseInt(l3_reps_three.getText().toString().trim());
+                                            }
+
+                                            l3_reps_three.setText(String.valueOf(txt_rep3_l3 - 1));
+                                            break;
+
+                                        case "l4_kg_one":
+                                            int txt_kg_l4;
+
+                                            if(l4_kg_one.getText().toString().trim().equals("0") || l4_kg_one.getText().toString().isEmpty()){
+                                                txt_kg_l4 = 2;
+                                            }
+                                            else {
+                                                txt_kg_l4 = Integer.parseInt(l4_kg_one.getText().toString().trim());
+                                            }
+
+                                            l4_kg_one.setText(String.valueOf(txt_kg_l4 - 2));
+                                            break;
+                                        case "l4_kg_two":
+                                            int txt_kg2_l4;
+
+                                            if(l4_kg_two.getText().toString().trim().equals("0") || l4_kg_two.getText().toString().isEmpty()){
+                                                txt_kg2_l4 = 2;
+                                            }
+                                            else {
+                                                txt_kg2_l4 = Integer.parseInt(l4_kg_two.getText().toString().trim());
+                                            }
+
+                                            l4_kg_two.setText(String.valueOf(txt_kg2_l4 - 2));
+
+                                            break;
+                                        case "l4_kg_three":
+
+                                            int txt_kg3_l4;
+
+                                            if(l4_kg_three.getText().toString().trim().equals("0") || l4_kg_three.getText().toString().isEmpty()){
+                                                txt_kg3_l4 = 2;
+                                            }
+                                            else {
+                                                txt_kg3_l4 = Integer.parseInt(l4_kg_three.getText().toString().trim());
+                                            }
+
+                                            l4_kg_three.setText(String.valueOf(txt_kg3_l4 - 2));
+
+                                            break;
+                                        case "l4_kg_four":
+
+                                            int txt_kg4_l4;
+
+                                            if(l4_kg_four.getText().toString().trim().equals("0") || l4_kg_four.getText().toString().isEmpty()){
+                                                txt_kg4_l4 = 2;
+                                            }
+                                            else {
+                                                txt_kg4_l4 = Integer.parseInt(l4_kg_four.getText().toString().trim());
+                                            }
+
+                                            l4_kg_four.setText(String.valueOf(txt_kg4_l4 - 2));
+                                            break;
+
+                                        case "l4_reps":
+                                            int txt_reps_l4;
+
+                                            if(l4_reps.getText().toString().trim().equals("0") || l4_reps.getText().toString().isEmpty()){
+                                                txt_reps_l4 = 1;
+                                            }
+                                            else {
+                                                txt_reps_l4 = Integer.parseInt(l4_reps.getText().toString().trim());
+                                            }
+
+                                            l4_reps.setText(String.valueOf(txt_reps_l4 - 1));
+
+                                            break;
+                                        case "l4_reps_two":
+
+                                            int txt_reps2_l4;
+
+                                            if(l4_reps_two.getText().toString().trim().equals("0") || l4_reps_two.getText().toString().isEmpty()){
+                                                txt_reps2_l4 = 1;
+                                            }
+                                            else {
+                                                txt_reps2_l4 = Integer.parseInt(l4_reps_two.getText().toString().trim());
+                                            }
+
+                                            l4_reps.setText(String.valueOf(txt_reps2_l4 - 1));
+
+                                            l4_reps_two.setText(String.valueOf(txt_reps2_l4 - 1));
+                                            break;
+                                        case "l4_reps_three":
+                                            int txt_reps3_l4;
+
+                                            if(l4_reps_three.getText().toString().trim().equals("0") || l4_reps_three.getText().toString().isEmpty()){
+                                                txt_reps3_l4 = 1;
+                                            }
+                                            else {
+                                                txt_reps3_l4 = Integer.parseInt(l4_reps_three.getText().toString().trim());
+                                            }
+                                            l4_reps_three.setText(String.valueOf(txt_reps3_l4 - 1));
+                                            break;
+                                        case "l4_reps_four":
+                                            int txt_reps4_l4;
+
+                                            if(l4_reps_four.getText().toString().trim().equals("0") || l4_reps_four.getText().toString().isEmpty()){
+                                                txt_reps4_l4 = 1;
+                                            }
+                                            else {
+                                                txt_reps4_l4 = Integer.parseInt(l4_reps_four.getText().toString().trim());
+                                            }
+
+                                            l4_reps_four.setText(String.valueOf(txt_reps4_l4 - 1));
+
+                                            break;
+
+                                        case "l5_reps":
+                                            int txt_reps_l5;
+
+                                            if(l5_reps.getText().toString().trim().equals("0") || l5_reps.getText().toString().isEmpty()){
+                                                txt_reps_l5 = 1;
+                                            }
+                                            else {
+                                                txt_reps_l5 = Integer.parseInt(l5_reps.getText().toString().trim());
+                                            }
+
+                                            l5_reps.setText(String.valueOf(txt_reps_l5 - 1));
+
+                                            break;
+                                        case "l5_reps_two":
+                                            int txt_rep2_l5;
+
+                                            if(l5_reps_two.getText().toString().trim().equals("0") || l5_reps_two.getText().toString().isEmpty()){
+                                                txt_rep2_l5 = 1;
+                                            }
+                                            else {
+                                                txt_rep2_l5 = Integer.parseInt(l5_reps_two.getText().toString().trim());
+                                            }
+
+                                            l5_reps_two.setText(String.valueOf(txt_rep2_l5 - 1));
+
+                                            break;
+                                        case "l5_reps_three":
+                                            int txt_rep3_l5;
+
+                                            if(l5_reps_three.getText().toString().trim().equals("0") || l5_reps_three.getText().toString().isEmpty()){
+                                                txt_rep3_l5 = 1;
+                                            }
+                                            else {
+                                                txt_rep3_l5 = Integer.parseInt(l5_reps_three.getText().toString().trim());
+                                            }
+
+                                            l5_reps_three.setText(String.valueOf(txt_rep3_l5 - 1));
+                                            break;
+
+                                        case "l5_reps_four":
+                                            int txt_rep4_l5;
+
+                                            if(l5_reps_four.getText().toString().trim().equals("0") || l5_reps_four.getText().toString().isEmpty()){
+                                                txt_rep4_l5 = 1;
+                                            }
+                                            else {
+                                                txt_rep4_l5 = Integer.parseInt(l5_reps_four.getText().toString().trim());
+                                            }
+                                            l5_reps_four.setText(String.valueOf(txt_rep4_l5 - 1));
+                                            break;
+                                        case "l5_reps_five":
+                                            int txt_rep5_l5;
+
+                                            if(l5_reps_five.getText().toString().trim().equals("0") || l5_reps_five.getText().toString().isEmpty()){
+                                                txt_rep5_l5 = 1;
+                                            }
+                                            else {
+                                                txt_rep5_l5 = Integer.parseInt(l5_reps_five.getText().toString().trim());
+                                            }
+
+                                            l5_reps_five.setText(String.valueOf(txt_rep5_l5 - 1));
+                                            break;
+
+                                        case "l5_kg_one":
+                                            int txt_kg_l5;
+
+                                            if(l5_kg_one.getText().toString().trim().equals("0") || l5_kg_one.getText().toString().isEmpty()){
+                                                txt_kg_l5 = 2;
+                                            }
+                                            else {
+                                                txt_kg_l5 = Integer.parseInt(l5_kg_one.getText().toString().trim());
+                                            }
+
+                                            l5_kg_one.setText(String.valueOf(txt_kg_l5 - 2));
+
+                                            break;
+                                        case "l5_kg_two":
+                                            int txt_kg2_l5;
+
+                                            if(l5_kg_two.getText().toString().trim().equals("0") || l5_kg_two.getText().toString().isEmpty()){
+                                                txt_kg2_l5 = 2;
+                                            }
+                                            else {
+                                                txt_kg2_l5 = Integer.parseInt(l5_kg_two.getText().toString().trim());
+                                            }
+
+                                            l5_kg_two.setText(String.valueOf(txt_kg2_l5 - 2));
+                                            break;
+
+                                        case "l5_kg_three":
+                                            int txt_kg3_l5;
+
+                                            if(l5_kg_three.getText().toString().trim().equals("0") || l5_kg_three.getText().toString().isEmpty()){
+                                                txt_kg3_l5 = 2;
+                                            }
+                                            else {
+                                                txt_kg3_l5 = Integer.parseInt(l5_kg_three.getText().toString().trim());
+                                            }
+
+                                            l5_kg_three.setText(String.valueOf(txt_kg3_l5 - 2));
+
+                                            break;
+                                        case "l5_kg_four":
+                                            int txt_kg4_l5;
+
+                                            if(l5_kg_four.getText().toString().trim().equals("0") || l5_kg_four.getText().toString().isEmpty()){
+                                                txt_kg4_l5 = 2;
+                                            }
+                                            else {
+                                                txt_kg4_l5 = Integer.parseInt(l5_kg_four.getText().toString().trim());
+                                            }
+
+                                            l5_kg_four.setText(String.valueOf(txt_kg4_l5 - 2));
+
+                                            break;
+                                        case "l5_kg_five":
+
+                                            int txt_kg5_l5;
+
+                                            if(l5_kg_five.getText().toString().trim().equals("0") || l5_kg_five.getText().toString().isEmpty()){
+                                                txt_kg5_l5 = 2;
+                                            }
+                                            else {
+                                                txt_kg5_l5 = Integer.parseInt(l5_kg_five.getText().toString().trim());
+                                            }
+
+                                            l5_kg_five.setText(String.valueOf(txt_kg5_l5 - 2));
+
+                                            break;
+
+                                    }
+                                    return true;
+                            }
+                        }
+
+
                         {
 
 
@@ -504,6 +900,7 @@ public class benchFragment extends Fragment implements
                 contactView.getLayoutManager().scrollToPosition(0);
 
 
+
                 btn_upload_data.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -524,7 +921,7 @@ public class benchFragment extends Fragment implements
 
                                     progr++;
 
-                                    reference.child(userid).child(childcard).setValue(progr);
+                                    reference.child("userID22").child(childcard).setValue(progr);
                                     referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench);
 
                                     updateProgressBar(progr);
@@ -537,8 +934,6 @@ public class benchFragment extends Fragment implements
 
                                     counter = 0;
                                     counterNew = 0;
-
-
 
                                     save.remove(0);
                                     adapterCallBackString = "l1_reps";
@@ -567,6 +962,7 @@ public class benchFragment extends Fragment implements
                                     modelBench bench2 = new modelBench(first_rep_l2, second_rep_l2, first_kg_l2, second_kg_l2);
                                     progr++;
 
+                                    reference.child("userID22").child(childcard).setValue(progr);
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench2);
                                     referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench2);
 
@@ -615,6 +1011,8 @@ public class benchFragment extends Fragment implements
                                 );
 
                                 progr++;
+
+                                reference.child("userID22").child(childcard).setValue(progr);
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench3);
                                 referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench3);
 
@@ -668,6 +1066,7 @@ public class benchFragment extends Fragment implements
                                     modelBench bench4 = new modelBench(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4, kg3_l4, kg4_l4);
 
                                     progr++;
+                                    reference.child("userID22").child(childcard).setValue(progr);
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench4);
                                     referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench4);
 
@@ -730,6 +1129,7 @@ public class benchFragment extends Fragment implements
 
 
                                 progr++;
+                                reference.child("userID22").child(childcard).setValue(progr);
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench5);
                                 referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench5);
 
@@ -917,9 +1317,17 @@ public class benchFragment extends Fragment implements
                 });
 
             }
+
+            ArrayList<String> y = new ArrayList<>();
+
         });
         return vx;
     }
+
+    private String saveRep(String x) {
+        return x;
+    }
+
 
     private void deleteString() {
         this.adapterCallBackString = "l1_reps";
