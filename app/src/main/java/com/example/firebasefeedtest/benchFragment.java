@@ -71,8 +71,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -83,7 +81,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class benchFragment extends Fragment implements
         cardViewAdapter.PlayPauseClick  {
@@ -130,7 +131,8 @@ public class benchFragment extends Fragment implements
 
     String adapterCallBackString = "l1_reps";
     int counterNew = 0;
-
+    int countMe = 0;
+    int progrrr = 0;
 
 
 
@@ -191,14 +193,11 @@ public class benchFragment extends Fragment implements
                 btn_delete_yes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(progr > 0){
+
                             deleteLastItem();
                             dialog.cancel();
                             buildRecyclerView();
-                        }
-                        else{
-                            Toast.makeText(getActivity(), "Is already empty", Toast.LENGTH_SHORT).show();
-                        }
+
                     }
                 });
 
@@ -355,11 +354,11 @@ public class benchFragment extends Fragment implements
                                         case "l2_reps_one":
                                             int txt_rep_l2 = Integer.parseInt(l2_reps_one.getText().toString().trim());
                                             Log.d("txt","mem" + txt_rep_l2);
-                                            l2_reps_one.setText(String.valueOf(1 + txt_rep_l2));
+                                            l2_reps_one.setText(String.valueOf(3 + txt_rep_l2));
                                             break;
                                         case "l2_reps_two":
                                             int txt_rep2_l2 = Integer.parseInt(l2_reps_two.getText().toString().trim());
-                                            l2_reps_two.setText(String.valueOf(1 + txt_rep2_l2));
+                                            l2_reps_two.setText(String.valueOf(3 + txt_rep2_l2));
                                             break;
                                         case "l2_kg_one":
                                             int txt_kg_l2 = Integer.parseInt(l2_kg_one.getText().toString().trim());
@@ -386,15 +385,15 @@ public class benchFragment extends Fragment implements
 
                                         case "l3_reps":
                                             int txt_rep_l3 = Integer.parseInt(l3_reps.getText().toString().trim());
-                                            l3_reps.setText(String.valueOf(1 + txt_rep_l3));
+                                            l3_reps.setText(String.valueOf(3 + txt_rep_l3));
                                             break;
                                         case "l3_reps_two":
                                             int txt_rep2_l3 = Integer.parseInt(l3_reps_two.getText().toString().trim());
-                                            l3_reps_two.setText(String.valueOf(txt_rep2_l3 + 1));
+                                            l3_reps_two.setText(String.valueOf(txt_rep2_l3 + 3));
                                             break;
                                         case "l3_reps_three":
                                             int txt_rep3_l3 = Integer.parseInt(l3_reps_three.getText().toString().trim());
-                                            l3_reps_three.setText(String.valueOf(1 + txt_rep3_l3));
+                                            l3_reps_three.setText(String.valueOf(3 + txt_rep3_l3));
                                             break;
 
                                         case "l4_kg_one":
@@ -416,40 +415,40 @@ public class benchFragment extends Fragment implements
 
                                         case "l4_reps":
                                             int txt_rep_l4 = Integer.parseInt(l4_reps.getText().toString().trim());
-                                            l4_reps.setText(String.valueOf(1 + txt_rep_l4));
+                                            l4_reps.setText(String.valueOf(3 + txt_rep_l4));
                                             break;
                                         case "l4_reps_two":
                                             int txt_rep2_l4 = Integer.parseInt(l4_reps_two.getText().toString().trim());
-                                            l4_reps_two.setText(String.valueOf(txt_rep2_l4 + 1));
+                                            l4_reps_two.setText(String.valueOf(txt_rep2_l4 + 3));
                                             break;
                                         case "l4_reps_three":
                                             int txt_rep3_l4 = Integer.parseInt(l4_reps_three.getText().toString().trim());
-                                            l4_reps_three.setText(String.valueOf(txt_rep3_l4 + 1));
+                                            l4_reps_three.setText(String.valueOf(txt_rep3_l4 + 3));
                                             break;
                                         case "l4_reps_four":
                                             int txt_rep4_l4 = Integer.parseInt(l4_reps_four.getText().toString().trim());
-                                            l4_reps_four.setText(String.valueOf(txt_rep4_l4 + 1));
+                                            l4_reps_four.setText(String.valueOf(txt_rep4_l4 + 3));
                                             break;
 
                                         case "l5_reps":
                                             int txt_rep_l5 = Integer.parseInt(l5_reps.getText().toString().trim());
-                                            l5_reps.setText(String.valueOf(1 + txt_rep_l5));
+                                            l5_reps.setText(String.valueOf(3 + txt_rep_l5));
                                             break;
                                         case "l5_reps_two":
                                             int txt_rep2_l5 = Integer.parseInt(l5_reps_two.getText().toString().trim());
-                                            l5_reps_two.setText(String.valueOf(1 + txt_rep2_l5));
+                                            l5_reps_two.setText(String.valueOf(3 + txt_rep2_l5));
                                             break;
                                         case "l5_reps_three":
                                             int txt_rep3_l5 = Integer.parseInt(l5_reps_three.getText().toString().trim());
-                                            l5_reps_three.setText(String.valueOf(1 + txt_rep3_l5));
+                                            l5_reps_three.setText(String.valueOf(3 + txt_rep3_l5));
                                             break;
                                         case "l5_reps_four":
                                             int txt_rep4_l5 = Integer.parseInt(l5_reps_four.getText().toString().trim());
-                                            l5_reps_four.setText(String.valueOf(1 + txt_rep4_l5));
+                                            l5_reps_four.setText(String.valueOf(3 + txt_rep4_l5));
                                             break;
                                         case "l5_reps_five":
                                             int txt_rep5_l5 = Integer.parseInt(l5_reps_five.getText().toString().trim());
-                                            l5_reps_five.setText(String.valueOf(1 + txt_rep5_l5));
+                                            l5_reps_five.setText(String.valueOf(3 + txt_rep5_l5));
                                             break;
 
                                         case "l5_kg_one":
@@ -904,7 +903,9 @@ public class benchFragment extends Fragment implements
                 btn_upload_data.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Log.d("savesize","peng" + save.size());
+                        DateFormat df = new SimpleDateFormat("d MMM yyyy");
+                        String date = df.format(Calendar.getInstance().getTime());
+
                         switch(save.size()){
 
                             case 1:
@@ -915,7 +916,7 @@ public class benchFragment extends Fragment implements
                                 String first_rep_string = first_rep.getText().toString().trim();
 
                                 if(!first_kg_string.isEmpty() && !first_rep_string.isEmpty()) {
-                                    modelBench bench = new modelBench(first_rep_string, first_kg_string);
+                                    modelBench bench = new modelBench(first_rep_string, first_kg_string,date);
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench);
 
 
@@ -959,7 +960,7 @@ public class benchFragment extends Fragment implements
                                 if(!first_kg_l2.isEmpty() && !second_kg_l2.isEmpty() && !first_rep_l2.isEmpty() &&
                                         !second_rep_l2.isEmpty()) {
 
-                                    modelBench bench2 = new modelBench(first_rep_l2, second_rep_l2, first_kg_l2, second_kg_l2);
+                                    modelBench bench2 = new modelBench(first_rep_l2, second_rep_l2, first_kg_l2, second_kg_l2, date);
                                     progr++;
 
                                     reference.child("userID22").child(childcard).setValue(progr);
@@ -1007,8 +1008,7 @@ public class benchFragment extends Fragment implements
 
                                 if(!first_rep_l3.isEmpty() && !second_rep_l3.isEmpty() &&
                                         !third_rep_l3.isEmpty() && !first_kg_l3.isEmpty() && !second_kg_l3.isEmpty() && !third_kg_l3.isEmpty()){
-                                modelBench bench3 = new modelBench(first_rep_l3, second_rep_l3, third_rep_l3, first_kg_l3, second_kg_l3, third_kg_l3
-                                );
+                                modelBench bench3 = new modelBench(first_rep_l3, second_rep_l3, third_rep_l3, first_kg_l3, second_kg_l3, third_kg_l3, date);
 
                                 progr++;
 
@@ -1063,7 +1063,7 @@ public class benchFragment extends Fragment implements
                                 if(!rp1_l4.isEmpty() && !rp2_l4.isEmpty() && !rp3_l4.isEmpty() && !rp4_l4.isEmpty()
                                 && !kg1_l4.isEmpty() && !kg2_l4.isEmpty() && !kg3_l4.isEmpty() && !kg4_l4.isEmpty()) {
 
-                                    modelBench bench4 = new modelBench(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4, kg3_l4, kg4_l4);
+                                    modelBench bench4 = new modelBench(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4, kg3_l4, kg4_l4, date);
 
                                     progr++;
                                     reference.child("userID22").child(childcard).setValue(progr);
@@ -1125,7 +1125,7 @@ public class benchFragment extends Fragment implements
                                         !kg1_l5.isEmpty() && !kg2_l5.isEmpty() && !kg3_l5.isEmpty() &&
                                         !kg4_l5.isEmpty() && !kg5_l5.isEmpty()){
 
-                                modelBench bench5 = new modelBench(rp1_l5, rp2_l5, rp3_l5, rp4_l5, rp5_l5, kg1_l5, kg2_l5, kg3_l5, kg4_l5, kg5_l5);
+                                modelBench bench5 = new modelBench(rp1_l5, rp2_l5, rp3_l5, rp4_l5, rp5_l5, kg1_l5, kg2_l5, kg3_l5, kg4_l5, kg5_l5, date);
 
 
                                 progr++;
@@ -1368,6 +1368,312 @@ public class benchFragment extends Fragment implements
         dialog = builder.create();
         dialog.show();
 
+        TextView date = view.findViewById(R.id.tv_date);
+
+        TextView rep1 = view.findViewById(R.id.tv_reps_opendialog);
+        TextView rep2 = view.findViewById(R.id.tv_reps_opendialog2);
+        TextView rep3 = view.findViewById(R.id.tv_reps_opendialog3);
+        TextView rep4 = view.findViewById(R.id.tv_reps_opendialog4);
+        TextView rep5 = view.findViewById(R.id.tv_reps_opendialog5);
+
+// KG STARTS HERE, BUT I NAMED IT TO REPS FOR THE LOOP IN THE NEXT PARAGRAPH
+        TextView rep6 = view.findViewById(R.id.tv_kg_opendialog);
+        TextView rep7 = view.findViewById(R.id.tv_kg_opendialog2);
+        TextView rep8 = view.findViewById(R.id.tv_kg_opendialog3);
+        TextView rep9 = view.findViewById(R.id.tv_kg_opendialog4);
+        TextView rep10 = view.findViewById(R.id.tv_kg_opendialog5);
+
+        String xy = (String.valueOf(position+1));
+
+        DateFormat df = new SimpleDateFormat("d MMM yyyy");
+        String dates = df.format(Calendar.getInstance().getTime());
+
+
+
+       Query bre = referenceTraininglogPrivate.child("userID22").child(xy);
+
+        
+       bre.addListenerForSingleValueEvent(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot snapshot) {
+               Log.d("count4","" + snapshot.getChildrenCount());
+               String count = String.valueOf(snapshot.getChildrenCount());
+
+               switch(count){
+                   case "3":
+                       for(DataSnapshot pee : snapshot.getChildren()) {
+                           progrrr++;
+                           String counterString = "rep" + String.valueOf(progrrr);
+                           Log.d("counterS","" + counterString);
+                           String x = pee.getValue(String.class);
+
+                           Log.d("counterSS","" + x);
+
+                           switch(counterString){
+                               case "rep1":
+                                   Log.d("counterS","peeeee");
+                                   rep1.setText(x);
+                                   break;
+
+                               case "rep2":
+                                   rep6.setText(x);
+                                   break;
+                               case "rep3":
+                                   date.setText(dates);
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   break;
+
+                           }
+                       }
+                       break;
+
+                   case "5":
+                       for(DataSnapshot pee : snapshot.getChildren()) {
+                           progrrr++;
+                           String counterString = "rep" + String.valueOf(progrrr);
+                           Log.d("counterS","" + counterString);
+                           String x = pee.getValue(String.class);
+
+                           Log.d("counterSS","" + x);
+
+                           switch(counterString){
+                               case "rep1":
+                                   Log.d("counterS","peeeee");
+                                   rep1.setText(x);
+                                   break;
+
+                               case "rep2":
+                                   //KG
+                                   rep2.setText(x);
+                                   break;
+
+                               case "rep3":
+                                   //REP
+                                   rep6.setText(x);
+                                   break;
+
+                               case "rep4":
+                                   //KG
+                                   rep7.setText(x);
+                                   break;
+                               case "rep5":
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   break;
+                           }
+                       }break;
+                   case "7":
+                       for(DataSnapshot pee : snapshot.getChildren()) {
+                           progrrr++;
+                           String counterString = "rep" + String.valueOf(progrrr);
+                           Log.d("counterS","" + counterString);
+                           String x = pee.getValue(String.class);
+
+                           Log.d("counterSS","" + x);
+
+                           switch(counterString){
+                               case "rep1":
+                                   Log.d("counterS","peeeee");
+                                   rep1.setText(x);
+                                   break;
+
+                               case "rep2":
+                                   //KG
+                                   rep2.setText(x);
+                                   break;
+
+                               case "rep3":
+                                   //REP
+                                   rep3.setText(x);
+                                   break;
+
+                               case "rep4":
+                                   //KG
+                                   rep6.setText(x);
+                                   break;
+
+                               case "rep5":
+                                   rep7.setText(x);
+                                   break;
+
+                               case "rep6":
+                                   rep8.setText(x);
+                                   break;
+
+                               case "rep7":
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   break;
+                           }
+                       }break;
+
+                   case "9":
+                       for(DataSnapshot pee : snapshot.getChildren()) {
+                           progrrr++;
+                           String counterString = "rep" + String.valueOf(progrrr);
+                           Log.d("counterS","" + counterString);
+                           String x = pee.getValue(String.class);
+
+                           Log.d("counterSS","" + x);
+
+                           switch(counterString){
+                               case "rep1":
+                                   Log.d("counterS","peeeee");
+                                   rep1.setText(x);
+                                   break;
+
+                               case "rep2":
+                                   //KG
+                                   rep2.setText(x);
+                                   break;
+
+                               case "rep3":
+                                   //REP
+                                   rep3.setText(x);
+                                   break;
+
+                               case "rep4":
+                                   //KG
+                                   rep4.setText(x);
+                                   break;
+
+                               case "rep5":
+                                   rep6.setText(x);
+                                   break;
+
+                               case "rep6":
+                                   rep7.setText(x);
+                                   break;
+
+                               case "rep7":
+                                   rep8.setText(x);
+                                   break;
+
+                               case "rep8":
+                                   rep9.setText(x);
+                                   break;
+
+                               case "rep9":
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   break;
+
+                           }
+                       }break;
+
+                   case "11" :
+                       for(DataSnapshot pee : snapshot.getChildren()) {
+                           progrrr++;
+                           String counterString = "rep" + String.valueOf(progrrr);
+                           Log.d("counterS","" + counterString);
+                           String x = pee.getValue(String.class);
+
+                           Log.d("counterSS","" + x);
+
+                           switch(counterString){
+                               case "rep1":
+                                   Log.d("counterS","peeeee");
+                                   rep1.setText(x);
+                                   break;
+
+                               case "rep2":
+                                   //KG
+                                   rep2.setText(x);
+                                   break;
+
+                               case "rep3":
+                                   //REP
+                                   rep3.setText(x);
+                                   break;
+
+                               case "rep4":
+                                   //KG
+                                   rep4.setText(x);
+                                   break;
+
+                               case "rep5":
+                                   rep5.setText(x);
+                                   break;
+
+                               case "rep6":
+                                   rep6.setText(x);
+                                   break;
+
+                               case "rep7":
+                                   rep7.setText(x);
+                                   break;
+
+                               case "rep8":
+                                   rep8.setText(x);
+                                   break;
+
+                               case "rep9":
+                                   rep9.setText(x);
+                                   break;
+                               case "rep10":
+                                   rep10.setText(x);
+                                   break;
+
+                               case "rep11":
+                                   rep10.setText(x);
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   progrrr--;
+                                   break;
+                           }
+                       }break;
+
+
+
+
+               }
+
+           }
+
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
+
+
+        referenceTraininglogPrivate.child("userID22").child("4").limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot pee : snapshot.getChildren()) {
+                    String x = pee.getValue(String.class);
+                    Log.d("GibMirEs", "" + x);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
 
@@ -1425,17 +1731,49 @@ public class benchFragment extends Fragment implements
     }
 
     public void deleteLastItem(){
-        DatabaseReference quotesRef = referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr));
-        Query queryForFirstElement = quotesRef.orderByKey().limitToLast(1); //
-        quotesRef.removeValue();
+        reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
+        referenceTraininglogPrivate = FirebaseDatabase.getInstance().getReference("TraininglogPrivateBench");
 
-        if(progr > 0) {
+
+        DatabaseReference quotesRef = referenceTraininglogPrivate.child("userID22");
+
+        if (progr > 0){
             progr--;
         }
 
-        reference.child(userid).child("anzahlBench").setValue(progr);
 
-        updateCard(progr);
+        quotesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String test = String.valueOf(snapshot.getChildrenCount());
+
+                String x = String.valueOf(snapshot.getChildrenCount());
+                int newC = Integer.parseInt(x);
+
+                DatabaseReference quotesRef = referenceTraininglogPrivate.child("userID22").child(x);
+                quotesRef.removeValue();
+
+                if(newC > 0) {
+                    newC--;
+                    reference.child("userID22").child("anzahlBench").setValue(newC);
+                    updateCard(Integer.parseInt(test));
+                    updateCard(newC);
+                    buildRecyclerView();
+                }
+                else{
+                    newC = 0;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
 
 
 

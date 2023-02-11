@@ -1,7 +1,57 @@
 package com.example.firebasefeedtest;
 
 public class modelBench {
-    String bench1, bench2, bench3, bench4,bench5, kg1, kg2, kg3, kg4, kg5;
+    String bench1, bench2, bench3, bench4,bench5, kg1, kg2, kg3, kg4, kg5, time;
+
+    public modelBench(String bench1, String kg1, String time) {
+        this.bench1 = bench1;
+        this.kg1 = kg1;
+        this.time = time;
+    }
+
+    public modelBench(String bench1, String bench2, String kg1, String kg2, String time) {
+        this.bench1 = bench1;
+        this.bench2 = bench2;
+        this.kg1 = kg1;
+        this.kg2 = kg2;
+        this.time = time;
+    }
+
+    public modelBench(String bench1, String bench2, String bench3, String kg1, String kg2, String kg3, String time) {
+        this.bench1 = bench1;
+        this.bench2 = bench2;
+        this.bench3 = bench3;
+        this.kg1 = kg1;
+        this.kg2 = kg2;
+        this.kg3 = kg3;
+        this.time = time;
+    }
+
+    public modelBench(String bench1, String bench2, String bench3, String bench4, String kg1, String kg2, String kg3, String kg4, String time) {
+        this.bench1 = bench1;
+        this.bench2 = bench2;
+        this.bench3 = bench3;
+        this.bench4 = bench4;
+        this.kg1 = kg1;
+        this.kg2 = kg2;
+        this.kg3 = kg3;
+        this.kg4 = kg4;
+        this.time = time;
+    }
+
+    public modelBench(String bench1, String bench2, String bench3, String bench4, String bench5, String kg1, String kg2, String kg3, String kg4, String kg5, String time) {
+        this.bench1 = bench1;
+        this.bench2 = bench2;
+        this.bench3 = bench3;
+        this.bench4 = bench4;
+        this.bench5 = bench5;
+        this.kg1 = kg1;
+        this.kg2 = kg2;
+        this.kg3 = kg3;
+        this.kg4 = kg4;
+        this.kg5 = kg5;
+        this.time = time;
+    }
 
     public String getBench1() {
         return bench1;
@@ -83,48 +133,11 @@ public class modelBench {
         this.kg5 = kg5;
     }
 
-    public modelBench(String bench1, String kg1) {
-        this.bench1 = bench1;
-        this.kg1 = kg1;
+    public String getTime() {
+        return time;
     }
 
-    public modelBench(String bench1, String bench2, String kg1, String kg2) {
-        this.bench1 = bench1;
-        this.bench2 = bench2;
-        this.kg1 = kg1;
-        this.kg2 = kg2;
-    }
-
-    public modelBench(String bench1, String bench2, String bench3, String kg1, String kg2, String kg3) {
-        this.bench1 = bench1;
-        this.bench2 = bench2;
-        this.bench3 = bench3;
-        this.kg1 = kg1;
-        this.kg2 = kg2;
-        this.kg3 = kg3;
-    }
-
-    public modelBench(String bench1, String bench2, String bench3, String bench4, String kg1, String kg2, String kg3, String kg4) {
-        this.bench1 = bench1;
-        this.bench2 = bench2;
-        this.bench3 = bench3;
-        this.bench4 = bench4;
-        this.kg1 = kg1;
-        this.kg2 = kg2;
-        this.kg3 = kg3;
-        this.kg4 = kg4;
-    }
-
-    public modelBench(String bench1, String bench2, String bench3, String bench4, String bench5, String kg1, String kg2, String kg3, String kg4, String kg5) {
-        this.bench1 = bench1;
-        this.bench2 = bench2;
-        this.bench3 = bench3;
-        this.bench4 = bench4;
-        this.bench5 = bench5;
-        this.kg1 = kg1;
-        this.kg2 = kg2;
-        this.kg3 = kg3;
-        this.kg4 = kg4;
-        this.kg5 = kg5;
+    public void setTime(String time) {
+        this.time = time;
     }
 }
