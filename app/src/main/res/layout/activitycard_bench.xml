@@ -39,7 +39,9 @@
         app:layout_constraintEnd_toEndOf="@+id/progress_bar"
         app:layout_constraintStart_toStartOf="@+id/progress_bar"
         app:layout_constraintTop_toTopOf="@+id/progress_bar"
-        tools:text="60%" />
+        android:textSize="60dp"
+        android:textStyle="bold"
+        android:text="%"/>
 
     <Button
         android:id="@+id/btn_add_data_card_bench"

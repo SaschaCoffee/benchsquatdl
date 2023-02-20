@@ -33,7 +33,7 @@
                 android:layout_toEndOf="@+id/layer_one_img"
                 android:ems="10"
                 android:hint="Repetitions"
-                android:inputType="textPersonName" />
+                android:inputType="phone" />
 
             <EditText
                 android:id="@+id/layer_one_kg"
@@ -44,7 +44,7 @@
                 android:layout_toStartOf="@+id/layer_one_heavy"
                 android:ems="10"
                 android:hint="Kg/lb"
-                android:inputType="textPersonName" />
+                android:inputType="phone" />
 
             <TextView
                 android:id="@+id/layer_one_heavy"

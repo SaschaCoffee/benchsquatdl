@@ -1,4 +1,4 @@
-package com.example.firebasefeedtest;
+package com.example.benchsquatdl2;
 
 import org.junit.Test;
 

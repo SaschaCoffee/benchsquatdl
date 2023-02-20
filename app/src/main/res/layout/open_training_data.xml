@@ -6,19 +6,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_dateee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:text="Date"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="178dp"
-        android:layout_height="165dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toStartOf="@+id/tv_dateee"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,11 +133,21 @@
                 android:id="@+id/multiAutoCompleteTextView"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
                 android:background="@color/grey"
                 android:text="Add a comment"
                 app:layout_constraintEnd_toEndOf="@+id/textView5"
                 app:layout_constraintStart_toStartOf="@+id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/tv_reps_opendialog5" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="SAVE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/multiAutoCompleteTextView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -161,5 +162,14 @@
         app:layout_constraintEnd_toEndOf="@+id/tv_dateee"
         app:layout_constraintStart_toStartOf="@+id/tv_dateee"
         app:layout_constraintTop_toBottomOf="@+id/tv_dateee" />
+
+    <TextView
+        android:id="@+id/tv_dateee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:text="Date"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
