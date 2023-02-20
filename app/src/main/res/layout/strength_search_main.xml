@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:layout_margin="25dp"
+        tools:context=".compareYourselfActivity"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/textView_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="6dp"
+            android:text="Country*"
+            android:textColor="#555555" />
+
+
+        <Spinner
+            android:id="@+id/spinner_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_country"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textView_indian_states"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinner_country"
+            android:layout_marginTop="30dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="6dp"
+            android:text="@string/state"
+            android:textColor="#555555" />
+
+
+        <Spinner
+            android:id="@+id/spinner_indian_states"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_indian_states"
+            android:layout_marginTop="10dp" />
+
+
+        <Button
+            android:id="@+id/button_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner_indian_states"
+
+            android:layout_alignStart="@+id/et_max_squat"
+            android:layout_alignEnd="@+id/et_max_deadlift"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="114dp"
+            android:layout_marginEnd="70dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="@string/submit"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/et_max_squat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner_indian_states"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="30dp"
+
+
+
+            android:layout_marginTop="34dp"
+            android:background="@drawable/border"
+
+            android:hint="@string/squat_hint"
+            android:inputType="textPersonName"
+            android:paddingTop="3dp"
+
+
+            android:paddingBottom="6dp"
+            android:textColorHint="#555555" />
+
+        <EditText
+            android:id="@+id/et_max_bench"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner_indian_states"
+
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="34dp"
+
+            android:layout_toEndOf="@+id/et_max_squat"
+            android:background="@drawable/border"
+            android:hint="@string/bench_hint"
+
+
+            android:inputType="textPersonName"
+            android:paddingTop="3dp"
+            android:paddingBottom="6dp"
+            android:textColorHint="#555555" />
+
+        <EditText
+            android:id="@+id/et_max_deadlift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spinner_indian_states"
+
+
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="34dp"
+
+
+            android:layout_marginEnd="85dp"
+            android:layout_toEndOf="@+id/et_max_bench"
+
+
+            android:background="@drawable/border"
+            android:hint="@string/deadlift_hint"
+            android:inputType="textPersonName"
+            android:paddingTop="3dp"
+            android:paddingBottom="6dp"
+            android:textColorHint="#555555" />
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
