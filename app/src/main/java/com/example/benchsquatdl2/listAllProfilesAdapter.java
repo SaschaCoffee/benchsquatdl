@@ -13,58 +13,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class listAllProfilesAdapter extends RecyclerView.Adapter<listAllProfilesViewHolder>
+public class listAllProfilesAdapter extends RecyclerView.Adapter<listAllProfilesViewHolder>{
 
+    DatabaseReference statistic;
+    modelStatisticData peace;
+    ArrayList<List> benchList, squatList, deadliftList;
 
-implements Filterable {
-    private Context context;
-    private ArrayList<modelDisplayRv> listContacts;
-
-    private ArrayList<modelDisplayRv> mArrayList;
-    private DataBaseHelper mData;
-
-    listAllProfilesAdapter(Context context, ArrayList<modelDisplayRv> listContacts){
-        this.context = context;
-        this.listContacts = listContacts;
-        this.mArrayList = listContacts;
-
-        mData = new DataBaseHelper(context);
+    public listAllProfilesAdapter(ArrayList<List> benchList, ArrayList<List> squatList, ArrayList<List> deadliftList) {
+        this.benchList = benchList;
+        this.squatList = squatList;
+        this. deadliftList = deadliftList;
     }
 
-
-
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
-                if (charString.isEmpty()) {
-                    listContacts = mArrayList;
-                }
-                else {
-                    ArrayList<modelDisplayRv> filteredList = new ArrayList<>();
-                    for (modelDisplayRv contacts : mArrayList) {
-                        if (contacts.getName().toLowerCase().contains(charString)) {
-                            filteredList.add(contacts);
-                        }
-                    }
-                    listContacts = filteredList;
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = listContacts;
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                listContacts = (ArrayList<modelDisplayRv>) filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
-    }
 
     @NonNull
     @Override
@@ -77,30 +48,19 @@ implements Filterable {
 
     @Override
     public void onBindViewHolder(@NonNull listAllProfilesViewHolder holder, int position) {
-    final modelDisplayRv contacts = listContacts.get(position);
+        statistic = FirebaseDatabase.getInstance().getReference();
 
+        int sizeList = benchList.get(position).size();
 
+        holder.tv_bench.setText(String.valueOf(benchList.get(position).get(sizeList - 1)));
+        Log.d("getV","AA" + benchList.size());
 
-
-    holder.tvName.setText(contacts.getName());
-
-
-      holder.img.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-              Intent s = new Intent(context, statisticActivity.class);
-              s.putExtra("item", contacts.getName());
-              Log.d("peace","" + contacts.getName());
-              context.startActivity(s);
-          }
-      });
-  ;
 
 
     }
 
     @Override
     public int getItemCount() {
-        return listContacts.size();
+        return 3;
     }
 }

@@ -82,9 +82,6 @@ public class SecondFragment extends Fragment implements BottomNavigationView.OnN
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("vaalla", "hallo1");
         View vx = inflater.inflate(R.layout.activitycard2, container, false);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        dialogExtend xx = new dialogExtend();
-        builder.setTitle("Enter Data");
 
         bottomNavigationView = vx.findViewById(R.id.topNavigationView);
 

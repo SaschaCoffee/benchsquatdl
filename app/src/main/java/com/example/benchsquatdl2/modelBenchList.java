@@ -22,6 +22,46 @@ public class modelBenchList {
         this.xNote = xNote;
     }
 
+    public modelBenchList(String squat1, String squat2, String squat3, String squat4, String kg1, String kg2, String kg3, String kg4, String time, String xNote) {
+        this.squat1 = squat1;
+        this.squat2 = squat2;
+        this.squat3 = squat3;
+        this.squat4 = squat4;
+        this.kg1 = kg1;
+        this.kg2 = kg2;
+        this.kg3 = kg3;
+        this.kg4 = kg4;
+        this.time = time;
+        this.xNote = xNote;
+    }
+
+    public modelBenchList(String squat1, String squat2, String squat3, String kg1, String kg2, String kg3, String time, String xNote) {
+        this.squat1 = squat1;
+        this.squat2 = squat2;
+        this.squat3 = squat3;
+        this.kg1 = kg1;
+        this.kg2 = kg2;
+        this.kg3 = kg3;
+        this.time = time;
+        this.xNote = xNote;
+    }
+
+    public modelBenchList(String squat1, String squat2, String kg1, String kg2, String time, String xNote) {
+        this.squat1 = squat1;
+        this.squat2 = squat2;
+        this.kg1 = kg1;
+        this.kg2 = kg2;
+        this.time = time;
+        this.xNote = xNote;
+    }
+
+    public modelBenchList(String squat1, String kg1, String time, String xNote) {
+        this.squat1 = squat1;
+        this.kg1 = kg1;
+        this.time = time;
+        this.xNote = xNote;
+    }
+
     public String getSquat1() {
         return squat1;
     }

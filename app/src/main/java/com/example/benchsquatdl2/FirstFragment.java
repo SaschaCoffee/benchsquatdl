@@ -1,42 +1,28 @@
 package com.example.benchsquatdl2;
 
-import android.content.ClipData;
-import android.content.Context;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class FirstFragment extends Fragment  {
@@ -47,6 +33,7 @@ public class FirstFragment extends Fragment  {
 
     private DataBaseHelper mDatabase;
     SQLiteDatabase db;
+    RecyclerView contactView;
     DatabaseReference statistic;
     Button sbd, add, btn_logregister;
     TextView tv_banner;
@@ -58,70 +45,90 @@ public class FirstFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vx = inflater.inflate(R.layout.list, container, false);
-
-        Button add = vx.findViewById(R.id.btnAdd);
-        sbd = vx.findViewById(R.id.sbd_button);
-        btn_logregister = vx.findViewById(R.id.btn_register_log);
-
-        RecyclerView contactView = vx.findViewById(R.id.myContactList);
+        statistic = FirebaseDatabase.getInstance().getReference();
+        contactView = vx.findViewById(R.id.myContactList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         contactView.setLayoutManager(linearLayoutManager);
         contactView.setHasFixedSize(true);
 
 
-        mDatabase = new DataBaseHelper(getContext());
+        Log.d("getV","FirstFragment");
+        ArrayList<Integer> x = new ArrayList<>();
 
-        statistic = FirebaseDatabase.getInstance().getReference();
-
-        statistic.child("TraininglogPrivateSquat").child("userID22").child("1").addValueEventListener(new ValueEventListener() {
+        statistic.child("statisticData").limitToFirst(4).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<List> benchList = new ArrayList<>();
+                ArrayList<List> squatList = new ArrayList<>();
+                ArrayList<List> deadliftList = new ArrayList<>();
 
-                    GenericTypeIndicator<modelBenchList> t = new GenericTypeIndicator<modelBenchList>() {
-                    };
+                for(DataSnapshot xx : snapshot.getChildren()){
 
 
-                    modelBenchList yourStringArray = snapshot.getValue(t);
-                    ArrayList<modelBenchList> xx = new ArrayList<>();
+                      GenericTypeIndicator<ArrayList<Double>> t = new GenericTypeIndicator<ArrayList<Double>>() {
+                      };
+                //    GenericTypeIndicator<ArrayList<String>> u = new GenericTypeIndicator<ArrayList<String>>() {
+                  //  };
+                      List<Double> myBench = xx.child("Best3BenchKg").getValue(t);
+                      List<Double> myDeadlift = xx.child("Best3DeadliftKg").getValue(t);
+                      List<Double> mySquat = xx.child("Best3SquatKg").getValue(t);
+               //     ArrayList<String> name = xx.child("Name").getValue(u);
+               //     buildRecyclerview(myBench);
 
-                    Log.d("listSize", "" + yourStringArray.getSquat1());
+                 benchList.add(myBench);
+                 squatList.add(mySquat);
+                 deadliftList.add(myDeadlift);
 
+                //    Log.d("getMe","" + myBench.get(0));
+                //    Log.d("getMe","" + name.get(0));
+
+
+                    //holder.tv_bench.setText(String.valueOf(myBench.get(placeBench)));
+
+                    //    List<String> hey = snapshot.getValue(List.class);
+
+
+                    //  GenericTypeIndicator<modelBenchList> t = new GenericTypeIndicator<modelBenchList>() {
+                    //  };
+
+                    //  modelBenchList yourStringArray = xx.getValue(t);
+
+                    //   Log.d("listSize", "" + yourStringArray.getSquat1());
+
+
+                }
+                buildRecyclerview(benchList,squatList,deadliftList);
 
             }
+
+
+
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("getV","VV" + error);
 
             }
         });
 
 
-        statistic.child("metaDateUser").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    String b = task.getResult().getValue().toString();
-                    Log.d("papa8","mama" + b);
-                }
-            }
-        });
 
 
-
-
-
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), searchActivity.class);
-                startActivity(intent);
-            }
-        });
+        Log.d("getMe","" + x.size());
 
 
         return vx;
     }
+
+    private void buildRecyclerview(ArrayList<List> benchList, ArrayList<List> squatList, ArrayList<List> deadliftList) {
+        listAllProfilesAdapter profilesAdapter = new listAllProfilesAdapter(benchList,squatList,deadliftList);
+
+        contactView.setAdapter(profilesAdapter);
+    }
+
+
 
 
 
