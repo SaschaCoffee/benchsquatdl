@@ -86,7 +86,7 @@ public class logRegActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    startActivity((new Intent(logRegActivity.this, fragmentTestAct.class)));
+                    startActivity((new Intent(logRegActivity.this, listCountriesMainActivity.class)));
                     Toast.makeText(logRegActivity.this, "SUCCESS BRO", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(logRegActivity.this, "Failed to login", Toast.LENGTH_SHORT).show();

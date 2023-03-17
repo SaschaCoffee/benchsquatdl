@@ -29,15 +29,16 @@
 
 
     <string-array name="array_country">
-        <item>Select Your Country</item>
+        <item>Worldwide</item>
         <item>USA</item>
         <item>Germany</item>
         <item>Sri Lanka</item>
         <item>Bangladesh</item>
+
     </string-array>
 
     <string-array name="array_default_state">
-        <item>Select Your State</item>
+        <item>Select the state</item>
     </string-array>
 
     <string-array name="array_german_states">

@@ -13,11 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class fragmentTestAct extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class listCountriesMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
     ArrayList<Integer> arrayList;
@@ -28,8 +27,6 @@ public class fragmentTestAct extends AppCompatActivity implements BottomNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_mainactivity);
-
-
 
         bottomNavigationView = findViewById(R.id.topNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -68,11 +65,8 @@ public class fragmentTestAct extends AppCompatActivity implements BottomNavigati
             Log.d("exercise:","" + exercise);
 
             if(!exercise.isEmpty()){
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, secondFragment).commit();
                 secondFragment.receiver(exercise);
-
-
             }
 
 

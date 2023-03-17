@@ -1,18 +1,13 @@
 package com.example.benchsquatdl2;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 
 
 public class cardActivity extends AppCompatActivity {
@@ -40,7 +35,7 @@ public class cardActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(cardActivity.this,fragmentTestAct.class);
+                Intent intent = new Intent(cardActivity.this, listCountriesMainActivity.class);
 
                 //passing data to the book activity
                 intent.putExtra("exercise", starter);

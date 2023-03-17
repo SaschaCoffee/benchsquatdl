@@ -42,7 +42,7 @@ public class searchActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 //State Spinner Initialisation
-                stateSpinner = findViewById(R.id.spinner_indian_states);    //Finds a view that was identified by the android:id attribute in xml
+                stateSpinner = findViewById(R.id.spinner_states);    //Finds a view that was identified by the android:id attribute in xml
                 selectedCountry = countrySpinner.getSelectedItem().toString();
 
                 int parentID = parent.getId();

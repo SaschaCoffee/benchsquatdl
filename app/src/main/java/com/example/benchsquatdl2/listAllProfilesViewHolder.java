@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class listAllProfilesViewHolder extends RecyclerView.ViewHolder {
-    TextView tvName, tvPhoneNum, tv_squat, tv_bench, tv_deadlift;
+    TextView tvName, countryOrState, tv_squat, tv_bench, tv_deadlift, tv_city;
     ImageView img;
 
 
@@ -18,11 +18,11 @@ public class listAllProfilesViewHolder extends RecyclerView.ViewHolder {
     public listAllProfilesViewHolder(@NonNull View itemView) {
         super(itemView);
         tvName = itemView.findViewById(R.id.contactName);
-        tvPhoneNum = itemView.findViewById(R.id.phoneNum);
-        img = itemView.findViewById(R.id.editContact);
+        countryOrState = itemView.findViewById(R.id.countryOrState);
         tv_squat = itemView.findViewById(R.id.tv_squat);
         tv_bench = itemView.findViewById(R.id.tv_bench);
         tv_deadlift = itemView.findViewById(R.id.tv_deadlift);
+        img = itemView.findViewById(R.id.deleteContact);
 
     }
 
