@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class listCountriesMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class FragmentMainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     BottomNavigationView bottomNavigationView;
     ArrayList<Integer> arrayList;

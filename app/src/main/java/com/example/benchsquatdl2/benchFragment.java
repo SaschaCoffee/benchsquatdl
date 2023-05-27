@@ -50,6 +50,7 @@ package com.example.benchsquatdl2;
 //
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -137,6 +138,9 @@ public class benchFragment extends Fragment implements
     int countMe = 0;
     int progrrr = 0;
 
+    private FirebaseAuth mAuth;
+
+
 
 
     public benchFragment(){
@@ -145,7 +149,18 @@ public class benchFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
+        String uid = mAuth.getUid().toString().trim();
+        try{
 
+            String x = mAuth.getUid();
+            Log.d("LOLO","Bench" + x);
+
+
+        }catch(Exception e){
+            Log.d("LOLO","BenchException" + e);
+
+        }
 
         // Inflate the layout for this fragment
         View vx = inflater.inflate(R.layout.activitycard_bench, container, false);
@@ -159,6 +174,7 @@ public class benchFragment extends Fragment implements
         String childcard = "anzahlBench";
         String childcardBench = "Best3BenchKg";
         String childcardDate = "Date";
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
 
@@ -172,7 +188,7 @@ public class benchFragment extends Fragment implements
         referenceTraininglogPublic = FirebaseDatabase.getInstance().getReference("TraininglogPublic");
         referenceTest = FirebaseDatabase.getInstance().getReference("teste");
         referenceTrainingLocation = FirebaseDatabase.getInstance().getReference("Location");
-       // userid = user.getUid();
+       // userid = uid;
 
         createCard();
         buildRecyclerView();
@@ -210,7 +226,7 @@ public class benchFragment extends Fragment implements
 
 
 
-        reference.child("userID22").child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(uid).child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -235,12 +251,19 @@ public class benchFragment extends Fragment implements
 
 
 
+
             @Override
             public void onClick(View view) {
                 Log.d("sizeCase23", "countnull" + save.size());
 
-                counter = 1;
+                for (int i = count;i>0;i--){
+                    count--;
+                    Log.d("countme4","" + count);
+                }
+
+                int counter = 1;
                 counterNew = 1;
+                adapterCallBackString = "l1_reps";
 
                 //OPEN DIALOG
                 builder = new AlertDialog.Builder(getActivity());
@@ -933,8 +956,8 @@ public class benchFragment extends Fragment implements
 
                                     progr++;
 
-                                    reference.child("userID22").child(childcard).setValue(progr);
-                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench);
+                                    reference.child(uid).child(childcard).setValue(progr);
+                                    referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench);
 
                                     updateProgressBar(progr);
                                     updateCard(progr);
@@ -944,7 +967,7 @@ public class benchFragment extends Fragment implements
                                     //RESET
                                     count = 0;
 
-                                    counter = 0;
+                                    //counter = 0;
                                     counterNew = 0;
 
                                     save.remove(0);
@@ -974,9 +997,9 @@ public class benchFragment extends Fragment implements
                                     modelBench bench2 = new modelBench(first_rep_l2, second_rep_l2, first_kg_l2, second_kg_l2, date, dummyTxt);
                                     progr++;
 
-                                    reference.child("userID22").child(childcard).setValue(progr);
+                                    reference.child(uid).child(childcard).setValue(progr);
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench2);
-                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench2);
+                                    referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench2);
 
 
                                     updateProgressBar(progr);
@@ -991,7 +1014,7 @@ public class benchFragment extends Fragment implements
 
                                     adapterCallBackString = "l1_reps";
                                     counterNew = 0;
-                                    counter = 0;
+                                    //counter = 0;
 
 
 
@@ -1023,9 +1046,9 @@ public class benchFragment extends Fragment implements
 
                                 progr++;
 
-                                reference.child("userID22").child(childcard).setValue(progr);
+                                reference.child(uid).child(childcard).setValue(progr);
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench3);
-                                referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench3);
+                                referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench3);
 
 
 
@@ -1036,7 +1059,7 @@ public class benchFragment extends Fragment implements
 
                                     dialog.cancel();
 
-                                    counter = 0;
+                                    //counter = 0;
 
                                 //RESET
                                 count = 0;
@@ -1077,9 +1100,9 @@ public class benchFragment extends Fragment implements
                                     modelBench bench4 = new modelBench(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4, kg3_l4, kg4_l4, date, dummyTxt);
 
                                     progr++;
-                                    reference.child("userID22").child(childcard).setValue(progr);
+                                    reference.child(uid).child(childcard).setValue(progr);
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench4);
-                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench4);
+                                    referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench4);
 
 
 
@@ -1087,7 +1110,7 @@ public class benchFragment extends Fragment implements
                                     updateCard(progr);
                                     buildRecyclerView();
 
-                                    counter = 0;
+                                    //counter = 0;
 
                                     dialog.cancel();
                                     //RESET
@@ -1140,15 +1163,15 @@ public class benchFragment extends Fragment implements
 
 
                                 progr++;
-                                reference.child("userID22").child(childcard).setValue(progr);
+                                reference.child(uid).child(childcard).setValue(progr);
                                 referenceTraininglogPublic.child(keyTraining).setValue(bench5);
-                                referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(bench5);
+                                referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench5);
 
                                     updateProgressBar(progr);
                                     updateCard(progr);
                                     buildRecyclerView();
 
-                                    counter = 0;
+                                    //counter = 0;
 
                                     dialog.cancel();
                                 //RESET
@@ -1182,7 +1205,7 @@ public class benchFragment extends Fragment implements
 
                                 mAdapter_two.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
                                 count = 0;
-                                counter = 0;
+                                //counter = 0;
                                 adapterCallBackString = "l1_reps_one";
 
                                 counterNew = 0;
@@ -1202,7 +1225,7 @@ public class benchFragment extends Fragment implements
                                 mAdapter_three.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
 
                                 count = 1;
-                                counter = 0;
+                                //counter = 0;
                                 adapterCallBackString = "l2_reps_one";
                                 counterNew = 0;
 
@@ -1220,7 +1243,7 @@ public class benchFragment extends Fragment implements
                                 mAdapter_three.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
 
                                 count = 2;
-                                counter = 0;
+                                //counter = 0;
                                 adapterCallBackString = "l3_reps_one";
                                 counterNew = 0;
 
@@ -1239,7 +1262,7 @@ public class benchFragment extends Fragment implements
                                 mAdapter_three.setPlayPauseClickListener(benchFragment.this::imageButtonOnClick2);
 
                                 count = 3;
-                                counter = 0;
+                                //counter = 0;
 
                                 Log.d("count4","" +save.size());
                                 adapterCallBackString = "l4_reps_five";
@@ -1369,6 +1392,7 @@ public class benchFragment extends Fragment implements
     }
 
     public void imageButtonOnClick(View v, int position) {
+        mAuth = FirebaseAuth.getInstance();
         // TODO: Implement this
         Log.d("cardview","hello Sir");
 
@@ -1401,7 +1425,9 @@ public class benchFragment extends Fragment implements
 
 
 
-       Query bre = referenceTraininglogPrivate.child("userID22").child(xy);
+        mAuth = FirebaseAuth.getInstance();
+        String uid = mAuth.getUid().toString().trim();
+       Query bre = referenceTraininglogPrivate.child(uid).child(xy);
 
 
        save.setOnClickListener(new View.OnClickListener() {
@@ -1410,7 +1436,7 @@ public class benchFragment extends Fragment implements
                String getComment = cc.getText().toString().trim();
                commentObject xx = new commentObject(getComment);
 
-               referenceTraininglogPrivate.child("userID22").child(xy).child("xNote").setValue(getComment);
+               referenceTraininglogPrivate.child(uid).child(xy).child("xNote").setValue(getComment);
                dialog.dismiss();
 
            }
@@ -1424,7 +1450,13 @@ public class benchFragment extends Fragment implements
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
                Log.d("count4","" + snapshot.getChildrenCount());
+
+
+
+
                String count = String.valueOf(snapshot.getChildrenCount());
+
+
 
                switch(count){
                    case "4":
@@ -1713,8 +1745,10 @@ public class benchFragment extends Fragment implements
            }
        });
 
+        mAuth = FirebaseAuth.getInstance();
 
-        referenceTraininglogPrivate.child("userID22").child("4").limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        referenceTraininglogPrivate.child(uid).child("4").limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot pee : snapshot.getChildren()) {
@@ -1737,52 +1771,11 @@ public class benchFragment extends Fragment implements
 
 
 
-        referenceTraininglogPrivate.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Log.d("snak","" + snapshot.getChildren());
-
-                }
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
 
-        referenceTraininglogPrivate.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Log.d("snaps","AAA" + snapshot.getValue());
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
     }
 
@@ -1790,8 +1783,10 @@ public class benchFragment extends Fragment implements
         reference = FirebaseDatabase.getInstance().getReference("metaDateUser");
         referenceTraininglogPrivate = FirebaseDatabase.getInstance().getReference("TraininglogPrivateBench");
 
+        mAuth = FirebaseAuth.getInstance();
+        String uid = mAuth.getUid().toString().trim();
 
-        DatabaseReference quotesRef = referenceTraininglogPrivate.child("userID22");
+        DatabaseReference quotesRef = referenceTraininglogPrivate.child(uid);
 
         if (progr > 0){
             progr--;
@@ -1802,16 +1797,17 @@ public class benchFragment extends Fragment implements
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String test = String.valueOf(snapshot.getChildrenCount());
+                mAuth = FirebaseAuth.getInstance();
 
                 String x = String.valueOf(snapshot.getChildrenCount());
                 int newC = Integer.parseInt(x);
 
-                DatabaseReference quotesRef = referenceTraininglogPrivate.child("userID22").child(x);
+                DatabaseReference quotesRef = referenceTraininglogPrivate.child(uid).child(x);
                 quotesRef.removeValue();
 
                 if(newC > 0) {
                     newC--;
-                    reference.child("userID22").child("anzahlBench").setValue(newC);
+                    reference.child(uid).child("anzahlBench").setValue(newC);
                     updateCard(Integer.parseInt(test));
                     updateCard(newC);
                     buildRecyclerView();

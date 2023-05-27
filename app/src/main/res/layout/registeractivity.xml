@@ -19,38 +19,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/et_max_squat_register"
-                android:layout_width="63dp"
-                android:layout_height="43dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Squat" />
-
-            <EditText
-                android:id="@+id/et_max_bench_register"
-                android:layout_width="71dp"
-                android:layout_height="43dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-
-                android:text="Bench" />
-
-            <EditText
-                android:id="@+id/et_max_deadlift_register"
-                android:layout_width="71dp"
-                android:layout_height="43dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Deadlift" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -58,7 +26,7 @@
         android:id="@+id/cv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -75,23 +43,7 @@
                 android:layout_marginTop="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Full Name" />
-
-            <EditText
-                android:id="@+id/et_register_age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Age" />
-
-            <EditText
-                android:id="@+id/et_height_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Height" />
+                android:text="Name" />
 
             <EditText
                 android:id="@+id/et_register_email"
@@ -110,12 +62,14 @@
                 android:text="Password" />
 
             <EditText
-                android:id="@+id/et_register_city"
-                android:layout_width="wrap_content"
+                android:id="@+id/et_register_password_repeat"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="City" />
+                android:text="Repeat password" />
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

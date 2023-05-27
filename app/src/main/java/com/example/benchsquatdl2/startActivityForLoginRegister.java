@@ -12,6 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.benchsquatdl2.modelApi.userModelApi;
+import com.example.benchsquatdl2.modelSpringer.Customer;
+import com.example.benchsquatdl2.modelSpringer.OrderRequest;
+import com.example.benchsquatdl2.modelSpringer.Product;
+import com.example.benchsquatdl2.retrofit.EmployeeApi;
+import com.example.benchsquatdl2.retrofit.RetrofitService;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -36,10 +42,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class startActivity extends AppCompatActivity {
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class startActivityForLoginRegister extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseAuth mAuth;
     LoginButton facebook_login;
@@ -50,6 +68,7 @@ public class startActivity extends AppCompatActivity {
     SignInClient oneTapClient, oneTapClient2;
     GoogleSignInClient mGoogleClient;
     TextView loginNormal;
+    DatabaseReference palo;
 
 
 
@@ -71,13 +90,77 @@ public class startActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         referenceTest = FirebaseDatabase.getInstance().getReference();
         googleLogin = findViewById(R.id.google_login);
-
         loginNormal = findViewById(R.id.textView3);
+
+
+
+
+        try{
+            Log.d("LOLO","" + mAuth.getUid());
+        int x = Integer.parseInt(mAuth.getUid().toString());
+        startActivity((new Intent(startActivityForLoginRegister.this, FragmentMainActivity.class)));
+        }catch(Exception e){
+
+        }
+
+
 
         loginNormal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity((new Intent(startActivity.this, logRegActivity.class)));
+                RetrofitService retrofitService = new RetrofitService();
+                EmployeeApi employeeApi = retrofitService.getRetrofit().create(EmployeeApi.class);
+
+                Product chocola = new Product(344,"Choco",23,1);
+                Product pizza = new Product(222,"pizza",22,3);
+
+
+                List<Product> products = Arrays.asList(chocola,pizza);
+
+
+
+
+
+
+                //List<Product> products = Arrays.asList(chocola,pizza);
+
+                Customer sascha = new Customer("sascha","sss@yahoo.de","M",products);
+                OrderRequest orderRequest = new OrderRequest();
+                orderRequest.setCustomer(sascha);
+
+                Gson gson = new Gson();
+                String strJsonObject = gson.toJson(orderRequest);
+                Log.e("strJsonObject", strJsonObject);
+
+                employeeApi.saveJson(orderRequest).enqueue(new Callback<Customer>() {
+                    @Override
+                    public void onResponse(Call<Customer> call, Response<Customer> response) {
+                        Log.d("heheh2","" + response);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Customer> call, Throwable t) {
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                startActivity((new Intent(startActivityForLoginRegister.this, loggingActivity.class)));
             }
         });
 
@@ -89,7 +172,12 @@ public class startActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 Log.d("reg1","ddddd");
                 handleFacebookAccessToken(loginResult.getAccessToken());
-                Toast.makeText(startActivity.this, "tschau", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(startActivityForLoginRegister.this, "tschau", Toast.LENGTH_SHORT).show();
+                //startActivity((new Intent(startActivityForLoginRegister.this, FragmentMainActivity.class)));
+
+
+
 
             }
 
@@ -185,6 +273,8 @@ public class startActivity extends AppCompatActivity {
                                             FirebaseDatabase.getInstance().getReference("googleUsers")
                                                     .child(user.getUid()).setValue("fff");
 
+                                            startActivity((new Intent(startActivityForLoginRegister.this, FragmentMainActivity.class)));
+
 
                                         } else {
                                             // If sign in fails, display a message to the user.
@@ -209,28 +299,61 @@ public class startActivity extends AppCompatActivity {
 
 
     void handleFacebookAccessToken(AccessToken token) {
-        Log.d("access", "komtan");
+        Log.d("access5", "komtan");
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
+
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("access5", "komtan21");
 
                         if(task.isSuccessful()){
 
+                            Log.d("hierBinich","21");
+
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Log.d("getName5","" + user.getDisplayName());
 
                             facebookSignModel fb_model = new facebookSignModel(user.getDisplayName(), user.getEmail());
 
-                            FirebaseDatabase.getInstance().getReference("fbUsers")
-                            .child(user.getUid()).setValue(fb_model);
+                            palo = FirebaseDatabase.getInstance().getReference();
+
+                            palo.child("fbUers").child(user.getUid()).setValue(fb_model);
+
+                            RetrofitService retrofitService = new RetrofitService();
+                            EmployeeApi employeeApi = retrofitService.getRetrofit().create(EmployeeApi.class);
+
+                            String name = user.getDisplayName();
+
+                            String tokee = user.getUid();
+                            userModelApi xx = new userModelApi();
+                            xx.setName(name);
+                            xx.setToken(tokee);
+
+                            employeeApi.save(xx).enqueue(new Callback<userModelApi>() {
+                                @Override
+                                public void onResponse(Call<userModelApi> call, Response<userModelApi> response) {
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<userModelApi> call, Throwable t) {
+                                    Log.d("failedMH","" + t);
+
+                                }
+                            });
 
 
-                            startActivity((new Intent(startActivity.this, listCountriesMainActivity.class)));
+
+
+                            startActivity((new Intent(startActivityForLoginRegister.this, FragmentMainActivity.class)));
 
 
 
                         } else{
+                            Log.d("getResultFB","" + task.getResult() );
+
                                                }
                     }
                 });

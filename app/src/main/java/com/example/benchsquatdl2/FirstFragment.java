@@ -66,21 +66,6 @@ public class FirstFragment extends Fragment  {
         Query statisticNi = statistic.child("statisticDataGermany2");
         Query statisticUSAA = statisticUSA.child("statisticUSA");
 
-        statisticUSAA.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot xx : snapshot.getChildren()){
-                    Log.d("umpf","" + xx.getChildrenCount());
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
 
         //Country Spinner Initialisation
         countrySpinner = vx.findViewById(R.id.spinner_country);//Finds a view that was identified by the android:id attribute
@@ -161,6 +146,46 @@ public class FirstFragment extends Fragment  {
 
 
 
+                }
+
+                if(selectedCountry.equals("Germany")){
+                    statistic.child("statisticTotalGermany").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            ArrayList<String> benchList = new ArrayList<>();
+                            ArrayList<String> squatList = new ArrayList<>();
+                            ArrayList<String> deadliftList = new ArrayList<>();
+                            ArrayList<String> nameList = new ArrayList<>();
+                            ArrayList<String> cityList = new ArrayList<>();
+
+                            for(DataSnapshot xx : snapshot.getChildren()){
+                                for(DataSnapshot xy : xx.getChildren()) {
+                                    String test = xy.child("Name").getValue(String.class);
+                                    Log.d("werteBitte", "" + test);
+
+                                    String bench = String.valueOf(xy.child("Best3BenchKg").getValue(Double.class));
+                                    String deadlift = String.valueOf(xy.child("Best3DeadliftKg").getValue(Double.class));
+                                    String squat = String.valueOf(xy.child("Best3SquatKg").getValue(Double.class));
+                                    String name = String.valueOf(xy.child("Name").getValue(String.class));
+                                    String city = String.valueOf(xy.child("MeetCountry").getValue(String.class));
+                                    benchList.add(bench);
+                                    deadliftList.add(deadlift);
+                                    squatList.add(squat);
+                                    nameList.add(name);
+                                    cityList.add(city);
+                                }
+
+                            }
+                            buildRecyclerviewDE(benchList, squatList, deadliftList, nameList, cityList);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
 
 

@@ -41,11 +41,11 @@ public class listAllProfilesAdapter extends RecyclerView.Adapter<listAllProfiles
     public void onBindViewHolder(@NonNull listAllProfilesViewHolder holder, int position) {
         statistic = FirebaseDatabase.getInstance().getReference();
 
-        holder.tv_bench.setText(String.valueOf(benchList.get(position)));
+        /*holder.tv_bench.setText(String.valueOf(benchList.get(position)));
         holder.tv_squat.setText(String.valueOf(squatList.get(position)));
         holder.tv_deadlift.setText(String.valueOf(deadliftList.get(position)));
         holder.tvName.setText(String.valueOf(nameList.get(position)));
-        holder.countryOrState.setText("("+"Meet Country: "+ String.valueOf(cityList.get(position))+")");
+        holder.countryOrState.setText("("+"Meet Country: "+ String.valueOf(cityList.get(position))+")");*/
 
 
 

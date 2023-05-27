@@ -1,6 +1,8 @@
 package com.example.benchsquatdl2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -13,16 +15,29 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.benchsquatdl2.modelApi.userModelApi;
+import com.example.benchsquatdl2.modelSpringer.Cart;
+import com.example.benchsquatdl2.modelSpringer.Item;
+import com.example.benchsquatdl2.retrofit.EmployeeApi;
+import com.example.benchsquatdl2.retrofit.RetrofitService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class registerUser extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
-    private EditText et_name, et_age, et_email, et_pw, et_city, et_bestsquat, et_bestbench, et_bestdeadlift, et_height;
+    private EditText et_name, et_age, et_email, et_pw, et_city, et_bestsquat, et_bestbench, et_bestdeadlift, et_height,et_pw_repeat;
 
     private Button btn_register;
     private ProgressBar pg_bar;
@@ -36,14 +51,13 @@ public class registerUser extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
         pg_bar = findViewById(R.id.progressBar);
         et_name = findViewById(R.id.et_register_name);
-        et_age = findViewById(R.id.et_register_age);
         et_email = findViewById(R.id.et_register_email);
         et_pw = findViewById(R.id.et_register_password);
-        et_city = findViewById(R.id.et_register_city);
+        et_pw_repeat = findViewById(R.id.et_register_password_repeat);
+      /*  et_city = findViewById(R.id.et_register_city);
         et_bestsquat = findViewById(R.id.et_max_squat_register);
         et_bestbench = findViewById(R.id.et_max_bench_register);
-        et_bestdeadlift = findViewById(R.id.et_max_deadlift_register);
-        et_height = findViewById(R.id.et_height_register);
+        et_bestdeadlift = findViewById(R.id.et_max_deadlift_register);*/
 
 
         btn_register = findViewById(R.id.btn_register);
@@ -58,25 +72,14 @@ public class registerUser extends AppCompatActivity implements View.OnClickListe
 
     public void registerUser() {
         String name = et_name.getText().toString().trim();
-        String age = et_age.getText().toString().trim();
         String email = et_email.getText().toString().trim();
         String pw = et_pw.getText().toString().trim();
-        String squat = et_bestsquat.getText().toString().trim();
-        String bench = et_bestbench.getText().toString().trim();
-        String deadlift = et_bestdeadlift.getText().toString().trim();
-        String city = et_city.getText().toString().trim();
-        String height = et_height.getText().toString().trim();
+
 
 
         if(name.isEmpty()){
             et_name.setError("Full name is required");
             et_name.requestFocus();
-            return;
-        }
-
-        if(age.isEmpty()){
-            et_age.setError("Age is required");
-            et_age.requestFocus();
             return;
         }
 
@@ -92,6 +95,12 @@ public class registerUser extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
+        if(!pw.equals(et_pw_repeat.getText().toString().trim())){
+            et_pw.setError("Please provide valid PW");
+            et_pw.requestFocus();
+            return;
+        }
+
         if(pw.isEmpty()){
             et_pw.setError("Pw is required");
             et_pw.requestFocus();
@@ -104,29 +113,8 @@ public class registerUser extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
-        if(squat.isEmpty()){
-            et_bestsquat.setError("Squat is required");
-            et_bestsquat.requestFocus();
-            return;
-        }
 
-        if(bench.isEmpty()){
-            et_bestbench.setError("bench is requiredf");
-            et_bestbench.requestFocus();
-            return;
-        }
 
-        if(deadlift.isEmpty()){
-            et_bestdeadlift.setError("dl is required");
-            et_bestdeadlift.requestFocus();
-            return;
-        }
-
-        if(height.isEmpty()){
-            et_height.setError("height is required");
-            et_height.requestFocus();
-            return;
-        }
 
 
         pg_bar.setVisibility(View.VISIBLE);
@@ -134,15 +122,43 @@ public class registerUser extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    userModel user = new userModel(name, age, email);
-                    metaModel meta = new metaModel(name,squat,bench,deadlift, age, city, height);
+                    userModel user = new userModel(name, "null","null" );
+                    metaModel meta = new metaModel(name,null,null,null,null,null,null);
                     FirebaseDatabase.getInstance().getReference("users")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(registerUser.this, "SUCCESS REGISTER", Toast.LENGTH_SHORT).show();
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        RetrofitService retrofitService = new RetrofitService();
+                                        EmployeeApi employeeApi = retrofitService.getRetrofit().create(EmployeeApi.class);
+
+                                        String name = user.getDisplayName();
+
+                                        String tokee = user.getUid();
+                                        userModelApi xx = new userModelApi();
+                                        Log.d("reg5","" +tokee + "" + name);
+                                        xx.setName("sascha");
+                                        xx.setToken(tokee);
+                                        employeeApi.save(xx).enqueue(new Callback<userModelApi>() {
+                                            @Override
+                                            public void onResponse(Call<userModelApi> call, Response<userModelApi> response) {
+
+                                                Log.d("reg5","success");
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<userModelApi> call, Throwable t) {
+                                                Log.d("reg5","" + t);
+
+
+                                            }
+                                        });
+
+
+                                        startActivity((new Intent(registerUser.this, FragmentMainActivity.class)));
+                                        Log.d("SuccessfulBRRROOOO","");
                                         pg_bar.setVisibility(View.GONE);
                                     }else{
                                         Toast.makeText(registerUser.this, "FAILED TO REGISTER", Toast.LENGTH_SHORT).show();

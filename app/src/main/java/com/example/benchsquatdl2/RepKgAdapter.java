@@ -363,6 +363,25 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
 
             if(counter == 2) {
 
+
+                holder.l2_heavy_button_two.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!heavyChosen) {
+                            holder.l2_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                            currentSelectedHeavy = 1;
+                            heavyChosen = true;
+                        }
+                        else{
+                            holder.l2_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                            heavyChosen = false;
+                        }
+                    }
+
+                });
+
+
+
                 holder.l2_reps_two.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View view, boolean b) {
@@ -849,8 +868,172 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
                     returnMyObject();
                 }
             });
+
+
+            holder.l4_heavy_button_one.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!heavyChosen) {
+                        holder.l4_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 1;
+                        heavyChosen = true;
+                    } else {
+                        switch (currentSelectedHeavy) {
+                            case 1:
+                                holder.l4_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                heavyChosen = false;
+                                break;
+                            case 2:
+                                holder.l4_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 1;
+                                heavyChosen = true;
+                                break;
+
+                            case 3:
+                                holder.l4_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 1;
+                                heavyChosen = true;
+                                break;
+
+                            case 4:
+                                holder.l4_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 1;
+                                heavyChosen = true;
+                                break;
+
+                        }
+                    }
+
+                }
+            });
+
+            holder.l4_heavy_button_two.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!heavyChosen) {
+                        holder.l4_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 2;
+                        heavyChosen = true;
+                    } else {
+                        switch (currentSelectedHeavy) {
+                            case 1:
+                                holder.l4_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                heavyChosen = true;
+                                break;
+                            case 2:
+                                holder.l4_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                currentSelectedHeavy = 2;
+                                heavyChosen = false;
+                                break;
+
+                            case 3:
+                                holder.l4_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 2;
+                                heavyChosen = true;
+                                break;
+
+                            case 4:
+                                holder.l4_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 2;
+                                heavyChosen = true;
+                                break;
+
+                        }
+                    }
+
+                }
+            });
+
+            holder.l4_heavy_button_three.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!heavyChosen) {
+                        holder.l4_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 3;
+                        heavyChosen = true;
+                    } else {
+                        switch (currentSelectedHeavy) {
+                            case 1:
+                                holder.l4_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 3;
+                                heavyChosen = true;
+                                break;
+                            case 2:
+                                holder.l4_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 3;
+                                heavyChosen = true;
+                                break;
+
+                            case 3:
+                                holder.l4_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                heavyChosen = false;
+                                break;
+
+                            case 4:
+                                holder.l4_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 3;
+                                heavyChosen = true;
+                                break;
+
+                        }
+                    }
+
+                }
+            });
+
+            holder.l4_heavy_button_four.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!heavyChosen) {
+                        holder.l4_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 4;
+                        heavyChosen = true;
+                    } else {
+                        switch (currentSelectedHeavy) {
+                            case 1:
+                                holder.l4_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 4;
+                                heavyChosen = true;
+                                break;
+                            case 2:
+                                holder.l4_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 4;
+                                heavyChosen = true;
+                                break;
+
+                            case 3:
+                                holder.l4_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 4;
+                                heavyChosen = true;
+                                break;
+
+                            case 4:
+                                holder.l4_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                heavyChosen = false;
+                                break;
+
+                        }
+                    }
+
+                }
+            });
+
         }
         if(counter == 5){
+
+
 
             holder.l5_reps.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
@@ -1004,7 +1187,243 @@ public class RepKgAdapter extends RecyclerView.Adapter<RepKgAdapter.MyViewHolder
                     returnMyObject();
                 }
             });
-        }
+
+
+            holder.l5_heavy_button_one.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!heavyChosen) {
+                        holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 1;
+                        heavyChosen = true;
+                    } else {
+                        switch (currentSelectedHeavy) {
+                            case 1:
+                                holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                heavyChosen = false;
+                                break;
+                            case 2:
+                                holder.l5_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 1;
+                                heavyChosen = true;
+                                break;
+
+                            case 3:
+                                holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 1;
+                                heavyChosen = true;
+                                break;
+
+                            case 4:
+                                holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 1;
+                                heavyChosen = true;
+                                break;
+
+                            case 5:
+                                holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l4_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 1;
+                                heavyChosen = true;
+                                break;
+
+                        }
+                    }
+
+                }
+            });
+
+            holder.l5_heavy_button_two.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!heavyChosen) {
+                        holder.l5_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 2;
+                        heavyChosen = true;
+                    } else {
+                        switch (currentSelectedHeavy) {
+                            case 1:
+                                holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 2;
+                                heavyChosen = true;
+                                break;
+                            case 2:
+                                holder.l5_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                heavyChosen = false;
+                                break;
+
+                            case 3:
+                                holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 2;
+                                heavyChosen = true;
+                                break;
+
+                            case 4:
+                                holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 2;
+                                heavyChosen = true;
+                                break;
+
+                            case 5:
+                                holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 2;
+                                heavyChosen = true;
+                                break;
+
+                        }
+                    }
+
+                }
+            });
+
+            holder.l5_heavy_button_three.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!heavyChosen) {
+                        holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 3;
+                        heavyChosen = true;
+                    } else {
+                        switch (currentSelectedHeavy) {
+                            case 1:
+                                holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 3;
+                                heavyChosen = true;
+                                break;
+                            case 2:
+                                holder.l5_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 3;
+                                heavyChosen = true;
+                                break;
+
+                            case 3:
+                                holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                heavyChosen = false;
+                                break;
+
+                            case 4:
+                                holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 3;
+                                heavyChosen = true;
+                                break;
+
+                            case 5:
+                                holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 3;
+                                heavyChosen = true;
+                                break;
+
+                        }
+                    }
+
+                }
+            });
+
+            holder.l5_heavy_button_four.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!heavyChosen) {
+                        holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 4;
+                        heavyChosen = true;
+                    } else {
+                        switch (currentSelectedHeavy) {
+                            case 1:
+                                holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 4;
+                                heavyChosen = true;
+                                break;
+                            case 2:
+                                holder.l5_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 4;
+                                heavyChosen = true;
+                                break;
+
+                            case 3:
+                                holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 4;
+                                heavyChosen = true;
+                                break;
+
+                            case 4:
+                                holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                heavyChosen = false;
+                                break;
+
+                            case 5:
+                                holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 4;
+                                heavyChosen = true;
+                                break;
+
+                        }
+                    }
+
+                }
+            });
+
+            holder.l5_heavy_button_five.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!heavyChosen) {
+                        holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                        currentSelectedHeavy = 5;
+                        heavyChosen = true;
+                    } else {
+                        switch (currentSelectedHeavy) {
+                            case 1:
+                                holder.l5_heavy_button_one.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 5;
+                                heavyChosen = true;
+                                break;
+                            case 2:
+                                holder.l5_heavy_button_two.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 5;
+                                heavyChosen = true;
+                                break;
+
+                            case 3:
+                                holder.l5_heavy_button_three.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 5;
+                                heavyChosen = true;
+                                break;
+
+                            case 4:
+                                holder.l5_heavy_button_four.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy_true));
+                                currentSelectedHeavy = 5;
+                                heavyChosen = true;
+                                break;
+
+                            case 5:
+                                holder.l5_heavy_button_five.setBackground(ContextCompat.getDrawable(mcontext, R.mipmap.heavy));
+                                heavyChosen = false;
+                                break;
+
+                        }
+                    }
+
+                }
+            });
+                        }
     }
 
     @Override

@@ -18,11 +18,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class logRegActivity extends AppCompatActivity {
+public class loggingActivity extends AppCompatActivity {
     private TextView register, forgetpw;
     private EditText et_ename, et_pw;
     private Button btn_login;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,7 @@ public class logRegActivity extends AppCompatActivity {
         et_ename = findViewById(R.id.et_ename);
         et_pw = findViewById(R.id.et_password);
         mAuth = FirebaseAuth.getInstance();
+
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +88,10 @@ public class logRegActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    startActivity((new Intent(logRegActivity.this, listCountriesMainActivity.class)));
-                    Toast.makeText(logRegActivity.this, "SUCCESS BRO", Toast.LENGTH_SHORT).show();
+                    startActivity((new Intent(loggingActivity.this, FragmentMainActivity.class)));
+                    Toast.makeText(loggingActivity.this, "SUCCESS BRO", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(logRegActivity.this, "Failed to login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(loggingActivity.this, "Failed to login", Toast.LENGTH_SHORT).show();
                 }
             }
         });

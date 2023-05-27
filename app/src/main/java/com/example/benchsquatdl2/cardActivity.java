@@ -35,7 +35,7 @@ public class cardActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(cardActivity.this, listCountriesMainActivity.class);
+                Intent intent = new Intent(cardActivity.this, FragmentMainActivity.class);
 
                 //passing data to the book activity
                 intent.putExtra("exercise", starter);

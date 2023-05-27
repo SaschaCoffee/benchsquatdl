@@ -163,7 +163,7 @@ public class deadliftFragment extends Fragment implements
 
 
 
-        reference.child("userID22").child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(user.getUid()).child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -191,6 +191,11 @@ public class deadliftFragment extends Fragment implements
             @Override
             public void onClick(View view) {
                 Log.d("sizeCase23", "countnull" + save.size());
+
+                for (int i = count;i>0;i--){
+                    count--;
+                    Log.d("countme4","" + count);
+                }
 
                 counter = 1;
                 counterNew = 1;
@@ -886,8 +891,8 @@ public class deadliftFragment extends Fragment implements
 
                                     progr++;
 
-                                    reference.child("userID22").child(childcard).setValue(progr);
-                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(deadlift);
+                                    reference.child(user.getUid()).child(childcard).setValue(progr);
+                                    referenceTraininglogPrivate.child(user.getUid()).child(String.valueOf(progr)).setValue(deadlift);
 
                                     updateProgressBar(progr);
                                     updateCard(progr);
@@ -927,9 +932,9 @@ public class deadliftFragment extends Fragment implements
                                     modelDeadlift deadlift2 = new modelDeadlift(first_rep_l2, second_rep_l2, first_kg_l2, second_kg_l2, date, dummyTxt);
                                     progr++;
 
-                                    reference.child("userID22").child(childcard).setValue(progr);
+                                    reference.child(user.getUid()).child(childcard).setValue(progr);
                                     referenceTraininglogPublic.child(keyTraining).setValue(deadlift2);
-                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(deadlift2);
+                                    referenceTraininglogPrivate.child(user.getUid()).child(String.valueOf(progr)).setValue(deadlift2);
 
 
                                     updateProgressBar(progr);
@@ -976,9 +981,9 @@ public class deadliftFragment extends Fragment implements
 
                                     progr++;
 
-                                    reference.child("userID22").child(childcard).setValue(progr);
+                                    reference.child(user.getUid()).child(childcard).setValue(progr);
                                     referenceTraininglogPublic.child(keyTraining).setValue(deadlift3);
-                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(deadlift3);
+                                    referenceTraininglogPrivate.child(user.getUid()).child(String.valueOf(progr)).setValue(deadlift3);
 
 
 
@@ -1030,9 +1035,9 @@ public class deadliftFragment extends Fragment implements
                                     modelDeadlift deadlift4 = new modelDeadlift(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4, kg3_l4, kg4_l4, date, dummyTxt);
 
                                     progr++;
-                                    reference.child("userID22").child(childcard).setValue(progr);
+                                    reference.child(user.getUid()).child(childcard).setValue(progr);
                                     referenceTraininglogPublic.child(keyTraining).setValue(deadlift4);
-                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(deadlift4);
+                                    referenceTraininglogPrivate.child(user.getUid()).child(String.valueOf(progr)).setValue(deadlift4);
 
 
 
@@ -1093,9 +1098,9 @@ public class deadliftFragment extends Fragment implements
 
 
                                     progr++;
-                                    reference.child("userID22").child(childcard).setValue(progr);
+                                    reference.child(user.getUid()).child(childcard).setValue(progr);
                                     referenceTraininglogPublic.child(keyTraining).setValue(deadlift5);
-                                    referenceTraininglogPrivate.child("userID22").child(String.valueOf(progr)).setValue(deadlift5);
+                                    referenceTraininglogPrivate.child(user.getUid()).child(String.valueOf(progr)).setValue(deadlift5);
 
                                     updateProgressBar(progr);
                                     updateCard(progr);
@@ -1357,7 +1362,7 @@ public class deadliftFragment extends Fragment implements
                 String getComment = cc.getText().toString().trim();
                 commentObject xx = new commentObject(getComment);
 
-                referenceTraininglogPrivate.child("userID22").child(xy).child("xNote").setValue(getComment);
+                referenceTraininglogPrivate.child(user.getUid()).child(xy).child("xNote").setValue(getComment);
                 dialog.dismiss();
 
             }
@@ -1366,7 +1371,7 @@ public class deadliftFragment extends Fragment implements
 
 
 
-        Query bre = referenceTraininglogPrivate.child("userID22").child(xy);
+        Query bre = referenceTraininglogPrivate.child(user.getUid()).child(xy);
 
 
         bre.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1663,7 +1668,7 @@ public class deadliftFragment extends Fragment implements
         });
 
 
-        referenceTraininglogPrivate.child("userID22").child("4").limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+        referenceTraininglogPrivate.child(user.getUid()).child("4").limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot pee : snapshot.getChildren()) {
@@ -1740,7 +1745,7 @@ public class deadliftFragment extends Fragment implements
         referenceTraininglogPrivate = FirebaseDatabase.getInstance().getReference("TraininglogPrivateDeadlift");
 
 
-        DatabaseReference quotesRef = referenceTraininglogPrivate.child("userID22");
+        DatabaseReference quotesRef = referenceTraininglogPrivate.child(user.getUid());
 
         if (progr > 0){
             progr--;
@@ -1755,12 +1760,12 @@ public class deadliftFragment extends Fragment implements
                 String x = String.valueOf(snapshot.getChildrenCount());
                 int newC = Integer.parseInt(x);
 
-                DatabaseReference quotesRef = referenceTraininglogPrivate.child("userID22").child(x);
+                DatabaseReference quotesRef = referenceTraininglogPrivate.child(user.getUid()).child(x);
                 quotesRef.removeValue();
 
                 if(newC > 0) {
                     newC--;
-                    reference.child("userID22").child("anzahlDeadlift").setValue(newC);
+                    reference.child(user.getUid()).child("anzahlDeadlift").setValue(newC);
                     updateCard(Integer.parseInt(test));
                     updateCard(newC);
                     buildRecyclerView();
