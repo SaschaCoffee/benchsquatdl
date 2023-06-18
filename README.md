@@ -7,7 +7,7 @@ can save the trainingsession and retrieve it.
 Unique function: with the volume up down you can increase your number of reps and kg.
 
 The following features will be added in future:
- <img src="https://github.com/SaschaCoffee/benchsquatdl/assets/42777981/340a292a-be80-455c-9502-f787f1bcc132" alt="alt text" width="300" height="600">
+ <img src="https://github.com/SaschaCoffee/benchsquatdl/assets/42777981/74580523-5547-4c2f-a57b-0a0f827bc8ba" alt="alt text" width="300" height="600">
 
 
 
