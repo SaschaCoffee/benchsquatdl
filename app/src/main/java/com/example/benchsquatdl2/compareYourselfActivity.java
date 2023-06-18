@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.benchsquatdl2.model.ModelAdd;
 
 
 public class compareYourselfActivity extends AppCompatActivity {
@@ -38,17 +39,14 @@ public class compareYourselfActivity extends AppCompatActivity {
              final String ph_no = et_age.getText().toString();
 
              ModelAdd modeladd;
-             DataBaseHelper dataBaseHelper = new DataBaseHelper(compareYourselfActivity.this);
+
 
              try {
-                 modeladd = new ModelAdd(-1, name, ph_no);
-                 dataBaseHelper.addOne(modeladd);
 
-                 Toast.makeText(compareYourselfActivity.this, "ADD BUTTON", Toast.LENGTH_SHORT).show();
 
 
              } catch (Exception e) {
-                 Toast.makeText(compareYourselfActivity.this, "error", Toast.LENGTH_SHORT).show();
+
 
              }
 

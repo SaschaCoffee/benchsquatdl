@@ -12,11 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.benchsquatdl2.modelApi.userModelApi;
-import com.example.benchsquatdl2.modelSpringer.Customer;
-import com.example.benchsquatdl2.modelSpringer.OrderRequest;
-import com.example.benchsquatdl2.modelSpringer.Product;
-import com.example.benchsquatdl2.retrofit.EmployeeApi;
+import com.example.benchsquatdl2.Fragment.FragmentMainActivity;
+import com.example.benchsquatdl2.model.modelLogRegister.facebookSignModel;
+import com.example.benchsquatdl2.model.modelApi.userModelApi;
+import com.example.benchsquatdl2.model.modelSpringBoot.Customer;
+import com.example.benchsquatdl2.model.modelSpringBoot.OrderRequest;
+import com.example.benchsquatdl2.model.modelSpringBoot.Product;
+import com.example.benchsquatdl2.model.orderResponse;
+import com.example.benchsquatdl2.retrofit.UserApi;
 import com.example.benchsquatdl2.retrofit.RetrofitService;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -44,15 +47,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -96,7 +93,7 @@ public class startActivityForLoginRegister extends AppCompatActivity {
 
 
         try{
-            Log.d("LOLO","" + mAuth.getUid());
+
         int x = Integer.parseInt(mAuth.getUid().toString());
         startActivity((new Intent(startActivityForLoginRegister.this, FragmentMainActivity.class)));
         }catch(Exception e){
@@ -108,57 +105,6 @@ public class startActivityForLoginRegister extends AppCompatActivity {
         loginNormal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RetrofitService retrofitService = new RetrofitService();
-                EmployeeApi employeeApi = retrofitService.getRetrofit().create(EmployeeApi.class);
-
-                Product chocola = new Product(344,"Choco",23,1);
-                Product pizza = new Product(222,"pizza",22,3);
-
-
-                List<Product> products = Arrays.asList(chocola,pizza);
-
-
-
-
-
-
-                //List<Product> products = Arrays.asList(chocola,pizza);
-
-                Customer sascha = new Customer("sascha","sss@yahoo.de","M",products);
-                OrderRequest orderRequest = new OrderRequest();
-                orderRequest.setCustomer(sascha);
-
-                Gson gson = new Gson();
-                String strJsonObject = gson.toJson(orderRequest);
-                Log.e("strJsonObject", strJsonObject);
-
-                employeeApi.saveJson(orderRequest).enqueue(new Callback<Customer>() {
-                    @Override
-                    public void onResponse(Call<Customer> call, Response<Customer> response) {
-                        Log.d("heheh2","" + response);
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Customer> call, Throwable t) {
-
-                    }
-                });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 startActivity((new Intent(startActivityForLoginRegister.this, loggingActivity.class)));
             }
@@ -170,27 +116,24 @@ public class startActivityForLoginRegister extends AppCompatActivity {
         facebook_login.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.d("reg1","ddddd");
+
                 handleFacebookAccessToken(loginResult.getAccessToken());
 
                 Toast.makeText(startActivityForLoginRegister.this, "tschau", Toast.LENGTH_SHORT).show();
                 //startActivity((new Intent(startActivityForLoginRegister.this, FragmentMainActivity.class)));
 
-
-
-
             }
 
             @Override
             public void onCancel() {
-                Log.d("register1", "cancled");
+
 
 
             }
 
             @Override
             public void onError(@NonNull FacebookException e) {
-                Log.d("register1", "error");
+
 
             }
         });
@@ -236,12 +179,12 @@ public class startActivityForLoginRegister extends AppCompatActivity {
                                         /* extraFlags= */ 0,
                                         /* options= */ null);
                             } catch (IntentSender.SendIntentException e) {
-                                Log.e("TAG", "Google Sign-in failed");
+
                             }
                         })
                 .addOnFailureListener(
                         e -> {
-                            Log.e("TAG", "Google Sign-in failed", e);
+
                         });
     }
 
@@ -267,7 +210,7 @@ public class startActivityForLoginRegister extends AppCompatActivity {
                                         if (task.isSuccessful()) {
 
                                             // Sign in success, update UI with the signed-in user's information
-                                            Log.d("TAG", "signInWithCredential:success");
+
                                             FirebaseUser user = mAuth.getCurrentUser();
 
                                             FirebaseDatabase.getInstance().getReference("googleUsers")
@@ -278,7 +221,7 @@ public class startActivityForLoginRegister extends AppCompatActivity {
 
                                         } else {
                                             // If sign in fails, display a message to the user.
-                                            Log.w("TAG", "signInWithCredential:failure", task.getException());
+
 
                                         }
                                     }
@@ -299,21 +242,21 @@ public class startActivityForLoginRegister extends AppCompatActivity {
 
 
     void handleFacebookAccessToken(AccessToken token) {
-        Log.d("access5", "komtan");
+
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
 
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("access5", "komtan21");
+
 
                         if(task.isSuccessful()){
 
-                            Log.d("hierBinich","21");
+
 
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Log.d("getName5","" + user.getDisplayName());
+
 
                             facebookSignModel fb_model = new facebookSignModel(user.getDisplayName(), user.getEmail());
 
@@ -322,7 +265,8 @@ public class startActivityForLoginRegister extends AppCompatActivity {
                             palo.child("fbUers").child(user.getUid()).setValue(fb_model);
 
                             RetrofitService retrofitService = new RetrofitService();
-                            EmployeeApi employeeApi = retrofitService.getRetrofit().create(EmployeeApi.class);
+                            UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
+
 
                             String name = user.getDisplayName();
 
@@ -331,18 +275,7 @@ public class startActivityForLoginRegister extends AppCompatActivity {
                             xx.setName(name);
                             xx.setToken(tokee);
 
-                            employeeApi.save(xx).enqueue(new Callback<userModelApi>() {
-                                @Override
-                                public void onResponse(Call<userModelApi> call, Response<userModelApi> response) {
 
-                                }
-
-                                @Override
-                                public void onFailure(Call<userModelApi> call, Throwable t) {
-                                    Log.d("failedMH","" + t);
-
-                                }
-                            });
 
 
 
@@ -352,7 +285,7 @@ public class startActivityForLoginRegister extends AppCompatActivity {
 
 
                         } else{
-                            Log.d("getResultFB","" + task.getResult() );
+
 
                                                }
                     }

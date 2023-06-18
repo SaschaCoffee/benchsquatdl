@@ -8,17 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.example.benchsquatdl2.modelApi.userModelApi;
-import com.example.benchsquatdl2.modelSpringer.Cart;
-import com.example.benchsquatdl2.modelSpringer.Item;
-import com.example.benchsquatdl2.retrofit.EmployeeApi;
+import com.example.benchsquatdl2.Fragment.FragmentMainActivity;
+import com.example.benchsquatdl2.model.metaModel;
+import com.example.benchsquatdl2.model.modelLogRegister.userModel;
+import com.example.benchsquatdl2.model.modelApi.userModelApi;
+import com.example.benchsquatdl2.retrofit.UserApi;
 import com.example.benchsquatdl2.retrofit.RetrofitService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,9 +26,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Arrays;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -132,33 +129,19 @@ public class registerUser extends AppCompatActivity implements View.OnClickListe
                                     if(task.isSuccessful()){
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         RetrofitService retrofitService = new RetrofitService();
-                                        EmployeeApi employeeApi = retrofitService.getRetrofit().create(EmployeeApi.class);
+                                        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
 
                                         String name = user.getDisplayName();
 
                                         String tokee = user.getUid();
                                         userModelApi xx = new userModelApi();
-                                        Log.d("reg5","" +tokee + "" + name);
+
                                         xx.setName("sascha");
                                         xx.setToken(tokee);
-                                        employeeApi.save(xx).enqueue(new Callback<userModelApi>() {
-                                            @Override
-                                            public void onResponse(Call<userModelApi> call, Response<userModelApi> response) {
 
-                                                Log.d("reg5","success");
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<userModelApi> call, Throwable t) {
-                                                Log.d("reg5","" + t);
-
-
-                                            }
-                                        });
 
 
                                         startActivity((new Intent(registerUser.this, FragmentMainActivity.class)));
-                                        Log.d("SuccessfulBRRROOOO","");
                                         pg_bar.setVisibility(View.GONE);
                                     }else{
                                         Toast.makeText(registerUser.this, "FAILED TO REGISTER", Toast.LENGTH_SHORT).show();

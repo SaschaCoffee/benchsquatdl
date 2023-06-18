@@ -6,10 +6,12 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 
 import androidx.annotation.Nullable;
+
+import com.example.benchsquatdl2.model.ModelAdd;
+import com.example.benchsquatdl2.model.modelDisplayRv;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -83,7 +85,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             while ((line = buffer.readLine()) != null){
                 String[] columns = line.split(";");
                 if(columns.length != 2) {
-                    Log.d("CSVParser", "Skipping Bad CSV Row");
+
                     continue;
                 }
 
@@ -119,7 +121,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ArrayList<modelDisplayRv> storeContacts = new ArrayList<>();
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor.moveToFirst() && storeContacts.size() < 19) {
-            Log.d("storeCont","");
+
             do {
                 String name = cursor.getString(0);
                 String insta = cursor.getString(1);

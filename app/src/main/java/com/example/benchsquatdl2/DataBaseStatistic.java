@@ -6,10 +6,11 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.example.benchsquatdl2.model.ProfileStats;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -144,7 +145,7 @@ public class DataBaseStatistic extends SQLiteOpenHelper {
             while ((line = buffer.readLine()) != null){
                 String[] columns = line.split(";");
                 if(columns.length != 41) {
-                    Log.d("CSVParser", "Skipping Bad CSV Row");
+
                     continue;
                 }
 

@@ -2,12 +2,13 @@ package com.example.benchsquatdl2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.benchsquatdl2.Fragment.FragmentMainActivity;
 
 
 public class cardActivity extends AppCompatActivity {
@@ -30,7 +31,7 @@ public class cardActivity extends AppCompatActivity {
 
         btn_back = findViewById(R.id.btn_back);
 
-        Log.d("ergebnis","" + starter);
+
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.benchsquatdl2.Fragment.FragmentMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -89,7 +90,7 @@ public class loggingActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     startActivity((new Intent(loggingActivity.this, FragmentMainActivity.class)));
-                    Toast.makeText(loggingActivity.this, "SUCCESS BRO", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(loggingActivity.this, "SUCCESS", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(loggingActivity.this, "Failed to login", Toast.LENGTH_SHORT).show();
                 }

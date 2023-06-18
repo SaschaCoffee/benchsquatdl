@@ -36,7 +36,7 @@
         </activity>
 
 
-        <activity android:name=".FragmentMainActivity">
+        <activity android:name=".Fragment.FragmentMainActivity">
 
         </activity>
 
