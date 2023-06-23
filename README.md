@@ -1,14 +1,13 @@
 # MyApp
 
-Similar Strength is a hobby-project from me to learn basic programming.
-The app is specialized on the three strength exercises Squat, Bench and Deadlift. Currently the app
-can save the trainingsession and retrieve it.
+"My app 'similarstrength' is a hobby project aimed to learn programming. The app is based on Java and utilizes Spring Boot to communicate with the database. A unique feature of the app is that it allows users to increase or decrease the number of repetitions using the volume up and down buttons on their smartphones."
+<p align="center">
+ <img src="https://github.com/SaschaCoffee/benchsquatdl/assets/42777981/8eb52189-5795-46dc-9634-d85120acc2e0" alt="alt text" width="180" height="360">
+ <p>
 
-Unique function: with the volume up down you can increase your number of reps and kg.
 
-The following features will be added in future:
- <img src="https://github.com/SaschaCoffee/benchsquatdl/assets/42777981/d22efbc2-6f1b-4b02-9405-93d46930dbe1" alt="alt text" width="180" height="360">
-
+The app will be completed in 3-4 months, and useful features such as user search and analysis of strength data will be added.
+A detailed guide will follow.
 
 
 
