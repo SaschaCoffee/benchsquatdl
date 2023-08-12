@@ -55,9 +55,13 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -73,13 +77,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchsquatdl2.AdapterHolder.RepKgAdapter;
 import com.example.benchsquatdl2.AdapterHolder.cardViewAdapter;
+import com.example.benchsquatdl2.CustomCalendarView;
+import com.example.benchsquatdl2.Events;
+import com.example.benchsquatdl2.MyGridAdapter;
 import com.example.benchsquatdl2.R;
 import com.example.benchsquatdl2.dialogExtend;
 import com.example.benchsquatdl2.model.RepKgModel;
 import com.example.benchsquatdl2.model.commentModel;
 import com.example.benchsquatdl2.model.greenCardModel;
+import com.example.benchsquatdl2.model.modelApi.Trainingdate;
+import com.example.benchsquatdl2.model.modelApi.trainingdto;
 import com.example.benchsquatdl2.model.modelBench;
 import com.example.benchsquatdl2.model.modelApi.trainingsdaten;
+import com.example.benchsquatdl2.model.orderResponse;
 import com.example.benchsquatdl2.retrofit.UserApi;
 import com.example.benchsquatdl2.retrofit.RetrofitService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,6 +105,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,6 +116,20 @@ import retrofit2.Response;
 public class benchFragment extends Fragment implements
         cardViewAdapter.PlayPauseClick  {
 
+    ImageButton NextButton,PreviousButton;
+    TextView CurrentDate;
+    MyGridAdapter myGridAdapter;
+    GridView gridView;
+    private static final int MAX_CALENDAR_DAYS = 42;
+    Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+    Context context;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+    SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM", Locale.ENGLISH);
+    SimpleDateFormat yearFormate = new SimpleDateFormat("yyyy", Locale.ENGLISH);
+
+    AlertDialog alertDialog;
+    List<Date> dates = new ArrayList<>();
+    List<Events> eventsList = new ArrayList<>();
     ArrayList<greenCardModel> lstBook = new ArrayList<>();
     private FirebaseUser user;
     private DatabaseReference reference, referenceTraininglogPrivate, referenceTraininglogPublic;
@@ -113,6 +140,7 @@ public class benchFragment extends Fragment implements
     int progr = 0;
     private Button btn_add_data,btn_delete_yes,btn_delete_item, btn_upload_data, buttonOpenDialog, btn_delete_data;
     private AlertDialog dialog;
+    private android.app.AlertDialog dialogCalendar;
 
     private int counter = 0;
 
@@ -129,6 +157,12 @@ public class benchFragment extends Fragment implements
     int progrrr = 0;
 
     private FirebaseAuth mAuth;
+    private LinearLayout linearLayout;
+
+    RetrofitService retrofitService = new RetrofitService();
+    UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
+
+
 
 
 
@@ -139,28 +173,33 @@ public class benchFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mAuth = FirebaseAuth.getInstance();
-        String uid = mAuth.getUid().toString().trim();
-        try{
-
-            String x = mAuth.getUid();
 
 
 
-        }catch(Exception e){
-
-
-        }
+      
 
         // Inflate the layout for this fragment
         View vx = inflater.inflate(R.layout.activitycard_bench, container, false);
+        NextButton = vx.findViewById(R.id.nextBtn);
+        PreviousButton = vx.findViewById(R.id.previousBtn2);
+        CurrentDate = vx.findViewById(R.id.current_date);
+        gridView = vx.findViewById(R.id.gridview);
+
+
+
         pgBar = vx.findViewById(R.id.progress_bar);
         tv = vx.findViewById(R.id.text_view_progress);
 
+        linearLayout = vx.findViewById(R.id.lr);
 
-        referenceTraininglogPublic = FirebaseDatabase.getInstance().getReference("TraininglogPublic");
+        SetUpCalendar();
 
-        mRecyclerView = vx.findViewById(R.id.recyclerview_id);
+
+
+
+
+
+
         String childcard = "anzahlBench";
         String childcardBench = "Best3BenchKg";
         String childcardDate = "Date";
@@ -180,9 +219,92 @@ public class benchFragment extends Fragment implements
         createCard();
         buildRecyclerView();
 
+
         buttonOpenDialog = vx.findViewById(R.id.btn_add_data_card_bench);
 
         btn_delete_item = vx.findViewById(R.id.btn_delete_item);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                builder = new AlertDialog.Builder(getActivity());
+                View vieww = getLayoutInflater().inflate(R.layout.open_training_data, null);
+                builder.setView(vieww);
+                dialog = builder.create();
+                dialog.show();
+                dialog.create();
+
+                Date monthDate = dates.get(position);
+                Calendar dateCalendar = Calendar.getInstance();
+                dateCalendar.setTime(monthDate);
+                Date xy = dateCalendar.getTime();
+                String format = new SimpleDateFormat("dd-MM-yyy").format(xy);
+                String neuFormat = format;
+
+
+
+                String bench = "bench";
+
+
+                trainingsdaten trainingsdaten = new trainingsdaten("bench",
+                        neuFormat,"2",null,null,null,null,
+                        neuFormat,null,null,null,null);
+
+                TextView rep1 = vieww.findViewById(R.id.tv_reps_opendialog);
+                TextView rep2 = vieww.findViewById(R.id.tv_reps_opendialog2);
+                TextView rep3 = vieww.findViewById(R.id.tv_reps_opendialog3);
+                TextView rep4 = vieww.findViewById(R.id.tv_reps_opendialog4);
+                TextView rep5 = vieww.findViewById(R.id.tv_reps_opendialog5);
+
+// KG STARTS HERE, BUT I NAMED IT TO REPS FOR THE LOOP IN THE NEXT PARAGRAPH
+                TextView kg1 = vieww.findViewById(R.id.tv_kg_opendialog);
+                TextView kg2 = vieww.findViewById(R.id.tv_kg_opendialog2);
+                TextView kg3 = vieww.findViewById(R.id.tv_kg_opendialog3);
+                TextView kg4 = vieww.findViewById(R.id.tv_kg_opendialog4);
+                TextView kg5 = vieww.findViewById(R.id.tv_kg_opendialog5);
+
+                TextView date = vieww.findViewById(R.id.tv_date);
+
+
+                userApi.testemich(trainingsdaten).enqueue(new Callback<com.example.benchsquatdl2.model.modelApi.trainingsdaten>() {
+                    @Override
+                    public void onResponse(Call<com.example.benchsquatdl2.model.modelApi.trainingsdaten> call, Response<com.example.benchsquatdl2.model.modelApi.trainingsdaten> response) {
+
+                        try {
+                            if(response.body().getUb_bezeichnung().equals(bench)){
+                                date.setText(response.body().getDate());
+                                rep1.setText(response.body().getRep1());
+                                rep2.setText(response.body().getRep2());
+                                rep3.setText(response.body().getRep3());
+                                rep4.setText(response.body().getRep4());
+                                rep5.setText(response.body().getRep5());
+
+                                kg1.setText(response.body().getKg1());
+                                kg2.setText(response.body().getKg2());
+                                kg3.setText(response.body().getKg3());
+                                kg4.setText(response.body().getKg4());
+                                kg5.setText(response.body().getKg5());
+
+
+                            }
+
+                        }catch (Exception e){
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<com.example.benchsquatdl2.model.modelApi.trainingsdaten> call, Throwable t) {
+
+                    }
+                });
+
+
+
+
+            }
+        });
 
         btn_delete_item.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,25 +335,7 @@ public class benchFragment extends Fragment implements
 
 
 
-        reference.child(uid).child(childcard).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                try {
-                    long model = snapshot.getValue(long.class);
-                    progr = Integer.parseInt(String.valueOf(model));
-
-                    updateCard(progr);
-                    updateProgressBar(progr);
-                    buildRecyclerView();
-                } catch (Exception e) {
-
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
 
         buttonOpenDialog.setOnClickListener(new View.OnClickListener() {
 
@@ -324,6 +428,7 @@ public class benchFragment extends Fragment implements
                         l5_kg_four =  vieww.findViewById(R.id.layer_five_et_kg_card_single_item_four);
                         l5_kg_five = vieww.findViewById(R.id.layer_five_et_kg_card_single_item_five);
 
+                        //Kalendar für Aktion "save"
 
 
                         int code = keyEvent.getKeyCode();
@@ -913,16 +1018,21 @@ public class benchFragment extends Fragment implements
                 String keyTraining = referenceTraininglogPublic.push().getKey();
 
 
-                RetrofitService retrofitService = new RetrofitService();
-                UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
+
+
+                Calendar dateCalendar = Calendar.getInstance();
+                Date xy = dateCalendar.getTime();
+                String format = new SimpleDateFormat("dd-MM-yyy").format(xy);
 
                 btn_upload_data.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View view) {
-                        DateFormat df = new SimpleDateFormat("d MMM yyyy");
-                        String date = df.format(Calendar.getInstance().getTime());
-                        String dummyTxt = "Add a comment";
+
+                        String dummyTxt="dd";
+                        String date = format;
+
+
+
 
                         switch(save.size()){
 
@@ -938,12 +1048,16 @@ public class benchFragment extends Fragment implements
                                     referenceTraininglogPublic.child(keyTraining).setValue(bench);
 
                                     trainingsdaten trainingsdaten = new trainingsdaten("bench",
-                                            "01.02.1999",first_rep_string,null,null,null,null,
+                                            date,first_rep_string,null,null,null,null,
                                             first_kg_string,null,null,null,null);
+
+
 
                                     userApi.savedata(trainingsdaten).enqueue(new Callback<com.example.benchsquatdl2.model.modelApi.trainingsdaten>() {
                                         @Override
                                         public void onResponse(Call<com.example.benchsquatdl2.model.modelApi.trainingsdaten> call, Response<com.example.benchsquatdl2.model.modelApi.trainingsdaten> response) {
+
+                                            Log.d("getTrain2","" + response.body());
 
                                         }
 
@@ -956,12 +1070,15 @@ public class benchFragment extends Fragment implements
 
 
 
+
+
+
+
                                     progr++;
 
-                                    reference.child(uid).child(childcard).setValue(progr);
-                                    referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench);
 
-                                    updateProgressBar(progr);
+
+
                                     updateCard(progr);
                                     buildRecyclerView();
 
@@ -997,7 +1114,7 @@ public class benchFragment extends Fragment implements
                                         !second_rep_l2.isEmpty()) {
 
                                     trainingsdaten trainingsdaten = new trainingsdaten("bench",
-                                            "01.02.1999",first_rep_l2,second_rep_l2,null,null,null,
+                                            date,first_rep_l2,second_rep_l2,null,null,null,
                                             first_kg_l2,second_kg_l2,null,null,null);
 
                                     userApi.savedata(trainingsdaten).enqueue(new Callback<com.example.benchsquatdl2.model.modelApi.trainingsdaten>() {
@@ -1015,9 +1132,6 @@ public class benchFragment extends Fragment implements
                                     modelBench bench2 = new modelBench(first_rep_l2, second_rep_l2, first_kg_l2, second_kg_l2, date, dummyTxt);
                                     progr++;
 
-                                    reference.child(uid).child(childcard).setValue(progr);
-                                    referenceTraininglogPublic.child(keyTraining).setValue(bench2);
-                                    referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench2);
 
 
                                     updateProgressBar(progr);
@@ -1063,12 +1177,9 @@ public class benchFragment extends Fragment implements
                                 modelBench bench3 = new modelBench(first_rep_l3, second_rep_l3, third_rep_l3, first_kg_l3, second_kg_l3, third_kg_l3, date, dummyTxt);
 
                                 progr++;
-                                reference.child(uid).child(childcard).setValue(progr);
-                                referenceTraininglogPublic.child(keyTraining).setValue(bench3);
-                                referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench3);
 
                                     trainingsdaten trainingsdaten = new trainingsdaten("bench",
-                                            "01.02.1999",first_rep_l3,second_rep_l3,third_rep_l3,null,null,
+                                            date,first_rep_l3,second_rep_l3,third_rep_l3,null,null,
                                             first_kg_l3,second_kg_l3,third_kg_l3,null,null);
 
                                     userApi.savedata(trainingsdaten).enqueue(new Callback<com.example.benchsquatdl2.model.modelApi.trainingsdaten>() {
@@ -1129,7 +1240,7 @@ public class benchFragment extends Fragment implements
                                 && !kg1_l4.isEmpty() && !kg2_l4.isEmpty() && !kg3_l4.isEmpty() && !kg4_l4.isEmpty()) {
 
                                     trainingsdaten trainingsdaten = new trainingsdaten("bench",
-                                            "01.02.1999",rp1_l4,rp2_l4,rp3_l4,rp4_l4,null,
+                                            date,rp1_l4,rp2_l4,rp3_l4,rp4_l4,null,
                                             kg1_l4,kg2_l4,kg3_l4,kg4_l4,null);
 
                                     userApi.savedata(trainingsdaten).enqueue(new Callback<com.example.benchsquatdl2.model.modelApi.trainingsdaten>() {
@@ -1147,9 +1258,6 @@ public class benchFragment extends Fragment implements
                                     modelBench bench4 = new modelBench(rp1_l4, rp2_l4, rp3_l4, rp4_l4, kg1_l4, kg2_l4, kg3_l4, kg4_l4, date, dummyTxt);
 
                                     progr++;
-                                    reference.child(uid).child(childcard).setValue(progr);
-                                    referenceTraininglogPublic.child(keyTraining).setValue(bench4);
-                                    referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench4);
 
 
 
@@ -1207,7 +1315,7 @@ public class benchFragment extends Fragment implements
                                         !kg4_l5.isEmpty() && !kg5_l5.isEmpty()){
 
                                     trainingsdaten trainingsdaten = new trainingsdaten("bench",
-                                            "01.02.1999",rp1_l5,rp2_l5,rp3_l5,rp4_l5,rp5_l5,
+                                            date,rp1_l5,rp2_l5,rp3_l5,rp4_l5,rp5_l5,
                                             kg1_l5,kg2_l5,kg3_l5,kg4_l5,kg5_l5);
 
                                     userApi.savedata(trainingsdaten).enqueue(new Callback<com.example.benchsquatdl2.model.modelApi.trainingsdaten>() {
@@ -1226,9 +1334,6 @@ public class benchFragment extends Fragment implements
 
 
                                 progr++;
-                                reference.child(uid).child(childcard).setValue(progr);
-                                referenceTraininglogPublic.child(keyTraining).setValue(bench5);
-                                referenceTraininglogPrivate.child(uid).child(String.valueOf(progr)).setValue(bench5);
 
                                     updateProgressBar(progr);
                                     updateCard(progr);
@@ -1417,6 +1522,48 @@ public class benchFragment extends Fragment implements
         return vx;
     }
 
+    private void SetUpCalendar() {
+        String currentDate = dateFormat.format(calendar.getTime());
+        CurrentDate.setText(currentDate);
+        dates.clear();
+        //Calendar Day of Month ist richtig (aktuelles Datum), Danach wird es auf 1 gesetzt
+        Calendar monthCalendar = (Calendar) calendar.clone();
+        monthCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        int FirstDayofMonth = monthCalendar.get(Calendar.DAY_OF_WEEK) - 2;
+
+        //mit -2 kann ich die Tageszahlen verschieben.OUTPUT =5
+        //Day of Week = An welcher stelle steht der tag,
+        //DAY_OF_WEEK is the day of the week (7 days), DAY_OF_MONTH is the day of the month (<=31 days)
+
+        //wichtig für das pinke feld
+        //start 01.07, -FirstDayofMonth, wir gehen paar tage zurück
+        //In der while schlafen fange wir paar tage früher an zu zählen, als der Monat anfängt
+        //Bsp. 26,27,28,29,30, dann 01 bis max 42
+
+        monthCalendar.add(Calendar.DAY_OF_MONTH, -FirstDayofMonth);
+
+        while (dates.size() < MAX_CALENDAR_DAYS){
+            dates.add(monthCalendar.getTime());
+            monthCalendar.add(Calendar.DAY_OF_MONTH,1);
+        }
+
+        userApi.getDatabyID().enqueue(new Callback<List<trainingdto>>() {
+            @Override
+            public void onResponse(Call<List<trainingdto>> call, Response<List<trainingdto>> response) {
+                myGridAdapter = new MyGridAdapter(getActivity(),dates,calendar,eventsList,response.body());
+                gridView.setAdapter(myGridAdapter);
+            }
+            @Override
+            public void onFailure(Call<List<trainingdto>> call, Throwable t) {
+
+            }
+        });
+
+
+
+    }
+
+
     private String saveRep(String x) {
         return x;
     }
@@ -1428,11 +1575,11 @@ public class benchFragment extends Fragment implements
 
 
     private void buildRecyclerView() {
-        mRecyclerView.setHasFixedSize(true);
+       /* mRecyclerView.setHasFixedSize(true);
         cardViewAdapter mAdapter = new cardViewAdapter(getActivity(), lstBook);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 10));
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setPlayPauseClickListener(this::imageButtonOnClick);
+        mAdapter.setPlayPauseClickListener(this::imageButtonOnClick);*/
     }
 
     private void updateCard(int z) {
@@ -1454,366 +1601,91 @@ public class benchFragment extends Fragment implements
         mAuth = FirebaseAuth.getInstance();
         // TODO: Implement this
 
+        RetrofitService retrofitService = new RetrofitService();
+        UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);
+        String bench = "bench";
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        dialogExtend xx = new dialogExtend();
-        View view = getLayoutInflater().inflate(R.layout.open_training_data, null);
-        builder.setView(view);
-        dialog = builder.create();
-        dialog.show();
+        Log.d("testemich","99999");
 
-        TextView date = view.findViewById(R.id.tv_date);
-        MultiAutoCompleteTextView cc = view.findViewById(R.id.multiAutoCompleteTextView);
-        Button save = view.findViewById(R.id.button3);
 
-        TextView rep1 = view.findViewById(R.id.tv_reps_opendialog);
-        TextView rep2 = view.findViewById(R.id.tv_reps_opendialog2);
-        TextView rep3 = view.findViewById(R.id.tv_reps_opendialog3);
-        TextView rep4 = view.findViewById(R.id.tv_reps_opendialog4);
-        TextView rep5 = view.findViewById(R.id.tv_reps_opendialog5);
+        userApi.geTrainingData().enqueue(new Callback<List<trainingdto>>() {
+            @Override
+            public void onResponse(Call<List<trainingdto>> call, Response<List<trainingdto>> response) {
+                if(response.body().get(position).getUb_bezeichnung().equals(bench)){
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    dialogExtend xx = new dialogExtend();
+                    View view = getLayoutInflater().inflate(R.layout.open_training_data, null);
+                    builder.setView(view);
+                    dialog = builder.create();
+                    dialog.show();
+
+                    TextView date = view.findViewById(R.id.tv_date);
+                    MultiAutoCompleteTextView cc = view.findViewById(R.id.multiAutoCompleteTextView);
+                    Button save = view.findViewById(R.id.button3);
+
+                    TextView rep1 = view.findViewById(R.id.tv_reps_opendialog);
+                    TextView rep2 = view.findViewById(R.id.tv_reps_opendialog2);
+                    TextView rep3 = view.findViewById(R.id.tv_reps_opendialog3);
+                    TextView rep4 = view.findViewById(R.id.tv_reps_opendialog4);
+                    TextView rep5 = view.findViewById(R.id.tv_reps_opendialog5);
 
 // KG STARTS HERE, BUT I NAMED IT TO REPS FOR THE LOOP IN THE NEXT PARAGRAPH
-        TextView rep6 = view.findViewById(R.id.tv_kg_opendialog);
-        TextView rep7 = view.findViewById(R.id.tv_kg_opendialog2);
-        TextView rep8 = view.findViewById(R.id.tv_kg_opendialog3);
-        TextView rep9 = view.findViewById(R.id.tv_kg_opendialog4);
-        TextView rep10 = view.findViewById(R.id.tv_kg_opendialog5);
-
-        String xy = (String.valueOf(position+1));
-
-
-
-
-        mAuth = FirebaseAuth.getInstance();
-        String uid = mAuth.getUid().toString().trim();
-       Query bre = referenceTraininglogPrivate.child(uid).child(xy);
-
-
-       save.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               String getComment = cc.getText().toString().trim();
-               commentModel xx = new commentModel(getComment);
-
-               referenceTraininglogPrivate.child(uid).child(xy).child("xNote").setValue(getComment);
-               dialog.dismiss();
-
-           }
-       });
-
-
-
-
-
-       bre.addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-               String count = String.valueOf(snapshot.getChildrenCount());
-
-
-               switch(count){
-                   case "4":
-                       for(DataSnapshot pee : snapshot.getChildren()) {
-                           progrrr++;
-                           String counterString = "rep" + String.valueOf(progrrr);
-
-                           String x = pee.getValue(String.class);
-
-
-                           switch(counterString){
-                               case "rep1":
-                                   rep1.setText(x);
-                                   break;
-
-                               case "rep2":
-                                   rep6.setText(x);
-                                   break;
-                               case "rep3":
-                                   date.setText(x);
-                                   break;
-                               case "rep4":
-                                   cc.setText(x);
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                           }
-                       }
-                       break;
-
-                   case "6":
-                       for(DataSnapshot pee : snapshot.getChildren()) {
-                           progrrr++;
-                           String counterString = "rep" + String.valueOf(progrrr);
-                           Log.d("counterS","" + counterString);
-                           String x = pee.getValue(String.class);
-
-
-                           switch(counterString){
-                               case "rep1":
-                                   Log.d("counterS","peeeee");
-                                   rep1.setText(x);
-                                   break;
-
-                               case "rep2":
-                                   //KG
-                                   rep2.setText(x);
-                                   break;
-
-                               case "rep3":
-                                   //REP
-                                   rep6.setText(x);
-                                   break;
-
-                               case "rep4":
-                                   //KG
-                                   rep7.setText(x);
-                                   break;
-                               case "rep5":
-                                   date.setText(x);
-                                   break;
-                               case "rep6":
-                                   cc.setText(x);
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   break;
-
-                           }
-                       }break;
-                   case "8":
-                       for(DataSnapshot pee : snapshot.getChildren()) {
-                           progrrr++;
-                           String counterString = "rep" + String.valueOf(progrrr);
-                           Log.d("counterS","" + counterString);
-                           String x = pee.getValue(String.class);
-
-                           Log.d("counterSS","" + x);
-
-                           switch(counterString){
-                               case "rep1":
-                                   Log.d("counterS","peeeee");
-                                   rep1.setText(x);
-                                   break;
-
-                               case "rep2":
-                                   //KG
-                                   rep2.setText(x);
-                                   break;
-
-                               case "rep3":
-                                   //REP
-                                   rep3.setText(x);
-                                   break;
-
-                               case "rep4":
-                                   //KG
-                                   rep6.setText(x);
-                                   break;
-
-                               case "rep5":
-                                   rep7.setText(x);
-                                   break;
-
-                               case "rep6":
-                                   rep8.setText(x);
-                                   break;
-
-                               case "rep7":
-                                   date.setText(x);
-                                   break;
-                               case "rep8":
-                                   cc.setText(x);
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   break;
-
-                           }
-                       }break;
-
-                   case "10":
-                       for(DataSnapshot pee : snapshot.getChildren()) {
-                           progrrr++;
-                           String counterString = "rep" + String.valueOf(progrrr);
-                           Log.d("counterS","" + counterString);
-                           String x = pee.getValue(String.class);
-
-                           Log.d("counterSS","" + x);
-
-                           switch(counterString){
-                               case "rep1":
-                                   Log.d("counterS","peeeee");
-                                   rep1.setText(x);
-                                   break;
-
-                               case "rep2":
-                                   //KG
-                                   rep2.setText(x);
-                                   break;
-
-                               case "rep3":
-                                   //REP
-                                   rep3.setText(x);
-                                   break;
-
-                               case "rep4":
-                                   //KG
-                                   rep4.setText(x);
-                                   break;
-
-                               case "rep5":
-                                   rep6.setText(x);
-                                   break;
-
-                               case "rep6":
-                                   rep7.setText(x);
-                                   break;
-
-                               case "rep7":
-                                   rep8.setText(x);
-                                   break;
-
-                               case "rep8":
-                                   rep9.setText(x);
-                                   break;
-
-                               case "rep9":
-                                   date.setText(x);
-                                   break;
-
-                               case "rep10":
-                                   cc.setText(x);
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   break;
-
-                           }
-                       }break;
-
-                   case "12" :
-                       for(DataSnapshot pee : snapshot.getChildren()) {
-                           progrrr++;
-                           String counterString = "rep" + String.valueOf(progrrr);
-                           Log.d("counterS","" + counterString);
-                           String x = pee.getValue(String.class);
-
-                           Log.d("counterSS","" + x);
-
-                           switch(counterString){
-                               case "rep1":
-                                   Log.d("counterS","peeeee");
-                                   rep1.setText(x);
-                                   break;
-
-                               case "rep2":
-                                   //KG
-                                   rep2.setText(x);
-                                   break;
-
-                               case "rep3":
-                                   //REP
-                                   rep3.setText(x);
-                                   break;
-
-                               case "rep4":
-                                   //KG
-                                   rep4.setText(x);
-                                   break;
-
-                               case "rep5":
-                                   rep5.setText(x);
-                                   break;
-
-                               case "rep6":
-                                   rep6.setText(x);
-                                   break;
-
-                               case "rep7":
-                                   rep7.setText(x);
-                                   break;
-
-                               case "rep8":
-                                   rep8.setText(x);
-                                   break;
-
-                               case "rep9":
-                                   rep9.setText(x);
-                                   break;
-                               case "rep10":
-                                   rep10.setText(x);
-                                   break;
-
-                               case "rep11":
-                                   date.setText(x);
-                                   break;
-                               case "rep12":
-                                   cc.setText(x);
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   progrrr--;
-                                   break;
-
-                           }
-                       }break;
-
-
-
-
-               }
-
-           }
-
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
-
-           }
-       });
-
-        mAuth = FirebaseAuth.getInstance();
-
-
-        referenceTraininglogPrivate.child(uid).child("4").limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot pee : snapshot.getChildren()) {
-                    String x = pee.getValue(String.class);
-
+                    TextView kg1 = view.findViewById(R.id.tv_kg_opendialog);
+                    TextView kg2 = view.findViewById(R.id.tv_kg_opendialog2);
+                    TextView kg3 = view.findViewById(R.id.tv_kg_opendialog3);
+                    TextView kg4 = view.findViewById(R.id.tv_kg_opendialog4);
+                    TextView kg5 = view.findViewById(R.id.tv_kg_opendialog5);
+
+                    rep1.setText(response.body().get(position).getRep1());
+                    rep2.setText(response.body().get(position).getRep2());
+                    rep3.setText(response.body().get(position).getRep3());
+                    rep4.setText(response.body().get(position).getRep4());
+                    rep5.setText(response.body().get(position).getRep5());
+
+                    kg1.setText(response.body().get(position).getKg1());
+                    kg2.setText(response.body().get(position).getKg2());
+                    kg3.setText(response.body().get(position).getKg3());
+                    kg4.setText(response.body().get(position).getKg4());
+                    kg5.setText(response.body().get(position).getKg5());
+
+
+                    save.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String getComment = cc.getText().toString().trim();
+                            commentModel xx = new commentModel(getComment);
+
+
+                            dialog.dismiss();
+
+                        }
+                    });
 
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onFailure(Call<List<trainingdto>> call, Throwable t) {
 
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+        mAuth = FirebaseAuth.getInstance();
+
+
+
     }
 
     public void deleteLastItem(){
@@ -1873,11 +1745,6 @@ public class benchFragment extends Fragment implements
         // TODO: Implement this
 
         View g = v;
-
-
-
-        EditText hey = v.findViewById(R.id.layer_two_et_symbol_reps_single_item);
-
 
         this.adapterCallBackString = x;
 
@@ -1948,7 +1815,7 @@ public class benchFragment extends Fragment implements
     private void updateProgressBar(int z) {
         int x = z;
         String zy = String.valueOf(z) + "%";
-        pgBar.setProgress(x);
+
         tv.setText(zy);
     }
 

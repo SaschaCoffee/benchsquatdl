@@ -23,7 +23,6 @@ public class ItemViewModel extends ViewModel {
             selectedItem.setValue(vall);
 
         }
-
     }
     public LiveData<String> getSelectedItem() {
         return selectedItem;
